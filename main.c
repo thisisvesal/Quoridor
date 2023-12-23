@@ -1,38 +1,62 @@
-#include <stdio.h>
+#include"board.h"
+#include"boardPrinter.h"
 
+// extern int thisIsATest;
 int main() {
-    int z,m,n,i,j,k;
-    scanf("%d %d",&m,&n);
-    scanf("%d",&k);
-    int a[m][n];
-    for(i=0;i<m;i++)
-        for(j=0;j<n;j++)
-            a[i][j]=0;
-    for(z=1;z<=k;z++){
-        int x,y;
-        scanf("%d %d", &x, &y);
-        a[x - 1][y - 1] = 42;
-    }
-    for(i=0;i<m;i++){
-        for(j=0;j<n ;j++){
-            if(a[i][j]==42) {
-                if (i - 1 >= 0) { if (a[i - 1][j] != 42) a[i - 1][j]++;}
-                if (j - 1 >= 0) { if (a[i][j - 1] != 42) a[i][j - 1]++;}
-                if (i + 1 < m) { if (a[i + 1][j] != 42) a[i + 1][j]++;}
-                if (j + 1 < n) { if (a[i][j + 1] != 42) a[i][j + 1]++;}
-                if ((i - 1) >=0 & (j - 1) >= 0) { if (a[i - 1][j - 1] != 42) a[i - 1][j - 1]++;}
-                if (i + 1 < m && j + 1 < n) { if (a[i + 1][j + 1] != 42)a[i + 1][j + 1]++;}
-                if (i + 1 <m && j - 1 >= 0) { if (a[i + 1][j - 1] != 42)a[i + 1][j - 1]++;}
-                if (i - 1 >= 0 && j + 1 < n) { if (a[i - 1][j + 1] != 42)a[i - 1][j + 1]++;}
-            }
+    int row,column;
+    scanf("%d %d",& row,&column);
+    boardMake(row,column);
+    //مختصات مهره اول
+    int x1,y1;
+    x1--;
+    y1--;
+    scanf("%d%d",&x1,&y1);
+    Board[2*x1][2*y1]=83;
+    //مختصات مهره دوم
+    int x2,y2;
+    scanf("%d%d",&x2,&y2);
+    x2--;
+    y2--;
+    Board[2*x2][2*y2]=86;
+    //تعداد دیوار بازیکن اول
+    int wallCount1;
+    scanf("%d",&wallCount1);
+    // مختصات دیوار بازیکن اول
+    for(int i=0;i<wallCount1;i++) {
+        int wx1, wy1;
+        char w1;
+        scanf("%d%d%c", &wx1, &wy1, &w1);
+        if(w1==72){
+            Board[2*wx1+1][2*wy1]=178;
+            Board[2*wx1+1][2*wy1+1]=178;
+            Board[2*wx1+1][2*wy1+2]=178;
+        }
+        else {
+            Board[2*wx1][2*wy1+1]=178;
+            Board[2*wx1+1][2*wy1+1]=178;
+            Board[2*wx1+2][2*wy1+1]=178;
         }
     }
-    for(i=0;i<m;i++){
-        for(j=0;j<n ;j++){
-            if(a[i][j]!=42)printf("%d ",a[i][j]);
-            else printf("* ");
+    //تعداد دیوار بازیکن دوم
+    int wallCount2;
+    scanf("%d",&wallCount2);
+    //مختصات دیوار بازیکن دوم
+    for(int i=0;i<wallCount2;i++) {
+        int wx2, wy2;
+        char w2;
+        scanf("%d%d%c", &wx2, &wy2, &w2);
+        if(w2==72){
+            Board[2*wx2+1][2*wy2]=178;
+            Board[2*wx2+1][2*wy2+1]=178;
+            Board[2*wx2+1][2*wy2+2]=178;
         }
-        printf("\n");
-    }
+        else {
+            Board[2*wx2][2*wy2+1]=178;
+            Board[2*wx2+1][2*wy2+1]=178;
+            Board[2*wx2+2][2*wy2+1]=178;
+        }
+        }
+    printBoard (Board,row,column);
+    printf("%d", thisIsATest);
     return 0;
 }
