@@ -11,8 +11,12 @@
 
 struct Player
 {
+    char name[30];
     char nameInitial;
-    int location[2];
+    struct place
+    {
+        int x, y;
+    } location;
     int wallCount;
 } player1, player2;
 
@@ -55,44 +59,52 @@ void move(struct Player *someone)
     int where = motionDetect();
     if (where == 77) // right
     {
-        if (Board[someoneCopy.location[0]][someoneCopy.location[1] + 1] != 186 && someoneCopy.location[1] != 2 * column - 1)
+        if (Board[someoneCopy.location.x][someoneCopy.location.y + 1] != -70  // if not ║
+            && Board[someoneCopy.location.x][someoneCopy.location.y + 2] == ' ' // in order not to hit the other player
+            && someoneCopy.location.y != 2*column - 1) // if not on the edges
         {
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = ' ';
-            someoneCopy.location[1] += 2;
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = someoneCopy.nameInitial;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+            someoneCopy.location.y += 2;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
             sw = 0;
         }
     }
     else if (where == 75) // left
     {
-        if (Board[someoneCopy.location[0]][someoneCopy.location[1] - 1] != 186 && someoneCopy.location[1] != 1)
+        // printf("%d\n", Board[someoneCopy.location.x][someoneCopy.location.y - 1]);
+        // sleep(1000);
+        if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70 // if not ║
+            && Board[someoneCopy.location.x][someoneCopy.location.y - 2] == ' ' // in order not to hit the other player
+            && someoneCopy.location.y != 1) // if not on the edges
         {
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = ' ';
-            someoneCopy.location[1] -= 2;
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = someoneCopy.nameInitial;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+            someoneCopy.location.y -= 2;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
             sw = 0;
         }
     }
     else if (where == 72) // up
     {
-        if (Board[someoneCopy.location[0] - 1][someoneCopy.location[1]] != 205 && someoneCopy.location[0] != 1)
+        if (Board[someoneCopy.location.x - 1][someoneCopy.location.y] != -51 // if not ═
+            && Board[someoneCopy.location.x - 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
+            && someoneCopy.location.x != 1) // if not on the edges
         {
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = ' ';
-            someoneCopy.location[0] += 2;
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = someoneCopy.nameInitial;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+            someoneCopy.location.x -= 2;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
             sw = 0;
-            printf("up");
         }
     }
     else if (where == 80) // down
     {
-        if (Board[someoneCopy.location[0] + 1][someoneCopy.location[1]] != 205 && someoneCopy.location[0] != 2 * row - 1)
+        if (Board[someoneCopy.location.x + 1][someoneCopy.location.y] != -51 // if not ═
+            && Board[someoneCopy.location.x + 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
+            && someoneCopy.location.x != 2*row - 1) // if not on the edges
         {
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = ' ';
-            someoneCopy.location[0] -= 2;
-            Board[someoneCopy.location[0]][someoneCopy.location[1]] = someoneCopy.nameInitial;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+            someoneCopy.location.x += 2;
+            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
             sw = 0;
-            printf("down");
         }
     }
 
@@ -100,7 +112,6 @@ void move(struct Player *someone)
     if (sw)
         move(someone);
 }
-
 void putWall()
 {
     int x = row, y = column;
@@ -134,10 +145,27 @@ void putWall()
 
     // ═ 205
     if (x % 2 == 0 && y % 2 != 0)
-        Board[x][y] = 205;
-    // ║ 186
+    {
+        if (y == 2*column - 1 && Board[x][y-1]!=-51 && Board[x][y-2]!=-70)
+        {
+            Board[x][y] = Board[x][y - 1]= Board[x][y-2] = 205;
+        }
+        else if(Board[x][y+1]!=-51 && Board[x][y+2]!=-70){
+            Board[x][y]=Board[x][y+1]=Board[x][y+2] = 205;
+        }else putWall();
+    }
+        // ║ 186
     else if (y % 2 == 0 && x % 2 != 0)
-        Board[x][y] = 186;
+    {
+        if (x == 2*row - 1 && Board[x-2][y]!=-51 && Board[x-1][y]!=-70)
+        {
+            Board[x][y]=Board[x-1][y]=Board[x-2][y] = 186;
+        }
+
+        else if(Board[x+2][y]!=-51 && Board[x+1][y]!=-70){
+            Board[x][y]=Board[x+1][y]=Board[x+2][y] = 186;
+        }else putWall();
+    }
     else putWall();
 }
 
