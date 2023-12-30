@@ -9,14 +9,14 @@ int main()
     int round = 1;
 
     setTextColor(0 , 15);
-    clearScreen();
+    // clearScreen();
 
     // write welcome message + arrow keys
     printf("Welcome to Quoridor game!");
     setTextColor(6 , 15);
     printf(" %c\n",2);
     sleep(2000);
-    clearScreen();
+    // clearScreen();
 
     setTextColor(0 , 15);
     printf("Movment keys:\n");
@@ -52,6 +52,7 @@ int main()
 
 
     makeBoard(row, column);
+    makeSw();
 
     if (column % 2 == 0)
     {

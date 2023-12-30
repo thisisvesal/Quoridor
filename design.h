@@ -1,6 +1,7 @@
 # include <stdio.h>
 # include <windows.h>
-#include "boardMaker.h"
+# include "boardMaker.h"
+# include "boardPrinter.h"
 
 # ifndef design
 # define design
@@ -20,6 +21,7 @@ void setTextColor(int textColor, int backColor)
 void arrowKeyPrint()
 {
     char keyArr[5][7];
+
     keyArr[0][0] = keyArr[0][1] = keyArr[0][5] = keyArr[0][6]
             = keyArr[1][0] = keyArr[1][1] = keyArr[1][5] = keyArr[1][6]
             = ' ';
@@ -56,12 +58,13 @@ void arrowKeyPrint()
         {
             printf("%c", keyArr[i][j]);
         }
-        printf("\n");
+        printf("\n ");
     }
 
 }
 
-int chooseBoard(){
+int chooseBoard()
+{
     int num;
     setTextColor(0 , 15);
     printf("Choose your board:\n");

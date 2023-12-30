@@ -51,70 +51,172 @@ void sleep(int mseconds)
         ;
 }
 
+int dfsDown(int sw[101][101], int row, int column, int x, int y)
+{
+    sw[x][y] = 2;
+    if (x > 0 && sw[x - 1][y] == 1)
+    {
+        dfsDown(sw, row, column, x - 1, y);
+    }
+
+    if (x + 1 < 2 * row + 1 && sw[x + 1][y] == 1)
+    {
+        dfsDown(sw, row, column, x + 1, y);
+    }
+
+    if (y > 0 && sw[x][y - 1] == 1)
+    {
+        dfsDown(sw, row, column, x, y - 1);
+    }
+
+    if (y + 1 < 2 * column + 1 && sw[x][y + 1] == 1)
+    {
+        dfsDown(sw, row, column, x, y + 1);
+    }
+
+    for (int i = 0; i < 2 * column + 1; i++)
+    {
+        if (sw[2 * row - 1][i] == 2)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int dfsUp(int sw[101][101], int row, int column, int x, int y)
+{
+    sw[x][y] = 2;
+    if (x > 0 && sw[x - 1][y] == 1)
+    {
+        dfsUp(sw, row, column, x - 1, y);
+    }
+
+    if (x + 1 < 2 * row + 1 && sw[x + 1][y] == 1)
+    {
+        dfsUp(sw, row, column, x + 1, y);
+    }
+
+    if (y > 0 && sw[x][y - 1] == 1)
+    {
+        dfsUp(sw, row, column, x, y - 1);
+    }
+
+    if (y + 1 < 2 * column + 1 && sw[x][y + 1] == 1)
+    {
+        dfsUp(sw, row, column, x, y + 1);
+    }
+
+    for (int i = 0; i < 2 * column + 1; i++)
+    {
+        if (sw[1][i] == 2)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 void move(struct Player *someone)
 {
     struct Player someoneCopy;
     someoneCopy = *someone;
-    int sw = 1;
+    int contSw = 1;
     int where = motionDetect();
     if (where == 77) // right
     {
-        if (Board[someoneCopy.location.x][someoneCopy.location.y + 1] != -70    // if not ║
-            && Board[someoneCopy.location.x][someoneCopy.location.y + 2] == ' ' // in order not to hit the other player
-            && someoneCopy.location.y != 2 * column - 1)                        // if not on the edges
+        if (Board[someoneCopy.location.x][someoneCopy.location.y + 1] != -70 // if not ║
+            && someoneCopy.location.y != 2 * column - 1)                     // if not on the edges
         {
-            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-            someoneCopy.location.y += 2;
-            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
-            sw = 0;
+            if (Board[someoneCopy.location.x][someoneCopy.location.y + 2] == ' ') // in order not to hit the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.y += 2;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            else // jump over the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.y += 4;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            contSw = 0;
         }
     }
     else if (where == 75) // left
     {
         // printf("%d\n", Board[someoneCopy.location.x][someoneCopy.location.y - 1]);
         // sleep(1000);
-        if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70    // if not ║
-            && Board[someoneCopy.location.x][someoneCopy.location.y - 2] == ' ' // in order not to hit the other player
-            && someoneCopy.location.y != 1)                                     // if not on the edges
+        if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70 // if not ║
+            && someoneCopy.location.y != 1)                                  // if not on the edges
         {
-            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-            someoneCopy.location.y -= 2;
-            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
-            sw = 0;
+            if (Board[someoneCopy.location.x][someoneCopy.location.y - 2] == ' ') // in order not to hit the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.y -= 2;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            else // jump over the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.y -= 4;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            contSw = 0;
         }
     }
     else if (where == 72) // up
     {
-        if (Board[someoneCopy.location.x - 1][someoneCopy.location.y] != -51    // if not ═
-            && Board[someoneCopy.location.x - 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
-            && someoneCopy.location.x != 1)                                     // if not on the edges
+        if (Board[someoneCopy.location.x - 1][someoneCopy.location.y] != -51 // if not ═
+            && someoneCopy.location.x != 1)                                  // if not on the edges
         {
-            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-            someoneCopy.location.x -= 2;
-            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
-            sw = 0;
+            if (Board[someoneCopy.location.x - 2][someoneCopy.location.y] == ' ') // in order not to hit the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.x -= 2;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            else // jump over the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.x -= 4;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            contSw = 0;
         }
     }
     else if (where == 80) // down
     {
-        if (Board[someoneCopy.location.x + 1][someoneCopy.location.y] != -51    // if not ═
-            && Board[someoneCopy.location.x + 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
-            && someoneCopy.location.x != 2 * row - 1)                           // if not on the edges
+        if (Board[someoneCopy.location.x + 1][someoneCopy.location.y] != -51 // if not ═
+            && someoneCopy.location.x != 2 * row - 1)                        // if not on the edges
         {
-            Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-            someoneCopy.location.x += 2;
-            Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
-            sw = 0;
+            if (Board[someoneCopy.location.x + 2][someoneCopy.location.y] == ' ') // in order not to hit the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.x += 2;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            else // jump over the other player
+            {
+                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                someoneCopy.location.x += 4;
+                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+            }
+            contSw = 0;
         }
     }
 
     *someone = someoneCopy;
-    if (sw)
+    if (contSw)
         move(someone);
 }
+
 void putWall()
 {
     int x = row, y = column;
+    int contSw = 1;
     gotoxy(x, y);
     while (1)
     {
@@ -148,32 +250,74 @@ void putWall()
     {
         if (y == 2 * column - 1 && Board[x][y] == -60 && Board[x][y - 1] == -59 && Board[x][y - 2] == -60)
         {
-            Board[x][y] = Board[x][y - 1] = Board[x][y - 2] = 205;
+            makeSw();
+            sw[x][y] = sw[x][y - 1] = sw[x][y - 2] = 0;
+            if (dfsDown(sw, row, column, player1.location.x, player1.location.y))
+            {
+                makeSw();
+                sw[x][y] = sw[x][y - 1] = sw[x][y - 2] = 0;
+                if (dfsUp(sw, row, column, player2.location.x, player2.location.y))
+                {
+                    Board[x][y] = Board[x][y - 1] = Board[x][y - 2] = 205;
+                    contSw = 0;
+                }
+            }
         }
         else if (Board[x][y] == -60 && Board[x][y + 1] == -59 && Board[x][y + 2] == -60)
         {
-            Board[x][y] = Board[x][y + 1] = Board[x][y + 2] = 205;
+            makeSw();
+            sw[x][y] = sw[x][y + 1] = sw[x][y + 2] = 0;
+            if (dfsDown(sw, row, column, player1.location.x, player1.location.y))
+            {
+                makeSw();
+                sw[x][y] = sw[x][y + 1] = sw[x][y + 2] = 0;
+                if (dfsUp(sw, row, column, player2.location.x, player2.location.y))
+                {
+                    Board[x][y] = Board[x][y + 1] = Board[x][y + 2] = 205;
+                    contSw = 0;
+                }
+            }
         }
-        else
-            putWall();
     }
     // ║ 186
     else if (y % 2 == 0 && x % 2 != 0)
     {
         if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
         {
-            Board[x][y] = Board[x - 1][y] = Board[x - 2][y] = 186;
+            makeSw();
+            sw[x][y] = sw[x - 1][y] = sw[x - 2][y] = 0;
+            if (dfsDown(sw, row, column, player1.location.x, player1.location.y))
+            {
+                makeSw();
+                sw[x][y] = sw[x - 1][y] = sw[x - 2][y] = 0;
+                if (dfsUp(sw, row, column, player2.location.x, player2.location.y))
+                {
+                    Board[x][y] = Board[x - 1][y] = Board[x - 2][y] = 186;
+                    contSw = 0;
+                }
+            }
         }
 
         else if (Board[x][y] == -77 && Board[x + 2][y] == -77 && Board[x + 1][y] == -59)
         {
-            Board[x][y] = Board[x + 1][y] = Board[x + 2][y] = 186;
+            makeSw();
+            sw[x][y] = sw[x + 1][y] = sw[x + 2][y] = 0;
+            if (dfsDown(sw, row, column, player1.location.x, player1.location.y))
+            {
+                makeSw();
+                sw[x][y] = sw[x + 1][y] = sw[x + 2][y] = 0;
+                if (dfsUp(sw, row, column, player2.location.x, player2.location.y))
+                {
+                    Board[x][y] = Board[x + 1][y] = Board[x + 2][y] = 186;
+                    contSw = 0;
+                }
+            }
         }
-        else
-            putWall();
     }
-    else
+    if (contSw)
+    {
         putWall();
+    }
 }
 
 #endif
