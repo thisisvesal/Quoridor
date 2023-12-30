@@ -59,9 +59,9 @@ void move(struct Player *someone)
     int where = motionDetect();
     if (where == 77) // right
     {
-        if (Board[someoneCopy.location.x][someoneCopy.location.y + 1] != -70  // if not ║
+        if (Board[someoneCopy.location.x][someoneCopy.location.y + 1] != -70    // if not ║
             && Board[someoneCopy.location.x][someoneCopy.location.y + 2] == ' ' // in order not to hit the other player
-            && someoneCopy.location.y != 2*column - 1) // if not on the edges
+            && someoneCopy.location.y != 2 * column - 1)                        // if not on the edges
         {
             Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
             someoneCopy.location.y += 2;
@@ -73,9 +73,9 @@ void move(struct Player *someone)
     {
         // printf("%d\n", Board[someoneCopy.location.x][someoneCopy.location.y - 1]);
         // sleep(1000);
-        if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70 // if not ║
+        if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70    // if not ║
             && Board[someoneCopy.location.x][someoneCopy.location.y - 2] == ' ' // in order not to hit the other player
-            && someoneCopy.location.y != 1) // if not on the edges
+            && someoneCopy.location.y != 1)                                     // if not on the edges
         {
             Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
             someoneCopy.location.y -= 2;
@@ -85,9 +85,9 @@ void move(struct Player *someone)
     }
     else if (where == 72) // up
     {
-        if (Board[someoneCopy.location.x - 1][someoneCopy.location.y] != -51 // if not ═
+        if (Board[someoneCopy.location.x - 1][someoneCopy.location.y] != -51    // if not ═
             && Board[someoneCopy.location.x - 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
-            && someoneCopy.location.x != 1) // if not on the edges
+            && someoneCopy.location.x != 1)                                     // if not on the edges
         {
             Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
             someoneCopy.location.x -= 2;
@@ -97,9 +97,9 @@ void move(struct Player *someone)
     }
     else if (where == 80) // down
     {
-        if (Board[someoneCopy.location.x + 1][someoneCopy.location.y] != -51 // if not ═
+        if (Board[someoneCopy.location.x + 1][someoneCopy.location.y] != -51    // if not ═
             && Board[someoneCopy.location.x + 2][someoneCopy.location.y] == ' ' // in order not to hit the other player
-            && someoneCopy.location.x != 2*row - 1) // if not on the edges
+            && someoneCopy.location.x != 2 * row - 1)                           // if not on the edges
         {
             Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
             someoneCopy.location.x += 2;
@@ -146,27 +146,34 @@ void putWall()
     // ═ 205
     if (x % 2 == 0 && y % 2 != 0)
     {
-        if (y == 2*column - 1 && Board[x][y-1]!=-51 && Board[x][y-2]!=-70)
+        if (y == 2 * column - 1 && Board[x][y] == -60 && Board[x][y - 1] == -59 && Board[x][y - 2] == -60)
         {
-            Board[x][y] = Board[x][y - 1]= Board[x][y-2] = 205;
+            Board[x][y] = Board[x][y - 1] = Board[x][y - 2] = 205;
         }
-        else if(Board[x][y+1]!=-51 && Board[x][y+2]!=-70){
-            Board[x][y]=Board[x][y+1]=Board[x][y+2] = 205;
-        }else putWall();
+        else if (Board[x][y] == -60 && Board[x][y + 1] == -59 && Board[x][y + 2] == -60)
+        {
+            Board[x][y] = Board[x][y + 1] = Board[x][y + 2] = 205;
+        }
+        else
+            putWall();
     }
-        // ║ 186
+    // ║ 186
     else if (y % 2 == 0 && x % 2 != 0)
     {
-        if (x == 2*row - 1 && Board[x-2][y]!=-51 && Board[x-1][y]!=-70)
+        if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
         {
-            Board[x][y]=Board[x-1][y]=Board[x-2][y] = 186;
+            Board[x][y] = Board[x - 1][y] = Board[x - 2][y] = 186;
         }
 
-        else if(Board[x+2][y]!=-51 && Board[x+1][y]!=-70){
-            Board[x][y]=Board[x+1][y]=Board[x+2][y] = 186;
-        }else putWall();
+        else if (Board[x][y] == -77 && Board[x + 2][y] == -77 && Board[x + 1][y] == -59)
+        {
+            Board[x][y] = Board[x + 1][y] = Board[x + 2][y] = 186;
+        }
+        else
+            putWall();
     }
-    else putWall();
+    else
+        putWall();
 }
 
 #endif
