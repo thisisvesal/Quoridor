@@ -1,15 +1,18 @@
 # include <stdio.h>
 # include <windows.h>
-#include "boardMaker.h"
+# include "boardMaker.h"
+# include "boardPrinter.h"
 
 # ifndef design
 # define design
 
+// for clearing screen
 void clearScreen()
 {
     system("cls");
 }
 
+//changing color
 void setTextColor(int textColor, int backColor)
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -17,9 +20,11 @@ void setTextColor(int textColor, int backColor)
     SetConsoleTextAttribute(consoleHandle, colorAttribute);
 }
 
+// printing arrow keys
 void arrowKeyPrint()
 {
     char keyArr[5][7];
+
     keyArr[0][0] = keyArr[0][1] = keyArr[0][5] = keyArr[0][6]
             = keyArr[1][0] = keyArr[1][1] = keyArr[1][5] = keyArr[1][6]
             = ' ';
@@ -56,59 +61,70 @@ void arrowKeyPrint()
         {
             printf("%c", keyArr[i][j]);
         }
-        printf("\n");
+        printf("\n ");
     }
 
 }
 
-int chooseBoard(){
+// choosing a theme
+int chooseBoard()
+{
     int num;
+
     setTextColor(0 , 15);
     printf("Choose your board:\n");
     makeBoard(2, 2);
 
+    // black board
     setTextColor(0 , 15);
     printf("1) \n");
     setTextColor(0 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //gold board
     setTextColor(0 , 15);
     printf("2) \n");
     setTextColor(6 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //purple board
     setTextColor(0 , 15);
     printf("3) \n");
     setTextColor(13 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //red board
     setTextColor(0 , 15);
     printf("4) \n");
     setTextColor(12 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //light blue board
     setTextColor(0 , 15);
     printf("5) \n");
     setTextColor(11 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //green board
     setTextColor(0 , 15);
     printf("6) \n");
     setTextColor(10 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //dark blue board
     setTextColor(0 , 15);
     printf("7) \n");
     setTextColor(9 , 15);
     printBoard(Board,2,2);
     printf("\n");
 
+    //gray board
     setTextColor(0 , 15);
     printf("8) \n");
     setTextColor(8 , 15);

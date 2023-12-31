@@ -2,7 +2,6 @@
 #include "boardPrinter.h"
 #include "motion.h"
 #include "design.h"
-#include "rounds.h"
 
 int main()
 {
@@ -52,6 +51,7 @@ int main()
 
 
     makeBoard(row, column);
+    makeSw();
 
     if (column % 2 == 0)
     {

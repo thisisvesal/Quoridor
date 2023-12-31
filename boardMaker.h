@@ -7,7 +7,6 @@ int row, column;
 char Board[101][101];
 int sw[101][101];
 
-
 void makeBoard(int row, int column)
 {
     // ابعاد بورد
@@ -55,7 +54,7 @@ void makeBoard(int row, int column)
     }
 }
 
-void swMaker(char arr[][101],int row,int column){
+void makeSw(){
     for (int i = 0; i < 2*row+1 ; i++)
     {
         for (int j = 0; j < 2*column+1 ; j++)
@@ -69,21 +68,26 @@ void swMaker(char arr[][101],int row,int column){
     {
         for (int j = 0; j < 2*column+1; j++)
         {
-            if (i == 0 || i == 2*row || j == 0 || j == 2*column)
+            if (i == 0 || i == 2*row || j == 0 || j == 2*column) // the edges
             {
                 sw[i][j] = 0;
             }
-            else if (arr[i][j] == -70 || arr[i][j] == -51)
+            else if (Board[i][j] == -70 || Board[i][j] == -51) // walls
             {
                 sw[i][j] = 0;
             }
-            else if (i % 2 == 1 && j % 2 == 1)
+            else if (i % 2 == 1 && j % 2 == 1) // players
             {
-                if (('a' <= arr[i][j] && arr[i][j] <= 'z') || ('A' <= arr[i][j] && arr[i][j] <= 'Z'))
+                if (('a' <= Board[i][j] && Board[i][j] <= 'z') || ('A' <= Board[i][j] && Board[i][j] <= 'Z'))
                 {
                     sw[i][j] = 0;
                 }
             }
+            else if (Board[i][j] == -59) // these ┼
+            {
+                sw[i][j] = 0;
+            }
+
 
 
         }
