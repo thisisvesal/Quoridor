@@ -3,6 +3,7 @@
 #ifndef boardPrinter
 #define boardPrinter
 
+// printing the board
 void printBoard(char Board[][101], int row, int column)
 {
     for (int i = 0; i < 2 * row + 1; i++)
