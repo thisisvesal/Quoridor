@@ -145,6 +145,7 @@ int chooseBoard()
             return 9;
         else if (num == 8)
             return 8;
+        else printf("That is not a theme number!\n");
     }
 }
 
