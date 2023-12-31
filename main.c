@@ -5,8 +5,6 @@
 
 int main()
 {
-    int round = 1;
-
     setTextColor(0 , 15);
     clearScreen();
 
@@ -47,17 +45,18 @@ int main()
     scanf("%d%d", &row, &column);
     clearScreen();
 
-
+    // gettinng the number of walls
     int wallCount;
     printf("Please enter the number of walls:\n");
     scanf("%d",&wallCount);
     player1.wallCount=player2.wallCount=wallCount;
     clearScreen();
 
-
+    // make the board 
     makeBoard(row, column);
-    makeSw();
+    // makeSw();
 
+    // determining the pawns' initial positions:
     if (column % 2 == 0)
     {
         player1.location.x = 1;
@@ -75,21 +74,31 @@ int main()
         player2.location.y = column;
     }
 
-    // مختصات مهره اول
+    // placing the players in their positions:
     Board[player1.location.x][player1.location.y] = player1.nameInitial;
-
-    // مختصات مهره دوم
     Board[player2.location.x][player2.location.y] = player2.nameInitial;
 
+
+    // first print of the board:
     setTextColor(color , 15);
     printBoard(Board, row, column);
+    printf("Player1 remained walls :");
+    printRemainingWalls(player1.wallCount);
+    printf("Player2 remained walls :");
+    printRemainingWalls(player2.wallCount);
 
-    while (player1.location.x != 2*row - 1 && player2.location.x != 1)
+    // integer round determines whose turn it is
+    // if it is 1, it's player 1's turn
+    // if it is -1, it's player 2's turn
+    int round = 1;
+
+    while (player1.location.x != 2*row - 1 && player2.location.x != 1) // while nobody has won
     {
         getchar();
-        char moveChar = 0;
         if (round == 1)
         {
+            // moveChar shows if the player wants to move or place a wall
+            char moveChar = 0;
             while (moveChar != 'm' && moveChar != 'w')
             {
                 setTextColor(0 , 15);
@@ -99,32 +108,43 @@ int main()
                 else if (moveChar == 'M') moveChar = 'm';
             }
 
-            if (moveChar == 'w' && player1.wallCount != 0) //wall
+            // placing a wall:
+            if (moveChar == 'w' && player1.wallCount != 0)  // runs only if the player still has walls left
             {
                 putWall();
                 player1.wallCount --;
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                printf("Player1 remained walls :");
+                printRemainingWalls(player1.wallCount);
+                printf("Player2 remained walls :");
+                printRemainingWalls(player2.wallCount);                // changing the round:
                 round *= -1;
             }
-            else if (moveChar == 'w' && player1.wallCount == 0)
+            else if (moveChar == 'w' && player1.wallCount == 0) // if the player is put of walls
             {
                 printf("You're out of walls!\n");
                 sleep(750);
             }
-            else if (moveChar == 'm') //move
+            else if (moveChar == 'm') // move for player 1
             {
                 gotoxy(player1.location.x, player1.location.y);
                 move(&player1);
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                printf("Player1 remained walls :");
+                printRemainingWalls(player1.wallCount);
+                printf("Player2 remained walls :");
+                printRemainingWalls(player2.wallCount);                // changing the round:
                 round *= -1;
             }
         }
         else
         {
+            // moveChar shows if the player wants to move or place a wall
+            char moveChar = 0;
             while (moveChar != 'm' && moveChar != 'w')
             {
                 setTextColor(0 , 15);
@@ -133,31 +153,48 @@ int main()
                 if (moveChar == 'W') moveChar = 'w';
                 else if (moveChar == 'M') moveChar = 'm';
             }
-            if (moveChar == 'w' && player2.wallCount != 0) //wall
+            // placing a wall:
+            if (moveChar == 'w' && player2.wallCount != 0)  // runs only if the player still has walls left
             {
                 putWall();
                 clearScreen();
                 player2.wallCount --;
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                printf("Player1 remained walls :");
+                printRemainingWalls(player1.wallCount);
+                printf("Player2 remained walls :");
+                printRemainingWalls(player2.wallCount);
+
+                // changing the round:
                 round *= -1;
             }
-            else if (moveChar == 'w' && player2.wallCount == 0)
+            else if (moveChar == 'w' && player2.wallCount == 0) // if the player is put of walls
             {
                 printf("You're out of walls!\n");
                 sleep(750);
             }
-            else if (moveChar == 'm') //move
+            else if (moveChar == 'm') // move for player 2
             {
                 gotoxy(player2.location.x, player2.location.y);
                 move(&player2);
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                printf("Player1 remained walls :");
+                printRemainingWalls(player1.wallCount);
+                printf("Player2 remained walls :");
+                printRemainingWalls(player2.wallCount);
+                // changing the round:
                 round *= -1;
             }
         }
     }
+    
+    // The previous loop has ended
+    // hence someone has won
+
+    // Determining the winner:
     if (player1.location.x == 2*row - 1)
     {
         setTextColor(0 , 15);
