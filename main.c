@@ -10,24 +10,27 @@ int main()
     setTextColor(0 , 15);
     clearScreen();
 
-    // write welcome message + arrow keys
+    // write welcome message
     printf("Welcome to Quoridor game!");
     setTextColor(6 , 15);
     printf(" %c\n",2);
     sleep(2000);
     clearScreen();
 
+    // prints the arrow keys 
     setTextColor(0 , 15);
-    printf("Movment keys:\n");
+    printf("You can move in the game using the arrow keys\n");
     setTextColor(4 , 15);
     arrowKeyPrint();
     sleep(2000);
     clearScreen();
 
+    // choosing a theme
     int color;
     color=chooseBoard();
     clearScreen();
 
+    // getting players' names
     setTextColor(0 , 15);
     printf("Player(1) Please enter your name:\n");
     scanf("%s",player1.name);
@@ -39,12 +42,13 @@ int main()
     player2.nameInitial=player2.name[0];
     clearScreen();
 
+    // getting row and column numbers
     printf("Please enter the number of rows and columns:\n");
     scanf("%d%d", &row, &column);
     clearScreen();
 
     int wallCount;
-    printf("Please enter the number of fences:\n(The maximum number of fences is %d)\n",column+1);
+    printf("Please enter the number of walls:\n");
     scanf("%d",&wallCount);
     player1.wallCount=player2.wallCount=wallCount;
     clearScreen();
