@@ -47,6 +47,7 @@ int main()
     scanf("%d%d", &row, &column);
     clearScreen();
 
+
     int wallCount;
     printf("Please enter the number of walls:\n");
     scanf("%d",&wallCount);
@@ -161,13 +162,11 @@ int main()
     {
         setTextColor(0 , 15);
         printf("%s wins!!!\n", player1.name);
-        // sleep(5000);
     }
     else
     {
         setTextColor(0 , 15);
         printf("%s wins!!!!\n", player2.name);
-        // sleep(5000);
     }
     printf("Press enter to exit \n");
     getch();
