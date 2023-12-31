@@ -43,6 +43,8 @@ int main()
     // getting row and column numbers
     int rowIsNum = 0, colIsNum = 0;
     row = column = 0;
+
+    // The Game Loop:
     while (!rowIsNum || !colIsNum)
     {
         printf("Please enter the number of rows and columns:\n");
