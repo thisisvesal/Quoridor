@@ -22,7 +22,7 @@ void printRemainingWalls(int wallCount)
     {
         printf(" %c", 219);
     }
-    printf("\n");
+    printf("\n\n");
 }
 
 #endif

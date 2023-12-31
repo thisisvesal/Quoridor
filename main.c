@@ -6,7 +6,6 @@
 int main()
 {
     setTextColor(0, 15);
-    setTextColor(0, 15);
     clearScreen();
 
     // write welcome message
@@ -17,12 +16,12 @@ int main()
     clearScreen();
 
     // prints the arrow keys
-    setTextColor(0, 15);
-    printf("You can move in the game using the arrow keys\n");
-    setTextColor(4, 15);
-    arrowKeyPrint();
-    sleep(2000);
-    clearScreen();
+    // setTextColor(0, 15);
+    // printf("You can move in the game using the arrow keys\n");
+    // setTextColor(4, 15);
+    // arrowKeyPrint();
+    // sleep(2000);
+    // clearScreen();
 
     // choosing a theme
     int color;
@@ -43,6 +42,7 @@ int main()
 
     // getting row and column numbers
     int rowIsNum = 0, colIsNum = 0;
+    row = column = 0;
     while (!rowIsNum || !colIsNum)
     {
         printf("Please enter the number of rows and columns:\n");
@@ -52,7 +52,7 @@ int main()
         int i;
         for (i = 0; rowCopy[i] && '0' <= rowCopy[i] && rowCopy[i] <= '9'; i++)
         {
-            row += rowCopy[i];
+            row += (rowCopy[i] - 48);
             row *= 10;
         }
         row /= 10;
@@ -63,7 +63,7 @@ int main()
 
         for (i = 0; colCopy[i] && '0' <= colCopy[i] && colCopy[i] <= '9'; i++)
         {
-            column += colCopy[i];
+            column += (colCopy[i] - 48);
             column *= 10;
         }
         column /= 10;
@@ -79,9 +79,9 @@ int main()
     }
     clearScreen();
 
-    // gettinng the number of walls
+    // getting the number of walls
     int wallIsNum = 0;
-    int wallCount;
+    int wallCount = 0;
     while (!wallIsNum)
     {
         printf("Please enter the number of walls:\n");
@@ -91,7 +91,7 @@ int main()
         int i;
         for (i = 0; wallCountCopy[i] && '0' <= wallCountCopy[i] && wallCountCopy[i] <= '9'; i++)
         {
-            wallCount += wallCountCopy[i];
+            wallCount += (wallCountCopy[i] - 48);
             wallCount *= 10;
         }
         wallCount /= 10;
@@ -114,7 +114,7 @@ int main()
     makeBoard(row, column);
 
     // not sure if this is needed here:
-    // makeSw();
+    makeSw();
 
     // determining the pawns' initial positions:
     if (column % 2 == 0)
@@ -141,9 +141,9 @@ int main()
     // first print of the board:
     setTextColor(color, 15);
     printBoard(Board, row, column);
-    printf("Player1 remained walls :");
+    printf("Player1 remaining walls:");
     printRemainingWalls(player1.wallCount);
-    printf("Player2 remained walls :");
+    printf("Player2 remaining walls:");
     printRemainingWalls(player2.wallCount);
 
     // integer round determines whose turn it is
@@ -155,10 +155,10 @@ int main()
     while (player1.location.x != 2 * row - 1 && player2.location.x != 1)
     {
         getchar();
+        char moveChar = 0;
         if (round == 1)
         {
             // moveChar shows if the player wants to move or place a wall
-            char moveChar = 0;
             // getting moveChar:
             while (moveChar != 'm' && moveChar != 'w')
             {
@@ -172,7 +172,7 @@ int main()
             }
 
             // placing a wall:
-            if (moveChar == 'w' && player1.wallCount != 0) // runs only if the player still has walls left
+            if (moveChar == 'w' && player1.wallCount > 0) // runs only if the player still has walls left
             {
                 putWall();
                 player1.wallCount--;
@@ -217,7 +217,6 @@ int main()
         else
         {
             // moveChar shows if the player wants to move or place a wall
-            char moveChar = 0;
             // getting moveChar:
             while (moveChar != 'm' && moveChar != 'w')
             {
@@ -231,7 +230,7 @@ int main()
             }
 
             // placing a wall:
-            if (moveChar == 'w' && player2.wallCount != 0) // runs only if the player still has walls left
+            if (moveChar == 'w' && player2.wallCount > 0) // runs only if the player still has walls left
             {
                 putWall();
                 clearScreen();
@@ -289,7 +288,7 @@ int main()
         setTextColor(0, 15);
         printf("%s wins!!!!\n", player2.name);
     }
-    printf("Press enter to exit \n");
+    printf("Press any key to exit \n");
     getch();
 
     return 0;
