@@ -5,6 +5,8 @@
 
 int row, column;
 char Board[101][101];
+int sw[101][101];
+
 
 void makeBoard(int row, int column)
 {
@@ -50,6 +52,42 @@ void makeBoard(int row, int column)
             else
                 Board[i][j] = ' ';
         }
+    }
+}
+
+void swMaker(char arr[][101],int row,int column){
+    for (int i = 0; i < 2*row+1 ; i++)
+    {
+        for (int j = 0; j < 2*column+1 ; j++)
+        {
+            sw[i][j] = 1;
+        }
+
+    }
+
+    for (int i = 0; i < 2*row+1 ; i++)
+    {
+        for (int j = 0; j < 2*column+1; j++)
+        {
+            if (i == 0 || i == 2*row || j == 0 || j == 2*column)
+            {
+                sw[i][j] = 0;
+            }
+            else if (arr[i][j] == -70 || arr[i][j] == -51)
+            {
+                sw[i][j] = 0;
+            }
+            else if (i % 2 == 1 && j % 2 == 1)
+            {
+                if (('a' <= arr[i][j] && arr[i][j] <= 'z') || ('A' <= arr[i][j] && arr[i][j] <= 'Z'))
+                {
+                    sw[i][j] = 0;
+                }
+            }
+
+
+        }
+
     }
 }
 

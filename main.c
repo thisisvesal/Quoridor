@@ -45,7 +45,7 @@ int main()
     clearScreen();
 
     int wallCount;
-    printf("Please enter the number of walls:\n");
+    printf("Please enter the number of fences:\n(The maximum number of fences is %d)\n",column+1);
     scanf("%d",&wallCount);
     player1.wallCount=player2.wallCount=wallCount;
     clearScreen();
@@ -94,12 +94,19 @@ int main()
                 else if (moveChar == 'M') moveChar = 'm';
             }
 
-            if (moveChar == 'w') //wall
+            if (moveChar == 'w' && player1.wallCount != 0) //wall
             {
                 putWall();
+                player1.wallCount --;
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                round *= -1;
+            }
+            else if (moveChar == 'w' && player1.wallCount == 0)
+            {
+                printf("You're out of walls!\n");
+                sleep(750);
             }
             else if (moveChar == 'm') //move
             {
@@ -108,6 +115,7 @@ int main()
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                round *= -1;
             }
         }
         else
@@ -120,12 +128,19 @@ int main()
                 if (moveChar == 'W') moveChar = 'w';
                 else if (moveChar == 'M') moveChar = 'm';
             }
-            if (moveChar == 'w') //wall
+            if (moveChar == 'w' && player2.wallCount != 0) //wall
             {
                 putWall();
                 clearScreen();
+                player2.wallCount --;
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                round *= -1;
+            }
+            else if (moveChar == 'w' && player2.wallCount == 0)
+            {
+                printf("You're out of walls!\n");
+                sleep(750);
             }
             else if (moveChar == 'm') //move
             {
@@ -134,10 +149,9 @@ int main()
                 clearScreen();
                 setTextColor(color , 15);
                 printBoard(Board, row, column);
+                round *= -1;
             }
         }
-
-        round *= -1;
     }
     if (player1.location.x == 2*row - 1)
     {
