@@ -9,6 +9,7 @@
 #ifndef motion
 #define motion
 
+// players elements
 struct Player
 {
     char name[30];
@@ -20,6 +21,8 @@ struct Player
     int wallCount;
 } player1, player2;
 
+
+// move in the cursor
 void gotoxy(int x, int y)
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -29,6 +32,7 @@ void gotoxy(int x, int y)
     SetConsoleCursorPosition(consoleHandle, cursorCoord);
 }
 
+//recognizing players pawns' move
 int motionDetect()
 {
     char motionCode;
@@ -44,6 +48,7 @@ int motionDetect()
     }
 }
 
+// making a delay
 void sleep(int mseconds)
 {
     clock_t goal = mseconds + clock();
@@ -51,6 +56,7 @@ void sleep(int mseconds)
         ;
 }
 
+//checking if the route exist for player1
 int dfsDown(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -85,6 +91,7 @@ int dfsDown(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
+//checking if the route exist for player2
 int dfsUp(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -119,6 +126,8 @@ int dfsUp(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
+
+//performing pawn's move
 void move(struct Player *someone)
 {
     struct Player someoneCopy;
@@ -147,8 +156,6 @@ void move(struct Player *someone)
     }
     else if (where == 75) // left
     {
-        // printf("%d\n", Board[someoneCopy.location.x][someoneCopy.location.y - 1]);
-        // sleep(1000);
         if (Board[someoneCopy.location.x][someoneCopy.location.y - 1] != -70 // if not ║
             && someoneCopy.location.y != 1)                                  // if not on the edges
         {
@@ -213,11 +220,15 @@ void move(struct Player *someone)
         move(someone);
 }
 
+
+// putting fences
 void putWall()
 {
     int x = row, y = column;
     int contSw = 1;
     gotoxy(x, y);
+    // this section allows movement of the cursor until enter is pressed
+    // then when enter is hit, a wall will be placed there
     while (1)
     {
         char where = getch();
@@ -245,6 +256,9 @@ void putWall()
         }
     }
 
+
+    // checking if the chosen place is accessible then place it
+    //horizontal fences
     // ═ 205
     if (x % 2 == 0 && y % 2 != 0)
     {
@@ -279,7 +293,8 @@ void putWall()
             }
         }
     }
-    // ║ 186
+        //vertical fences
+        // ║ 186
     else if (y % 2 == 0 && x % 2 != 0)
     {
         if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)

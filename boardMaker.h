@@ -106,7 +106,7 @@ void makeSw()
             {
                 sw[i][j] = 0;
             }
-            
+
 
 
         }

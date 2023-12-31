@@ -2,21 +2,20 @@
 #include "boardPrinter.h"
 #include "motion.h"
 #include "design.h"
-#include "rounds.h"
 
 int main()
 {
     int round = 1;
 
     setTextColor(0 , 15);
-    // clearScreen();
+    clearScreen();
 
     // write welcome message + arrow keys
     printf("Welcome to Quoridor game!");
     setTextColor(6 , 15);
     printf(" %c\n",2);
     sleep(2000);
-    // clearScreen();
+    clearScreen();
 
     setTextColor(0 , 15);
     printf("Movment keys:\n");
@@ -45,7 +44,7 @@ int main()
     clearScreen();
 
     int wallCount;
-    printf("Please enter the number of walls:\n");
+    printf("Please enter the number of fences:\n(The maximum number of fences is %d)\n",column+1);
     scanf("%d",&wallCount);
     player1.wallCount=player2.wallCount=wallCount;
     clearScreen();
