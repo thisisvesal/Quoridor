@@ -142,14 +142,18 @@ void move(struct Player *someone)
                 Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                 someoneCopy.location.y += 2;
                 Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                contSw = 0;
             }
             else // jump over the other player
             {
-                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-                someoneCopy.location.y += 4;
-                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                if (Board[someoneCopy.location.x][someoneCopy.location.y + 4] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y += 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
-            contSw = 0;
         }
     }
     else if (where == 75) // left
@@ -162,14 +166,18 @@ void move(struct Player *someone)
                 Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                 someoneCopy.location.y -= 2;
                 Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                contSw = 0;
             }
             else // jump over the other player
             {
-                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-                someoneCopy.location.y -= 4;
-                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                if (Board[someoneCopy.location.x][someoneCopy.location.y - 4] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y -= 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
-            contSw = 0;
         }
     }
     else if (where == 72) // up
@@ -182,14 +190,18 @@ void move(struct Player *someone)
                 Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                 someoneCopy.location.x -= 2;
                 Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                contSw = 0;
             }
             else // jump over the other player
             {
-                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-                someoneCopy.location.x -= 4;
-                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                if (Board[someoneCopy.location.x - 4][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x -= 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
-            contSw = 0;
         }
     }
     else if (where == 80) // down
@@ -202,14 +214,18 @@ void move(struct Player *someone)
                 Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                 someoneCopy.location.x += 2;
                 Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                contSw = 0;
             }
             else // jump over the other player
             {
-                Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
-                someoneCopy.location.x += 4;
-                Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                if (Board[someoneCopy.location.x + 4][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x += 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
-            contSw = 0;
         }
     }
 
