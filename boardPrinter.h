@@ -16,9 +16,11 @@ void printBoard(char Board[][101], int row, int column)
     }
 }
 
-void printRemainingWalls(int wallCount){
-    for(int i=0;i<wallCount;i++){
-        printf(" %c",219);
+void printRemainingWalls(int wallCount)
+{
+    for (int i = 0; i < wallCount; i++)
+    {
+        printf(" %c", 219);
     }
     printf("\n");
 }

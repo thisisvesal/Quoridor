@@ -73,21 +73,20 @@ void makeSw()
     // and so all the inaccessible ones should be mark with 0
 
     // first all points are marked 1:
-    for (int i = 0; i < 2*row+1 ; i++)
+    for (int i = 0; i < 2 * row + 1; i++)
     {
-        for (int j = 0; j < 2*column+1 ; j++)
+        for (int j = 0; j < 2 * column + 1; j++)
         {
             sw[i][j] = 1;
         }
-
     }
 
     // here we mark the mentioned inaccessible points with 0:
-    for (int i = 0; i < 2*row+1 ; i++)
+    for (int i = 0; i < 2 * row + 1; i++)
     {
-        for (int j = 0; j < 2*column+1; j++)
+        for (int j = 0; j < 2 * column + 1; j++)
         {
-            if (i == 0 || i == 2*row || j == 0 || j == 2*column) // the edges
+            if (i == 0 || i == 2 * row || j == 0 || j == 2 * column) // the edges
             {
                 sw[i][j] = 0;
             }
@@ -106,11 +105,7 @@ void makeSw()
             {
                 sw[i][j] = 0;
             }
-
-
-
         }
-
     }
 }
 

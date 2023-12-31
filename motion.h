@@ -21,7 +21,6 @@ struct Player
     int wallCount;
 } player1, player2;
 
-
 // move in the cursor
 void gotoxy(int x, int y)
 {
@@ -32,7 +31,7 @@ void gotoxy(int x, int y)
     SetConsoleCursorPosition(consoleHandle, cursorCoord);
 }
 
-//recognizing players pawns' move
+// recognizing players pawns' move
 int motionDetect()
 {
     char motionCode;
@@ -56,7 +55,7 @@ void sleep(int mseconds)
         ;
 }
 
-//checking if the route exist for player1
+// checking if the route exist for player1
 int dfsDown(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -91,7 +90,7 @@ int dfsDown(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-//checking if the route exist for player2
+// checking if the route exist for player2
 int dfsUp(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -126,8 +125,7 @@ int dfsUp(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-
-//performing pawn's move
+// performing pawn's move
 void move(struct Player *someone)
 {
     struct Player someoneCopy;
@@ -220,7 +218,6 @@ void move(struct Player *someone)
         move(someone);
 }
 
-
 // putting fences
 void putWall()
 {
@@ -256,9 +253,8 @@ void putWall()
         }
     }
 
-
     // checking if the chosen place is accessible then place it
-    //horizontal fences
+    // horizontal fences
     // ═ 205
     if (x % 2 == 0 && y % 2 != 0)
     {
@@ -293,8 +289,8 @@ void putWall()
             }
         }
     }
-        //vertical fences
-        // ║ 186
+    // vertical fences
+    //  ║ 186
     else if (y % 2 == 0 && x % 2 != 0)
     {
         if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
