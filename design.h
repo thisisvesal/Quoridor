@@ -54,7 +54,7 @@ void arrowKeyPrint()
         {
             printf("%c", keyArr[i][j]);
         }
-        printf("\n ");
+        printf("\n");
     }
 }
 
@@ -64,7 +64,7 @@ int chooseBoard()
     int num;
 
     setTextColor(0, 15);
-    printf("Choose your board:\n");
+    printf("\033[31mChoose a theme:\033[0m\n");
     makeBoard(2, 2);
 
     // black board

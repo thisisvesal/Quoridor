@@ -13,9 +13,9 @@ int main()
     setTextColor(6, 15);
     printf(" %c\n", 2);
     sleep(2000);
-    clearScreen();
+    // clearScreen();
 
-    // prints the arrow keys
+    // // prints the arrow keys
     // setTextColor(0, 15);
     // printf("You can move in the game using the arrow keys\n");
     // setTextColor(4, 15);
