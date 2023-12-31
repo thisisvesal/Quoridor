@@ -13,7 +13,7 @@ int main()
     setTextColor(6, 15);
     printf(" %c\n", 2);
     sleep(2000);
-    // clearScreen();
+    clearScreen();
 
     // // prints the arrow keys
     // setTextColor(0, 15);
@@ -44,7 +44,6 @@ int main()
     int rowIsNum = 0, colIsNum = 0;
     row = column = 0;
 
-    // The Game Loop:
     while (!rowIsNum || !colIsNum)
     {
         printf("Please enter the number of rows and columns:\n");
@@ -143,9 +142,9 @@ int main()
     // first print of the board:
     setTextColor(color, 15);
     printBoard(Board, row, column);
-    printf("Player1 remaining walls:");
+    printf("%s's remaining walls:", player1.name);
     printRemainingWalls(player1.wallCount);
-    printf("Player2 remaining walls:");
+    printf("%s's remaining walls:", player2.name);
     printRemainingWalls(player2.wallCount);
 
     // integer round determines whose turn it is
@@ -153,13 +152,14 @@ int main()
     // if it is -1, it's player 2's turn
     int round = 1;
 
-    // while nobody has won:
-    while (player1.location.x != 2 * row - 1 && player2.location.x != 1)
+    // The game loop:
+    while (player1.location.x != 2 * row - 1 && player2.location.x != 1) // while nobody has won
     {
         getchar();
         char moveChar = 0;
         if (round == 1)
         {
+            printf("%s's turn\n", player1.name);
             // moveChar shows if the player wants to move or place a wall
             // getting moveChar:
             while (moveChar != 'm' && moveChar != 'w')
@@ -171,6 +171,11 @@ int main()
                     moveChar = 'w';
                 else if (moveChar == 'M')
                     moveChar = 'm';
+                else if (moveChar != 'm' && moveChar != 'w')
+                {
+                    getchar();
+                }
+                
             }
 
             // placing a wall:
@@ -183,10 +188,10 @@ int main()
 
                 printBoard(Board, row, column);
 
-                printf("Player1 remaining walls :");
+                printf("%s's remaining walls: ", player1.name);
                 printRemainingWalls(player1.wallCount);
 
-                printf("Player2 remaining walls :");
+                printf("%s's remaining walls: ", player2.name);
                 printRemainingWalls(player2.wallCount);
 
                 // changing the round:
@@ -206,10 +211,10 @@ int main()
 
                 printBoard(Board, row, column);
 
-                printf("Player1 remaining walls :");
+                printf("%s's remaining walls: ", player1.name);
                 printRemainingWalls(player1.wallCount);
 
-                printf("Player2 remaining walls :");
+                printf("%s's remaining walls: ", player2.name);
                 printRemainingWalls(player2.wallCount);
 
                 // changing the round:
@@ -218,6 +223,7 @@ int main()
         }
         else
         {
+            printf("%s's turn\n", player2.name);
             // moveChar shows if the player wants to move or place a wall
             // getting moveChar:
             while (moveChar != 'm' && moveChar != 'w')
@@ -229,6 +235,10 @@ int main()
                     moveChar = 'w';
                 else if (moveChar == 'M')
                     moveChar = 'm';
+                else if (moveChar != 'm' && moveChar != 'w')
+                {
+                    getchar();
+                }
             }
 
             // placing a wall:
@@ -241,10 +251,10 @@ int main()
 
                 printBoard(Board, row, column);
 
-                printf("Player1 remaining walls :");
+                printf("%s's remaining walls: ", player1.name);
                 printRemainingWalls(player1.wallCount);
 
-                printf("Player2 remaining walls :");
+                printf("%s's remaining walls: ", player2.name);
                 printRemainingWalls(player2.wallCount);
 
                 // changing the round:
@@ -264,10 +274,10 @@ int main()
 
                 printBoard(Board, row, column);
 
-                printf("Player1 remaining walls :");
+                printf("%s's remaining walls: ", player1.name);
                 printRemainingWalls(player1.wallCount);
 
-                printf("Player2 remaining walls :");
+                printf("%s's remaining walls: ", player2.name);
                 printRemainingWalls(player2.wallCount);
 
                 // changing the round:

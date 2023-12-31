@@ -64,7 +64,7 @@ int chooseBoard()
     int num;
 
     setTextColor(0, 15);
-    printf("\033[31mChoose a theme:\033[0m\n");
+    printf("Choose a theme:\n");
     makeBoard(2, 2);
 
     // black board
