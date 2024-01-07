@@ -2,7 +2,6 @@
 #define dfs
 
 
-
 // checking if the route exist for player1
 int dfsDown(int sw[101][101], int row, int column, int x, int y)
 {
@@ -73,7 +72,6 @@ int dfsUp(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-
 int dfsRight(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -141,5 +139,7 @@ int dfsLeft(int sw[101][101], int row, int column, int x, int y)
 
     return 0;
 }
+
+
 
 #endif

@@ -166,6 +166,4 @@ void move(struct Player *someone)
         move(someone);
 }
 
-
-
 #endif
