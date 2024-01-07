@@ -253,10 +253,23 @@ int main()
         // setTextColor(0, 15);
         printf("%s wins!!!\n", player1.name);
     }
-    else
+    else if (player2.location.x == 1)
     {
         // setTextColor(0, 15);
         printf("%s wins!!!!\n", player2.name);
+    }
+    if(gameMode == 3)
+    {
+        if (player3.location.y == 1)
+        {
+            // setTextColor(0, 15);
+            printf("%s wins!!!\n", player3.name);
+        }
+        else if (player4.location.y == 2*column - 1)
+        {
+            // setTextColor(0, 15);
+            printf("%s wins!!!!\n", player4.name);
+        }
     }
     printf("Press any key to exit \n");
     getch();
