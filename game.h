@@ -3,7 +3,7 @@
 #include "motion.h"
 #include "design.h"
 
-void gameRun(int *round)
+void gameRun(int *round, int color)
 {
     struct Player someone;
     if (*round == 0)
@@ -41,7 +41,7 @@ void gameRun(int *round)
         putWall();
         someone.wallCount--;
         clearScreen();
-        // setTextColor(color, 15);
+        setTextColor(color, 15);
 
         printBoard(Board, row, column);
 
@@ -64,7 +64,7 @@ void gameRun(int *round)
         gotoxy(someone.location.x, someone.location.y);
         move(&someone);
         clearScreen();
-        // setTextColor(color, 15);
+        setTextColor(color, 15);
 
         printBoard(Board, row, column);
 

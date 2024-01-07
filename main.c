@@ -207,7 +207,7 @@ int main()
             gameRepCount++;
         }
         char moveChar[100] = "\0";
-        gameRun(&round);
+        gameRun(&round, color);
     }
 
     // The previous loop has ended
