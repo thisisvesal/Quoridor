@@ -20,7 +20,7 @@ struct Player
         int x, y;
     } location;
     int wallCount;
-} player1, player2,player3,player4;
+} player1, player2, player3, player4;
 
 // move in the cursor
 void gotoxy(int x, int y)
@@ -55,7 +55,6 @@ void sleep(int mseconds)
     while (goal > clock())
         ;
 }
-
 
 // performing pawn's move
 void move(struct Player *someone)
@@ -163,7 +162,10 @@ void move(struct Player *someone)
 
     *someone = someoneCopy;
     if (contSw)
+    {
+        printf("\a");
         move(someone);
+    }
 }
 
 #endif

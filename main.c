@@ -31,12 +31,16 @@ int main()
     // choosing game mode
     printf("How would you like to play?\n");
     printf("1) 2 Player mode\n");
-    printf("2) Play with the computer\n");
-    printf("3) 4 Player mode\n");
+    printf("2) 4 Player mode\n");
     scanf("%d", &gameMode);
     clearScreen();
 
-    if (gameMode == 1)
+    int aiSw = 0;
+    printf("1) Play with AI\n");
+    printf("2) Play with a friend\n");
+    scanf("%d", &aiSw);
+
+    if (gameMode == 1 && aiSw == 2)
     {
         // getting players' names
         printf("Player(1) Please enter your name:\n");
@@ -48,7 +52,7 @@ int main()
         player2.nameInitial = player2.name[0];
         clearScreen();
     }
-    else if (gameMode == 2)
+    else if (gameMode == 1 && aiSw == 1)
     {
         printf("Please enter your name:\n");
         scanf("%s", player1.name);
@@ -57,7 +61,7 @@ int main()
         strcpy(player2.name, "Computer");
         player2.nameInitial = 'C';
     }
-    else if (gameMode == 3)
+    else if (gameMode == 2 && aiSw == 2)
     {
         // getting players' names
         printf("Player(1) Please enter your name:\n");
@@ -148,7 +152,7 @@ int main()
 
     // setting players' wall count:
     player1.wallCount = player2.wallCount = wallCount;
-    if (gameMode == 3)
+    if (gameMode == 2)
     {
         player3.wallCount = player4.wallCount = wallCount;
     }
@@ -177,11 +181,11 @@ int main()
         player2.location.y = column;
     }
 
-    if (gameMode == 3)
+    if (gameMode == 2)
     {
         if (row % 2 == 0)
         {
-            player3.location.x = row + 1;
+            player3.location.x = row - 1;
             player3.location.y = 2 * column - 1;
 
             player4.location.x = row + 1;
@@ -200,7 +204,7 @@ int main()
     // placing the players in their positions:
     Board[player1.location.x][player1.location.y] = player1.nameInitial;
     Board[player2.location.x][player2.location.y] = player2.nameInitial;
-    if (gameMode == 3)
+    if (gameMode == 2)
     {
         Board[player3.location.x][player3.location.y] = player3.nameInitial;
         Board[player4.location.x][player4.location.y] = player4.nameInitial;
@@ -213,17 +217,15 @@ int main()
     printRemainingWalls(player1.wallCount);
     printf("%s's remaining walls:", player2.name);
     printRemainingWalls(player2.wallCount);
-    if (gameMode == 3)
+    if (gameMode == 2)
     {
         printf("%s's remaining walls:", player3.name);
         printRemainingWalls(player3.wallCount);
-        printf("%s's remaining walls:", player3.name);
-        printRemainingWalls(player3.wallCount);
+        printf("%s's remaining walls:", player4.name);
+        printRemainingWalls(player4.wallCount);
     }
 
     // integer round determines whose turn it is
-    // if it is 1, it's player 1's turn
-    // if it is -1, it's player 2's turn
     int round = 0;
     int gameRepCount = 0;
 
@@ -254,7 +256,7 @@ int main()
         // setTextColor(0, 15);
         printf("%s wins!!!!\n", player2.name);
     }
-    if(gameMode == 3)
+    if(gameMode == 2)
     {
         if (player3.location.y == 1)
         {
