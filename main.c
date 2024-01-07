@@ -2,6 +2,7 @@
 #include "boardPrinter.h"
 #include "motion.h"
 #include "design.h"
+#include "game.h"
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
     clearScreen();
 
     // // prints the arrow keys
+
     // setTextColor(0, 15);
     // printf("You can move in the game using the arrow keys\n");
     // setTextColor(4, 15);
@@ -28,17 +30,57 @@ int main()
     color = chooseBoard();
     clearScreen();
 
-    // getting players' names
     setTextColor(0, 15);
-    printf("Player(1) Please enter your name:\n");
-    scanf("%s", player1.name);
-    player1.nameInitial = player1.name[0];
+
+    // choosing game mode
+    printf("How would you like to play?\n");
+    printf("1) 2 Player mode\n");
+    printf("2) Play with the computer\n");
+    printf("3) 4 Player mode\n");
+    scanf("%d", &gameMode);
     clearScreen();
 
-    printf("Player(2) Please enter your name:\n");
-    scanf("%s", player2.name);
-    player2.nameInitial = player2.name[0];
-    clearScreen();
+    if (gameMode == 1)
+    {
+        // getting players' names
+        printf("Player(1) Please enter your name:\n");
+        scanf("%s", player1.name);
+        player1.nameInitial = player1.name[0];
+
+        printf("Player(2) Please enter your name:\n");
+        scanf("%s", player2.name);
+        player2.nameInitial = player2.name[0];
+        clearScreen();
+    }
+    else if (gameMode == 2)
+    {
+        printf("Please enter your name:\n");
+        scanf("%s", player1.name);
+        player1.nameInitial = player1.name[0];
+        clearScreen();
+        strcpy(player2.name, "Computer");
+        player2.nameInitial = 'C';
+    }
+    else if (gameMode == 3)
+    {
+        // getting players' names
+        printf("Player(1) Please enter your name:\n");
+        scanf("%s", player1.name);
+        player1.nameInitial = player1.name[0];
+
+        printf("Player(2) Please enter your name:\n");
+        scanf("%s", player2.name);
+        player2.nameInitial = player2.name[0];
+
+        printf("Player(3) Please enter your name:\n");
+        scanf("%s", player3.name);
+        player3.nameInitial = player3.name[0];
+
+        printf("Player(4) Please enter your name:\n");
+        scanf("%s", player4.name);
+        player4.nameInitial = player4.name[0];
+        clearScreen();
+    }
 
     // getting row and column numbers
     int rowIsNum = 0, colIsNum = 0;
@@ -110,6 +152,10 @@ int main()
 
     // setting players' wall count:
     player1.wallCount = player2.wallCount = wallCount;
+    if (gameMode == 3)
+    {
+        player3.wallCount = player4.wallCount = wallCount;
+    }
 
     // make the board
     makeBoard(row, column);
@@ -135,9 +181,34 @@ int main()
         player2.location.y = column;
     }
 
+    if (gameMode == 3)
+    {
+        if (row % 2 == 0)
+        {
+            player3.location.x = row + 1;
+            player3.location.y = 2 * column - 1;
+
+            player4.location.x = row + 1;
+            player4.location.y = 1;
+        }
+        else
+        {
+            player3.location.x = row;
+            player3.location.y = 2 * column - 1;
+
+            player4.location.x = row;
+            player4.location.y = 1;
+        }
+    }
+
     // placing the players in their positions:
     Board[player1.location.x][player1.location.y] = player1.nameInitial;
     Board[player2.location.x][player2.location.y] = player2.nameInitial;
+    if (gameMode == 3)
+    {
+        Board[player3.location.x][player3.location.y] = player3.nameInitial;
+        Board[player4.location.x][player4.location.y] = player4.nameInitial;
+    }
 
     // first print of the board:
     setTextColor(color, 15);
@@ -146,158 +217,31 @@ int main()
     printRemainingWalls(player1.wallCount);
     printf("%s's remaining walls:", player2.name);
     printRemainingWalls(player2.wallCount);
+    if (gameMode == 3)
+    {
+        printf("%s's remaining walls:", player3.name);
+        printRemainingWalls(player3.wallCount);
+        printf("%s's remaining walls:", player3.name);
+        printRemainingWalls(player3.wallCount);
+    }
 
     // integer round determines whose turn it is
     // if it is 1, it's player 1's turn
     // if it is -1, it's player 2's turn
-    int round = 1;
+    int round = 0;
     int gameRepCount = 0;
 
     // The game loop:
-    while (player1.location.x != 2 * row - 1 && player2.location.x != 1) // while nobody has won
+    while (player1.location.x != 2 * row - 1 && player2.location.x != 1
+           && player3.location.y != 1 && player4.location.y != 2 * column - 1) // while nobody has won
     {
         if (gameRepCount == 0)
         {
             getchar();
-            gameRepCount ++;
+            gameRepCount++;
         }
         char moveChar[100] = "\0";
-        if (round == 1)
-        {
-            printf("%s's turn\n", player1.name);
-            
-            // moveChar shows if the player wants to move or place a wall
-            // getting moveChar:
-            while ((moveChar[0] != 'm' && moveChar[0] != 'w') || moveChar[1] != 0)
-            {
-                setTextColor(0, 15);
-                printf("\nWall or move?\n(enter w for wall, and m for move)\n");
-                gets(moveChar);
-                if (moveChar[0] == 'm' && moveChar[1] == 0);
-                if (moveChar[0] == 'w' && moveChar[1] == 0);
-                if (moveChar[0] == 'W' && moveChar[1] == 0)
-                    moveChar[0] = 'w';
-                else if (moveChar[0] == 'M' && moveChar[1] == 0)
-                    moveChar[0] = 'm';
-                // else
-                // {
-                //     getchar();
-                //     getchar();
-                // }
-                
-            }
-
-            // placing a wall:
-            if (moveChar[0] == 'w' && player1.wallCount > 0) // runs only if the player still has walls left
-            {
-                putWall();
-                player1.wallCount--;
-                clearScreen();
-                setTextColor(color, 15);
-
-                printBoard(Board, row, column);
-
-                printf("%s's remaining walls: ", player1.name);
-                printRemainingWalls(player1.wallCount);
-
-                printf("%s's remaining walls: ", player2.name);
-                printRemainingWalls(player2.wallCount);
-
-                // changing the round:
-                round *= -1;
-            }
-            else if (moveChar[0] == 'w' && player1.wallCount == 0) // if the player is out of walls
-            {
-                printf("You're out of walls!\n");
-                sleep(750);
-            }
-            else if (moveChar[0] == 'm') // move for player 1
-            {
-                gotoxy(player1.location.x, player1.location.y);
-                move(&player1);
-                clearScreen();
-                setTextColor(color, 15);
-
-                printBoard(Board, row, column);
-
-                printf("%s's remaining walls: ", player1.name);
-                printRemainingWalls(player1.wallCount);
-
-                printf("%s's remaining walls: ", player2.name);
-                printRemainingWalls(player2.wallCount);
-
-                // changing the round:
-                round *= -1;
-            }
-        }
-        else
-        {
-            printf("%s's turn\n", player2.name);
-
-            // moveChar shows if the player wants to move or place a wall
-            // getting moveChar:
-            while ((moveChar[0] != 'm' && moveChar[0] != 'w') || moveChar[1] != 0)
-            {
-                setTextColor(0, 15);
-                printf("\nWall or move?\n(enter w for wall, and m for move)\n");
-                gets(moveChar);
-                if (moveChar[0] == 'm' && moveChar[1] == 0);
-                if (moveChar[0] == 'w' && moveChar[1] == 0);
-                if (moveChar[0] == 'W' && moveChar[1] == 0)
-                    moveChar[0] = 'w';
-                else if (moveChar[0] == 'M' && moveChar[1] == 0)
-                    moveChar[0] = 'm';
-                // else
-                // {
-                //     getchar();
-                //     getchar();
-                // }
-                
-            }
-
-            // placing a wall:
-            if (moveChar[0] == 'w' && player2.wallCount > 0) // runs only if the player still has walls left
-            {
-                putWall();
-                clearScreen();
-                player2.wallCount--;
-                setTextColor(color, 15);
-
-                printBoard(Board, row, column);
-
-                printf("%s's remaining walls: ", player1.name);
-                printRemainingWalls(player1.wallCount);
-
-                printf("%s's remaining walls: ", player2.name);
-                printRemainingWalls(player2.wallCount);
-
-                // changing the round:
-                round *= -1;
-            }
-            else if (moveChar[0] == 'w' && player2.wallCount == 0) // if the player is out of walls
-            {
-                printf("You're out of walls!\n");
-                sleep(750);
-            }
-            else if (moveChar[0] == 'm') // move for player 2
-            {
-                gotoxy(player2.location.x, player2.location.y);
-                move(&player2);
-                clearScreen();
-                setTextColor(color, 15);
-
-                printBoard(Board, row, column);
-
-                printf("%s's remaining walls: ", player1.name);
-                printRemainingWalls(player1.wallCount);
-
-                printf("%s's remaining walls: ", player2.name);
-                printRemainingWalls(player2.wallCount);
-
-                // changing the round:
-                round *= -1;
-            }
-        }
+        gameRun(&round, color);
     }
 
     // The previous loop has ended
@@ -306,12 +250,12 @@ int main()
     // Determining the winner:
     if (player1.location.x == 2 * row - 1)
     {
-        setTextColor(0, 15);
+        // setTextColor(0, 15);
         printf("%s wins!!!\n", player1.name);
     }
     else
     {
-        setTextColor(0, 15);
+        // setTextColor(0, 15);
         printf("%s wins!!!!\n", player2.name);
     }
     printf("Press any key to exit \n");
