@@ -6,6 +6,7 @@
 int row, column;
 char Board[101][101];
 int sw[101][101];
+int gameMode = 0;
 
 void makeBoard(int row, int column) // as the name suggests, making the board
 {

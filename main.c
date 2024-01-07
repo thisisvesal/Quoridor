@@ -16,7 +16,7 @@ int main()
     clearScreen();
 
     // // prints the arrow keys
-    
+
     // setTextColor(0, 15);
     // printf("You can move in the game using the arrow keys\n");
     // setTextColor(4, 15);
@@ -29,17 +29,40 @@ int main()
     color = chooseBoard();
     clearScreen();
 
-    // getting players' names
     setTextColor(0, 15);
-    printf("Player(1) Please enter your name:\n");
-    scanf("%s", player1.name);
-    player1.nameInitial = player1.name[0];
+
+    // choosing game mode
+    printf("How would you like to play?\n");
+    printf("1) 2 Player mode\n");
+    printf("2) Play with the computer\n");
+    // printf("3) 4 Player mode\n");
+    scanf("%d", &gameMode);
     clearScreen();
 
-    printf("Player(2) Please enter your name:\n");
-    scanf("%s", player2.name);
-    player2.nameInitial = player2.name[0];
-    clearScreen();
+    if (gameMode == 1)
+    {   
+        // getting players' names
+        printf("Player(1) Please enter your name:\n");
+        scanf("%s", player1.name);
+        player1.nameInitial = player1.name[0];
+        clearScreen();
+
+        printf("Player(2) Please enter your name:\n");
+        scanf("%s", player2.name);
+        player2.nameInitial = player2.name[0];
+        clearScreen();
+    }
+    else if (gameMode == 2)
+    {
+        // setTextColor(0, 15);
+        printf("Please enter your name:\n");
+        scanf("%s", player1.name);
+        player1.nameInitial = player1.name[0];
+        clearScreen();
+        strcpy(player2.name, "Computer");
+        player2.nameInitial = 'C';
+    }
+    
 
     // getting row and column numbers
     int rowIsNum = 0, colIsNum = 0;
@@ -160,13 +183,13 @@ int main()
         if (gameRepCount == 0)
         {
             getchar();
-            gameRepCount ++;
+            gameRepCount++;
         }
         char moveChar[100] = "\0";
         if (round == 1)
         {
             printf("%s's turn\n", player1.name);
-            
+
             // moveChar shows if the player wants to move or place a wall
             // getting moveChar:
             while ((moveChar[0] != 'm' && moveChar[0] != 'w') || moveChar[1] != 0)
@@ -174,8 +197,10 @@ int main()
                 setTextColor(0, 15);
                 printf("\nWall or move?\n(enter w for wall, and m for move)\n");
                 gets(moveChar);
-                if (moveChar[0] == 'm' && moveChar[1] == 0);
-                if (moveChar[0] == 'w' && moveChar[1] == 0);
+                if (moveChar[0] == 'm' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'w' && moveChar[1] == 0)
+                    ;
                 if (moveChar[0] == 'W' && moveChar[1] == 0)
                     moveChar[0] = 'w';
                 else if (moveChar[0] == 'M' && moveChar[1] == 0)
@@ -185,7 +210,6 @@ int main()
                 //     getchar();
                 //     getchar();
                 // }
-                
             }
 
             // placing a wall:
@@ -242,8 +266,10 @@ int main()
                 setTextColor(0, 15);
                 printf("\nWall or move?\n(enter w for wall, and m for move)\n");
                 gets(moveChar);
-                if (moveChar[0] == 'm' && moveChar[1] == 0);
-                if (moveChar[0] == 'w' && moveChar[1] == 0);
+                if (moveChar[0] == 'm' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'w' && moveChar[1] == 0)
+                    ;
                 if (moveChar[0] == 'W' && moveChar[1] == 0)
                     moveChar[0] = 'w';
                 else if (moveChar[0] == 'M' && moveChar[1] == 0)
@@ -253,7 +279,6 @@ int main()
                 //     getchar();
                 //     getchar();
                 // }
-                
             }
 
             // placing a wall:
