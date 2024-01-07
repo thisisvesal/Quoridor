@@ -97,9 +97,9 @@ int dfsRight(int sw[101][101], int row, int column, int x, int y)
         dfsRight(sw, row, column, x+1, y);
     }
 
-    for (int i = 0; i < 2 * column + 1; i++)
+    for (int i = 0; i < 2 * row + 1; i++)
     {
-        if (sw[1][i] == 2)
+        if (sw[i][2*column-1] == 2)
         {
             return 1;
         }
@@ -131,9 +131,9 @@ int dfsLeft(int sw[101][101], int row, int column, int x, int y)
         dfsLeft(sw, row, column, x+1, y);
     }
 
-    for (int i = 0; i < 2 * column + 1; i++)
+    for (int i = 0; i < 2 * row + 1; i++)
     {
-        if (sw[1][i] == 2)
+        if (sw[i][1] == 2)
         {
             return 1;
         }
