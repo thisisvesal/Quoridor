@@ -41,7 +41,7 @@ int main()
     clearScreen();
 
     if (gameMode == 1)
-    {   
+    {
         // getting players' names
         printf("Player(1) Please enter your name:\n");
         scanf("%s", player1.name);
@@ -81,8 +81,6 @@ int main()
         player4.nameInitial = player4.name[0];
         clearScreen();
     }
-    
-    
 
     // getting row and column numbers
     int rowIsNum = 0, colIsNum = 0;
@@ -154,6 +152,10 @@ int main()
 
     // setting players' wall count:
     player1.wallCount = player2.wallCount = wallCount;
+    if (gameMode == 3)
+    {
+        player3.wallCount = player4.wallCount = wallCount;
+    }
 
     // make the board
     makeBoard(row, column);
@@ -179,9 +181,34 @@ int main()
         player2.location.y = column;
     }
 
+    if (gameMode == 3)
+    {
+        if (row % 2 == 0)
+        {
+            player3.location.x = row + 1;
+            player3.location.y = 2 * column - 1;
+
+            player4.location.x = row + 1;
+            player4.location.y = 1;
+        }
+        else
+        {
+            player3.location.x = row;
+            player3.location.y = 2 * column - 1;
+
+            player4.location.x = row;
+            player4.location.y = 1;
+        }
+    }
+
     // placing the players in their positions:
     Board[player1.location.x][player1.location.y] = player1.nameInitial;
     Board[player2.location.x][player2.location.y] = player2.nameInitial;
+    if (gameMode == 3)
+    {
+        Board[player3.location.x][player3.location.y] = player3.nameInitial;
+        Board[player4.location.x][player4.location.y] = player4.nameInitial;
+    }
 
     // first print of the board:
     setTextColor(color, 15);
@@ -190,6 +217,13 @@ int main()
     printRemainingWalls(player1.wallCount);
     printf("%s's remaining walls:", player2.name);
     printRemainingWalls(player2.wallCount);
+    if (gameMode == 3)
+    {
+        printf("%s's remaining walls:", player3.name);
+        printRemainingWalls(player3.wallCount);
+        printf("%s's remaining walls:", player3.name);
+        printRemainingWalls(player3.wallCount);
+    }
 
     // integer round determines whose turn it is
     // if it is 1, it's player 1's turn
@@ -199,7 +233,7 @@ int main()
 
     // The game loop:
     while (player1.location.x != 2 * row - 1 && player2.location.x != 1
-    && player3.location.y != 1 && player4.location.y != 2*column - 1) // while nobody has won
+    && player3.location.y != 1 && player4.location.y != 2 * column - 1) // while nobody has won
     {
         if (gameRepCount == 0)
         {
