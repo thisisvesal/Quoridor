@@ -1,7 +1,3 @@
-#include "boardMaker.h"
-#include "boardPrinter.h"
-#include "motion.h"
-#include "design.h"
 #include "game.h"
 
 int main()

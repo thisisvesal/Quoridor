@@ -1,6 +1,8 @@
 #include "boardMaker.h"
 #include "boardPrinter.h"
 #include "motion.h"
+#include "wall.h"
+#include "dfs.h"
 #include "design.h"
 
 void gameRun(int *round, int color)
