@@ -19,7 +19,7 @@ struct Player
         int x, y;
     } location;
     int wallCount;
-} player1, player2;
+} player1, player2, player3, player4;
 
 // move in the cursor
 void gotoxy(int x, int y)
