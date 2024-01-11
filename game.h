@@ -8,7 +8,7 @@
 void gameRun(int *round, int color)
 {
     struct Player *someone;
-    if (gameMode == 3)
+    if (gameMode == 2)
     {
         if (*round == 0)
             someone = &player1;
@@ -61,7 +61,7 @@ void gameRun(int *round, int color)
 
         printf("%s's remaining walls: ", player2.name);
         printRemainingWalls(player2.wallCount);
-        if (gameMode == 3)
+        if (gameMode == 2)
         {
             printf("%s's remaining walls: ", player3.name);
             printRemainingWalls(player3.wallCount);
@@ -72,7 +72,7 @@ void gameRun(int *round, int color)
 
         // changing the *round:
         *round += 1;
-        if (gameMode == 3)
+        if (gameMode == 2)
         {
             *round %= 4;
         }
@@ -101,7 +101,7 @@ void gameRun(int *round, int color)
         printf("%s's remaining walls: ", player2.name);
         printRemainingWalls(player2.wallCount);
 
-        if (gameMode == 3)
+        if (gameMode == 2)
         {
             printf("%s's remaining walls: ", player3.name);
             printRemainingWalls(player3.wallCount);
@@ -112,7 +112,7 @@ void gameRun(int *round, int color)
 
         // changing the *round:
         *round += 1;
-        if (gameMode == 3)
+        if (gameMode == 2)
         {
             *round %= 4;
         }

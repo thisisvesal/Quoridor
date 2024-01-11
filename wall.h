@@ -121,7 +121,7 @@ void putWall()
         }
     }
     // 4 player mode
-    else if (gameMode == 3)
+    else if (gameMode == 2)
     {
 
         // checking if the chosen place is accessible then place it
