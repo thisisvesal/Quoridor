@@ -163,7 +163,7 @@ void move(struct Player *someone)
     *someone = someoneCopy;
     if (contSw)
     {
-        printf("\a");
+        // printf("\a");
         move(someone);
     }
 }
