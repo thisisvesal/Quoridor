@@ -1,0 +1,17 @@
+Ideas for improvement:
+1. After printing "Game saved", change don't print "Press S to save your game". It feels odd.
+2. Add an option which allows users to go back while they're in the set-up process, where they enter their names, board dims, etc.
+3. **Make sure valid entries are checked everywhere**
+4. See if you could add an option through which ctrl+s would be the save command
+5. Design a logo :)
+6. Implement the game using graphics libraries
+7. Write a Readme.md for GitHub
+8. Write a "help" section for the game
+9. If AI is somehow successfuly implemented, allow different levels of difficulty
+10. Add "shadows" for each pawn, when it is its turn. It should make the game way more intuitive.
+I'm guessing the key to implementing that, must be successfully changing the color of one single character in the board.
+11. Allow change of move type. A player might regret their choice, afterall.
+12. Add dark mode (even addaptive dark, maybe? :)))
+13. Make the game's ending a bit happier for the winner
+14. Add sounds for each move
+15. Tidy up the code even further
