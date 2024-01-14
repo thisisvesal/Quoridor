@@ -15,3 +15,4 @@ I'm guessing the key to implementing that, must be successfully changing the col
 13. Make the game's ending a bit happier for the winner
 14. Add sounds for each move
 15. Tidy up the code even further
+16. Organise the files
