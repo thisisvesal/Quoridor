@@ -48,11 +48,11 @@ void gameRun()
         setTextColor(0, 15);
         if (aiSw == 1 && round == 1)
         {
-            // int moveCode = randomize(0, 1);
-            // if (moveCode == 0)
+            int moveCode = randomize(0, 1);
+            if (moveCode == 0)
                 moveChar[0] = 'm';
-            // else if (moveCode == 1)
-            //     moveChar[0] = 'w';
+            else if (moveCode == 1)
+                moveChar[0] = 'w';
         }
         else
         {
