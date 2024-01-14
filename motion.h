@@ -6,6 +6,7 @@
 #include "design.h"
 #include "boardMaker.h"
 #include "dfs.h"
+#include "random.h"
 
 #ifndef motion
 #define motion
@@ -36,16 +37,35 @@ void gotoxy(int x, int y)
 int motionDetect()
 {
     char motionCode;
-    motionCode = getch();
-    if (motionCode == 0)
+
+    if (aiSw == 1 && round == 1)
+    {
+        int motionInt;
+        motionInt = randomize(0, 3);
+        if (motionInt == 0)
+            motionCode = 77;
+        else if (motionInt == 1)
+            motionCode = 75;
+        else if (motionInt == 2)
+            motionCode = 72;
+        else if (motionInt == 3)
+            motionCode = 80;
+        return motionCode;
+    }
+    else
     {
         motionCode = getch();
-        return motionCode;
-        // right: 77
-        // left: 75
-        // up: 72
-        // down: 80
+        if (motionCode == 0)
+        {
+            motionCode = getch();
+            return motionCode;
+            // right: 77
+            // left: 75
+            // up: 72
+            // down: 80
+        }
     }
+    // return 0;
 }
 
 // making a delay

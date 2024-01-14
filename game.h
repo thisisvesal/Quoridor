@@ -4,6 +4,7 @@
 #include "wall.h"
 #include "design.h"
 #include <stdlib.h>
+#include "random.h"
 
 struct features
 {
@@ -13,9 +14,6 @@ struct features
     int aiSw;
     int round;
 };
-
-// integer round determines whose turn it is
-int round;
 
 void gameRun()
 {
@@ -48,18 +46,29 @@ void gameRun()
     while ((moveChar[0] != 'm' && moveChar[0] != 'w' && moveChar[0] != 's') || moveChar[1] != 0)
     {
         setTextColor(0, 15);
-        printf("\nWall or move?\n(enter w for wall, and m for move)\n");
-        gets(moveChar);
-        if (moveChar[0] == 'm' && moveChar[1] == 0)
-            ;
-        if (moveChar[0] == 'w' && moveChar[1] == 0)
-            ;
-        if (moveChar[0] == 'W' && moveChar[1] == 0)
-            moveChar[0] = 'w';
-        else if (moveChar[0] == 'M' && moveChar[1] == 0)
-            moveChar[0] = 'm';
-        else if (moveChar[0] == 'S' && moveChar[1] == 0)
-            moveChar[0] = 's';
+        if (aiSw == 1 && round == 1)
+        {
+            // int moveCode = randomize(0, 1);
+            // if (moveCode == 0)
+                moveChar[0] = 'm';
+            // else if (moveCode == 1)
+            //     moveChar[0] = 'w';
+        }
+        else
+        {
+            printf("\nWall or move?\n(enter w for wall, and m for move)\n");
+            gets(moveChar);
+            if (moveChar[0] == 'm' && moveChar[1] == 0)
+                ;
+            if (moveChar[0] == 'w' && moveChar[1] == 0)
+                ;
+            if (moveChar[0] == 'W' && moveChar[1] == 0)
+                moveChar[0] = 'w';
+            else if (moveChar[0] == 'M' && moveChar[1] == 0)
+                moveChar[0] = 'm';
+            else if (moveChar[0] == 'S' && moveChar[1] == 0)
+                moveChar[0] = 's';
+        }
     }
 
     // placing a wall:
@@ -92,17 +101,24 @@ void gameRun()
         {
             round %= 4;
         }
-        else
+        else if (gameMode == 1)
         {
             round %= 2;
         }
     }
     else if (moveChar[0] == 'w' && someone->wallCount == 0) // if the player is out of walls
     {
-        printf("You're out of walls!\n");
-        sleep(750);
+        if (aiSw == 1 && round == 1)
+        {
+            moveChar[0] = 'm';
+        }
+        else
+        {
+            printf("You're out of walls!\n");
+            sleep(750);
+        }
     }
-    else if (moveChar[0] == 'm') // move for player 1
+    else if (moveChar[0] == 'm') // move for someone
     {
         gotoxy(someone->location.x, someone->location.y);
         move(someone);
@@ -132,7 +148,7 @@ void gameRun()
         {
             round %= 4;
         }
-        else
+        else if (gameMode == 1)
         {
             round %= 2;
         }
@@ -185,7 +201,7 @@ void gameRun()
 
                 fwrite(players, sizeof(struct Player), 4, savePlayers);
             }
-            
+
             fclose(savePlayers);
 
             printf("\nGame saved\n\n");

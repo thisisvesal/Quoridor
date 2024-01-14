@@ -9,6 +9,8 @@ int sw[101][101];
 int gameMode = 0;
 int color = 0;
 int aiSw = 0;
+// integer round determines whose turn it is
+int round = 0;
 
 void makeBoard(int row, int column) // as the name suggests, making the board
 {

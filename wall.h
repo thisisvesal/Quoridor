@@ -1,5 +1,6 @@
 #include "dfs.h"
 #include "motion.h"
+#include "random.h"
 
 #ifndef wall
 #define wall
@@ -8,36 +9,57 @@
 void putWall()
 {
     // 2 player mode
-
-    int x = row, y = column;
     int contSw = 1;
-    gotoxy(x, y);
-    // this section allows movement of the cursor until enter is pressed
-    // then when enter is hit, a wall will be placed there
-    while (1)
+    int x, y;
+
+    if (aiSw == 1 && round == 1)
     {
-        char where = getch();
-        if (where == 13)
-            break;
-        else if (where == 77) // right
+        int align = randomize(0,1);
+        // Vertical:
+        if (align == 0)
         {
-            y++;
-            gotoxy(x, y);
+            x = 2 * (randomize(1, row)) - 1;
+            y = 2 * (randomize(1, column - 1));
         }
-        else if (where == 75) // left
+        // Horizontal:
+        else if (align == 1)
         {
-            y--;
-            gotoxy(x, y);
+            x = 2 * (randomize(1, row - 1));
+            y = 2 * (randomize(1, column)) - 1;
         }
-        else if (where == 72) // up
+    }
+    else
+    {
+        x = row;
+        y = column;
+        gotoxy(x, y);
+        // this section allows movement of the cursor until enter is pressed
+        // then when enter is hit, a wall will be placed there
+        while (1)
         {
-            x--;
-            gotoxy(x, y);
-        }
-        else if (where == 80) // down
-        {
-            x++;
-            gotoxy(x, y);
+            char where = getch();
+            if (where == 13)
+                break;
+            else if (where == 77) // right
+            {
+                y++;
+                gotoxy(x, y);
+            }
+            else if (where == 75) // left
+            {
+                y--;
+                gotoxy(x, y);
+            }
+            else if (where == 72) // up
+            {
+                x--;
+                gotoxy(x, y);
+            }
+            else if (where == 80) // down
+            {
+                x++;
+                gotoxy(x, y);
+            }
         }
     }
 
