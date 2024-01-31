@@ -1,6 +1,4 @@
-#include "dfs.h"
 #include "motion.h"
-#include "random.h"
 
 #ifndef wall
 #define wall
@@ -12,7 +10,7 @@ void putWall()
     int contSw = 1;
     int x, y;
 
-    if (aiSw == 1 && round == 1)
+    if (gameMode==1 && aiSw == 1 && round == 1)
     {
         int align = randomize(0,1);
         // Vertical:
@@ -21,7 +19,52 @@ void putWall()
             x = 2 * (randomize(1, row)) - 1;
             y = 2 * (randomize(1, column - 1));
         }
-        // Horizontal:
+            // Horizontal:
+        else if (align == 1)
+        {
+            x = 2 * (randomize(1, row - 1));
+            y = 2 * (randomize(1, column)) - 1;
+        }
+    } else if (gameMode==2 && aiSw == 2 && round == 3)
+    {
+        int align = randomize(0,1);
+        // Vertical:
+        if (align == 0)
+        {
+            x = 2 * (randomize(1, row)) - 1;
+            y = 2 * (randomize(1, column - 1));
+        }
+            // Horizontal:
+        else if (align == 1)
+        {
+            x = 2 * (randomize(1, row - 1));
+            y = 2 * (randomize(1, column)) - 1;
+        }
+    }else if (gameMode==2 && aiSw == 3 && (round == 3|| round==1))
+    {
+        int align = randomize(0,1);
+        // Vertical:
+        if (align == 0)
+        {
+            x = 2 * (randomize(1, row)) - 1;
+            y = 2 * (randomize(1, column - 1));
+        }
+            // Horizontal:
+        else if (align == 1)
+        {
+            x = 2 * (randomize(1, row - 1));
+            y = 2 * (randomize(1, column)) - 1;
+        }
+    }else if (gameMode==2 && aiSw == 3 && round!=0 )
+    {
+        int align = randomize(0,1);
+        // Vertical:
+        if (align == 0)
+        {
+            x = 2 * (randomize(1, row)) - 1;
+            y = 2 * (randomize(1, column - 1));
+        }
+            // Horizontal:
         else if (align == 1)
         {
             x = 2 * (randomize(1, row - 1));
@@ -101,8 +144,8 @@ void putWall()
                 }
             }
         }
-        // vertical fences
-        //  ║ 186
+            // vertical fences
+            //  ║ 186
         else if (y % 2 == 0 && x % 2 != 0)
         {
             if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
@@ -142,7 +185,7 @@ void putWall()
             putWall();
         }
     }
-    // 4 player mode
+        // 4 player mode
     else if (gameMode == 2)
     {
 
@@ -202,8 +245,8 @@ void putWall()
                 }
             }
         }
-        // vertical fences
-        //  ║ 186
+            // vertical fences
+            //  ║ 186
         else if (y % 2 == 0 && x % 2 != 0)
         {
             if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)

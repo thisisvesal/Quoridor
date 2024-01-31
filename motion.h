@@ -2,26 +2,12 @@
 #include <windows.h>
 #include <conio.h>
 #include <time.h>
-#include "boardPrinter.h"
 #include "design.h"
-#include "boardMaker.h"
 #include "dfs.h"
 #include "random.h"
 
 #ifndef motion
 #define motion
-
-// players elements
-struct Player
-{
-    char name[30];
-    char nameInitial;
-    struct place
-    {
-        int x, y;
-    } location;
-    int wallCount;
-} player1, player2, player3, player4;
 
 // move in the cursor
 void gotoxy(int x, int y)
@@ -37,35 +23,141 @@ void gotoxy(int x, int y)
 int motionDetect()
 {
     char motionCode;
-
-    if (aiSw == 1 && round == 1)
+    if (gameMode == 1)
     {
-        int motionInt;
-        motionInt = randomize(0, 3);
-        if (motionInt == 0)
-            motionCode = 77;
-        else if (motionInt == 1)
-            motionCode = 75;
-        else if (motionInt == 2)
-            motionCode = 72;
-        else if (motionInt == 3)
-            motionCode = 80;
-        return motionCode;
+        if (aiSw == 1 && round == 1)
+        {
+            int motionInt;
+            motionInt = randomize(0, 3);
+            if (motionInt == 0)
+                motionCode = 77;
+            else if (motionInt == 1)
+                motionCode = 75;
+            else if (motionInt == 2)
+                motionCode = 72;
+            else if (motionInt == 3)
+                motionCode = 80;
+            return motionCode;
+        }
+        else
+        {
+            motionCode = getch();
+            if (motionCode == 0)
+            {
+                motionCode = getch();
+                return motionCode;
+                // right: 77
+                // left: 75
+                // up: 72
+                // down: 80
+            }
+        }
     }
     else
     {
-        motionCode = getch();
-        if (motionCode == 0)
+        if (aiSw == 1)
         {
             motionCode = getch();
-            return motionCode;
-            // right: 77
-            // left: 75
-            // up: 72
-            // down: 80
+            if (motionCode == 0)
+            {
+                motionCode = getch();
+                return motionCode;
+                // right: 77
+                // left: 75
+                // up: 72
+                // down: 80
+            }
+        }
+        else if (aiSw == 2)
+        {
+            if (round == 3)
+            {
+                int motionInt;
+                motionInt = randomize(0, 3);
+                if (motionInt == 0)
+                    motionCode = 77;
+                else if (motionInt == 1)
+                    motionCode = 75;
+                else if (motionInt == 2)
+                    motionCode = 72;
+                else if (motionInt == 3)
+                    motionCode = 80;
+                return motionCode;
+            }
+            else
+            {
+                motionCode = getch();
+                if (motionCode == 0)
+                {
+                    motionCode = getch();
+                    return motionCode;
+                    // right: 77
+                    // left: 75
+                    // up: 72
+                    // down: 80
+                }
+            }
+        }
+        else if (aiSw == 3)
+        {
+            if (round == 3 || round == 1)
+            {
+                int motionInt;
+                motionInt = randomize(0, 3);
+                if (motionInt == 0)
+                    motionCode = 77;
+                else if (motionInt == 1)
+                    motionCode = 75;
+                else if (motionInt == 2)
+                    motionCode = 72;
+                else if (motionInt == 3)
+                    motionCode = 80;
+                return motionCode;
+            }
+            else
+            {
+                motionCode = getch();
+                if (motionCode == 0)
+                {
+                    motionCode = getch();
+                    return motionCode;
+                    // right: 77
+                    // left: 75
+                    // up: 72
+                    // down: 80
+                }
+            }
+        }
+        else if (aiSw == 3)
+        {
+            if (round == 0)
+            {
+                if (motionCode == 0)
+                {
+                    motionCode = getch();
+                    return motionCode;
+                    // right: 77
+                    // left: 75
+                    // up: 72
+                    // down: 80
+                }
+            }
+            else
+            {
+                int motionInt;
+                motionInt = randomize(0, 3);
+                if (motionInt == 0)
+                    motionCode = 77;
+                else if (motionInt == 1)
+                    motionCode = 75;
+                else if (motionInt == 2)
+                    motionCode = 72;
+                else if (motionInt == 3)
+                    motionCode = 80;
+                return motionCode;
+            }
         }
     }
-    // return 0;
 }
 
 // making a delay

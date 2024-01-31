@@ -1,73 +1,89 @@
-#include "boardMaker.h"
-#include "boardPrinter.h"
-#include "motion.h"
 #include "wall.h"
-#include "design.h"
+#include "charms.h"
 #include <stdlib.h>
-#include "random.h"
-
-struct features
-{
-    int row, column;
-    int color;
-    int gameMode;
-    int aiSw;
-    int round;
-};
 
 void gameRun()
 {
-    struct Player *someone;
-    if (gameMode == 2)
-    {
-        if (round == 0)
-            someone = &player1;
-        else if (round == 1)
-            someone = &player3;
-        else if (round == 2)
-            someone = &player2;
-        else if (round == 3)
-            someone = &player4;
-    }
-    else
-    {
-        if (round == 0)
-            someone = &player1;
-        else if (round == 1)
-            someone = &player2;
-    }
-    printf("%s's turn\n", someone->name);
-    setTextColor(15, color);
-    printf("\n(Press S to save your game)\n");
+    struct Player *someone = determinePlayer();
 
-    char moveChar[100] = "\0";
+    charmSw = 1;
+
+    printPage(someone);
+
     // moveChar shows if the player wants to move or place a wall
+    char moveChar[100] = "\0";
+    
     // getting moveChar:
     while ((moveChar[0] != 'm' && moveChar[0] != 'w' && moveChar[0] != 's') || moveChar[1] != 0)
     {
         setTextColor(0, 15);
-        if (aiSw == 1 && round == 1)
+        if (gameMode == 1)
         {
-            int moveCode = randomize(0, 1);
-            if (moveCode == 0)
-                moveChar[0] = 'm';
-            else if (moveCode == 1)
-                moveChar[0] = 'w';
+            if (aiSw == 1 && round == 1)
+            {
+                int moveCode = randomize(0, 1);
+                if (moveCode == 0)
+                    moveChar[0] = 'm';
+                else if (moveCode == 1)
+                    moveChar[0] = 'w';
+            }
+            else
+            {
+                printf("\nWall or move?\n(enter w for wall, and m for move)\n");
+                gets(moveChar);
+                if (moveChar[0] == 'm' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'w' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'W' && moveChar[1] == 0)
+                    moveChar[0] = 'w';
+                else if (moveChar[0] == 'M' && moveChar[1] == 0)
+                    moveChar[0] = 'm';
+                else if (moveChar[0] == 'S' && moveChar[1] == 0)
+                    moveChar[0] = 's';
+            }
         }
-        else
+        if (gameMode == 2)
         {
-            printf("\nWall or move?\n(enter w for wall, and m for move)\n");
-            gets(moveChar);
-            if (moveChar[0] == 'm' && moveChar[1] == 0)
-                ;
-            if (moveChar[0] == 'w' && moveChar[1] == 0)
-                ;
-            if (moveChar[0] == 'W' && moveChar[1] == 0)
-                moveChar[0] = 'w';
-            else if (moveChar[0] == 'M' && moveChar[1] == 0)
-                moveChar[0] = 'm';
-            else if (moveChar[0] == 'S' && moveChar[1] == 0)
-                moveChar[0] = 's';
+            if (aiSw == 2 && round == 3)
+            {
+                int moveCode = randomize(0, 1);
+                if (moveCode == 0)
+                    moveChar[0] = 'm';
+                else if (moveCode == 1)
+                    moveChar[0] = 'w';
+            }
+            else if (aiSw == 3 && (round == 3 || round == 1))
+            {
+                int moveCode = randomize(0, 1);
+                if (moveCode == 0)
+                    moveChar[0] = 'm';
+                else if (moveCode == 1)
+                    moveChar[0] = 'w';
+            }
+            else if (aiSw == 4 && round != 0)
+            {
+                int moveCode = randomize(0, 1);
+                if (moveCode == 0)
+                    moveChar[0] = 'm';
+                else if (moveCode == 1)
+                    moveChar[0] = 'w';
+            }
+            else
+            {
+                printf("\nWall or move?\n(enter w for wall, and m for move)\n");
+                gets(moveChar);
+                if (moveChar[0] == 'm' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'w' && moveChar[1] == 0)
+                    ;
+                if (moveChar[0] == 'W' && moveChar[1] == 0)
+                    moveChar[0] = 'w';
+                else if (moveChar[0] == 'M' && moveChar[1] == 0)
+                    moveChar[0] = 'm';
+                else if (moveChar[0] == 'S' && moveChar[1] == 0)
+                    moveChar[0] = 's';
+            }
         }
     }
 
@@ -76,24 +92,8 @@ void gameRun()
     {
         putWall();
         someone->wallCount--;
-        clearScreen();
-        setTextColor(color, 15);
 
-        printBoard(Board, row, column);
-
-        printf("%s's remaining walls: ", player1.name);
-        printRemainingWalls(player1.wallCount);
-
-        printf("%s's remaining walls: ", player2.name);
-        printRemainingWalls(player2.wallCount);
-        if (gameMode == 2)
-        {
-            printf("%s's remaining walls: ", player3.name);
-            printRemainingWalls(player3.wallCount);
-
-            printf("%s's remaining walls: ", player4.name);
-            printRemainingWalls(player4.wallCount);
-        }
+        printPage(someone);
 
         // changing the round:
         round += 1;
@@ -122,25 +122,8 @@ void gameRun()
     {
         gotoxy(someone->location.x, someone->location.y);
         move(someone);
-        clearScreen();
-        setTextColor(color, 15);
-
-        printBoard(Board, row, column);
-
-        printf("%s's remaining walls: ", player1.name);
-        printRemainingWalls(player1.wallCount);
-
-        printf("%s's remaining walls: ", player2.name);
-        printRemainingWalls(player2.wallCount);
-
-        if (gameMode == 2)
-        {
-            printf("%s's remaining walls: ", player3.name);
-            printRemainingWalls(player3.wallCount);
-
-            printf("%s's remaining walls: ", player4.name);
-            printRemainingWalls(player4.wallCount);
-        }
+        
+        printPage(someone);
 
         // changing the round:
         round += 1;
@@ -155,6 +138,7 @@ void gameRun()
     }
     else if (moveChar[0] == 's')
     {
+        charmSw = 0;
         setTextColor(15, color);
         // save
 
@@ -177,7 +161,7 @@ void gameRun()
             }
             fclose(saveBoard);
 
-            struct features features, loadFeatures;
+            struct features features;
 
             features.row = row;
             features.column = column;
@@ -205,6 +189,10 @@ void gameRun()
             fclose(savePlayers);
 
             printf("\nGame saved\n\n");
+
+            setTextColor(color, 15);
+
+            sleep(2000);
         }
     }
 }

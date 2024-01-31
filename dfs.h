@@ -1,3 +1,5 @@
+#include "general.h"
+
 #ifndef dfs
 #define dfs
 

@@ -12,6 +12,7 @@ int main()
     sleep(2000);
     clearScreen();
 
+    setTextColor(0, 15);
     printf("1) Continue my old game\n");
     printf("2) Start a new game\n");
     int newOrOld = 0;
@@ -78,9 +79,20 @@ int main()
         scanf("%d", &gameMode);
         clearScreen();
 
-        printf("1) Play with AI\n");
-        printf("2) Play with a friend\n");
-        scanf("%d", &aiSw);
+        if (gameMode == 1)
+        {
+            printf("1) Play with AI\n");
+            printf("2) Play with a friend\n");
+            scanf("%d", &aiSw);
+        }
+        if (gameMode == 2)
+        {
+            printf("1) Play with a friend\n");
+            printf("2) Play with AI(1 AI player)\n");
+            printf("3) Play with AI(2 AI players)\n");
+            printf("4) Play with AI(3 AI players)\n");
+            scanf("%d", &aiSw);
+        }
 
         if (gameMode == 1 && aiSw == 2)
         {
@@ -103,7 +115,7 @@ int main()
             strcpy(player2.name, "Computer");
             player2.nameInitial = 'C';
         }
-        else if (gameMode == 2 && aiSw == 2)
+        else if (gameMode == 2 && aiSw == 1)
         {
             // getting players' names
             printf("Player(1) Please enter your name:\n");
@@ -121,6 +133,60 @@ int main()
             printf("Player(4) Please enter your name:\n");
             scanf("%s", player4.name);
             player4.nameInitial = player4.name[0];
+            clearScreen();
+        }
+        else if (gameMode == 2 && aiSw == 2)
+        {
+            // getting players' names
+            printf("Player(1) Please enter your name:\n");
+            scanf("%s", player1.name);
+            player1.nameInitial = player1.name[0];
+
+            printf("Player(2) Please enter your name:\n");
+            scanf("%s", player2.name);
+            player2.nameInitial = player2.name[0];
+
+            printf("Player(3) Please enter your name:\n");
+            scanf("%s", player3.name);
+            player3.nameInitial = player3.name[0];
+
+            strcpy(player4.name, "Computer");
+            player4.nameInitial = 'C';
+            clearScreen();
+        }
+        else if (gameMode == 2 && aiSw == 3)
+        {
+            // getting players' names
+            printf("Player(1) Please enter your name:\n");
+            scanf("%s", player1.name);
+            player1.nameInitial = player1.name[0];
+
+            strcpy(player2.name, "Computer1");
+            player2.nameInitial = 'C';
+
+            printf("Player(3) Please enter your name:\n");
+            scanf("%s", player3.name);
+            player3.nameInitial = player3.name[0];
+
+            strcpy(player4.name, "Computer2");
+            player4.nameInitial = 'C';
+            clearScreen();
+        }
+        else if (gameMode == 2 && aiSw == 4)
+        {
+            // getting players' names
+            printf("Player(1) Please enter your name:\n");
+            scanf("%s", player1.name);
+            player1.nameInitial = player1.name[0];
+
+            strcpy(player2.name, "Computer1");
+            player2.nameInitial = 'C';
+
+            strcpy(player3.name, "Computer2");
+            player3.nameInitial = 'C';
+
+            strcpy(player4.name, "Computer3");
+            player4.nameInitial = 'C';
             clearScreen();
         }
 
@@ -243,6 +309,11 @@ int main()
             }
         }
 
+        player1.blockedFor = 0;
+        player2.blockedFor = 0;
+        player3.blockedFor = 0;
+        player4.blockedFor = 0;
+
         // placing the players in their positions:
         Board[player1.location.x][player1.location.y] = player1.nameInitial;
         Board[player2.location.x][player2.location.y] = player2.nameInitial;
@@ -254,32 +325,29 @@ int main()
     }
 
     // first print of the board:
-    clearScreen();
-    setTextColor(color, 15);
-    printBoard(Board, row, column);
-    printf("%s's remaining walls:", player1.name);
-    printRemainingWalls(player1.wallCount);
-    printf("%s's remaining walls:", player2.name);
-    printRemainingWalls(player2.wallCount);
-    if (gameMode == 2)
-    {
-        printf("%s's remaining walls:", player3.name);
-        printRemainingWalls(player3.wallCount);
-        printf("%s's remaining walls:", player4.name);
-        printRemainingWalls(player4.wallCount);
-    }
+    printPage(&player1);
+    // printf("%s's turn\n", player1.name);
 
-    int gameRepCount = 0;
+    getchar();
 
     // The game loop:
     while (player1.location.x != 2 * row - 1 && player2.location.x != 1 && player3.location.y != 1 && player4.location.y != 2 * column - 1) // while nobody has won
     {
-        if (gameRepCount == 0)
+        printPage(determinePlayer());
+        if (charmSw) getCharm();
+
+        if (determinePlayer()->blockedFor > 0)
         {
-            getchar();
-            gameRepCount++;
+            determinePlayer()->blockedFor--;
+            round += 1;
+            if (gameMode == 1)
+                round %= 2;
+            else if (gameMode == 2)
+                round %= 4;
+
+            continue;
         }
-        char moveChar[100] = "\0";
+
         gameRun();
     }
 
@@ -290,24 +358,24 @@ int main()
     if (player1.location.x == 2 * row - 1)
     {
         // setTextColor(0, 15);
-        printf("%s wins!!!\n", player1.name);
+        printf("%s WINSSSSSSSSSSSSS!!!\n", player1.name);
     }
     else if (player2.location.x == 1)
     {
         // setTextColor(0, 15);
-        printf("%s wins!!!!\n", player2.name);
+        printf("%s WINSSSSSSSSSSSSS!!!!\n", player2.name);
     }
     if (gameMode == 2)
     {
         if (player3.location.y == 1)
         {
             // setTextColor(0, 15);
-            printf("%s wins!!!\n", player3.name);
+            printf("%s WINSSSSSSSSSSSSS!!!\n", player3.name);
         }
         else if (player4.location.y == 2 * column - 1)
         {
             // setTextColor(0, 15);
-            printf("%s wins!!!!\n", player4.name);
+            printf("%s WINSSSSSSSSSSSSS!!!!\n", player4.name);
         }
     }
     printf("Press any key to exit \n");

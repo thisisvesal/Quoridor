@@ -145,8 +145,36 @@ int chooseBoard()
             return 9;
         else if (num == 8)
             return 8;
-        else printf("That is not a theme number!\n");
+        else
+            printf("That is not a theme number!\n");
     }
+}
+
+void printPage(struct Player *someone)
+{
+    clearScreen();
+    setTextColor(color, 15);
+    printBoard(Board, row, column);
+    printf("%s: Blocked for: %d   ", player1.name, player1.blockedFor);
+    printf("remaining walls:", player1.name);
+    printRemainingWalls(player1.wallCount);
+    printf("%s: Blocked for: %d   ", player2.name, player2.blockedFor);
+    printf("remaining walls:", player2.name);
+    printRemainingWalls(player2.wallCount);
+    if (gameMode == 2)
+    {
+        printf("%s: Blocked for: %d   ", player3.name, player3.blockedFor);
+        printf("remaining walls:", player3.name);
+        printRemainingWalls(player3.wallCount);
+        printf("%s: Blocked for: %d   ", player4.name, player4.blockedFor);
+        printf("remaining walls:", player4.name);
+        printRemainingWalls(player4.wallCount);
+    }
+    setTextColor(15, color);
+    printf("(Press S to save your game)\n");
+    setTextColor(color, 15);
+
+    printf("%s's turn\n", someone->name);
 }
 
 #endif

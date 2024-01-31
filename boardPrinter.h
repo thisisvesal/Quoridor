@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "general.h"
 
 #ifndef boardPrinter
 #define boardPrinter
