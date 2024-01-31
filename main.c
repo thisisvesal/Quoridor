@@ -19,8 +19,6 @@ int main()
     scanf("%d", &newOrOld);
     if (newOrOld == 1)
     {
-        // int loadColor;
-        // int loadGameMode;
         struct features loadFeatures;
         char loadBoard[101][101];
         struct Player loadPlayers[4];
