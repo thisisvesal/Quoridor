@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include <windows.h>
 #include <conio.h>
 #include <time.h>
 #include "design.h"
 #include "dfs.h"
 #include "random.h"
+#include "decision.h"
 
 #ifndef motion
 #define motion
@@ -23,21 +23,25 @@ void gotoxy(int x, int y)
 int motionDetect()
 {
     char motionCode;
-    if (gameMode == 1)
+
+    if (aiSw == 1)
     {
-        if (aiSw == 1 && round == 1)
+        motionCode = getch();
+        if (motionCode == 0)
         {
-            int motionInt;
-            motionInt = randomize(0, 3);
-            if (motionInt == 0)
-                motionCode = 77;
-            else if (motionInt == 1)
-                motionCode = 75;
-            else if (motionInt == 2)
-                motionCode = 72;
-            else if (motionInt == 3)
-                motionCode = 80;
+            motionCode = getch();
             return motionCode;
+            // right: 77
+            // left: 75
+            // up: 72
+            // down: 80
+        }
+    }
+    else if (aiSw == 2)
+    {
+        if (round == 3)
+        {
+            return moveDecision();
         }
         else
         {
@@ -53,9 +57,13 @@ int motionDetect()
             }
         }
     }
-    else
+    else if (aiSw == 3)
     {
-        if (aiSw == 1)
+        if (round == 2 || round == 3)
+        {
+            return moveDecision();
+        }
+        else
         {
             motionCode = getch();
             if (motionCode == 0)
@@ -68,96 +76,28 @@ int motionDetect()
                 // down: 80
             }
         }
-        else if (aiSw == 2)
+    }
+    else if (aiSw == 4)
+    {
+        if (round == 0)
         {
-            if (round == 3)
-            {
-                int motionInt;
-                motionInt = randomize(0, 3);
-                if (motionInt == 0)
-                    motionCode = 77;
-                else if (motionInt == 1)
-                    motionCode = 75;
-                else if (motionInt == 2)
-                    motionCode = 72;
-                else if (motionInt == 3)
-                    motionCode = 80;
-                return motionCode;
-            }
-            else
+            motionCode = getch();
+            if (motionCode == 0)
             {
                 motionCode = getch();
-                if (motionCode == 0)
-                {
-                    motionCode = getch();
-                    return motionCode;
-                    // right: 77
-                    // left: 75
-                    // up: 72
-                    // down: 80
-                }
+                return motionCode;
+                // right: 77
+                // left: 75
+                // up: 72
+                // down: 80
             }
         }
-        else if (aiSw == 3)
+        else
         {
-            if (round == 3 || round == 1)
-            {
-                int motionInt;
-                motionInt = randomize(0, 3);
-                if (motionInt == 0)
-                    motionCode = 77;
-                else if (motionInt == 1)
-                    motionCode = 75;
-                else if (motionInt == 2)
-                    motionCode = 72;
-                else if (motionInt == 3)
-                    motionCode = 80;
-                return motionCode;
-            }
-            else
-            {
-                motionCode = getch();
-                if (motionCode == 0)
-                {
-                    motionCode = getch();
-                    return motionCode;
-                    // right: 77
-                    // left: 75
-                    // up: 72
-                    // down: 80
-                }
-            }
-        }
-        else if (aiSw == 3)
-        {
-            if (round == 0)
-            {
-                if (motionCode == 0)
-                {
-                    motionCode = getch();
-                    return motionCode;
-                    // right: 77
-                    // left: 75
-                    // up: 72
-                    // down: 80
-                }
-            }
-            else
-            {
-                int motionInt;
-                motionInt = randomize(0, 3);
-                if (motionInt == 0)
-                    motionCode = 77;
-                else if (motionInt == 1)
-                    motionCode = 75;
-                else if (motionInt == 2)
-                    motionCode = 72;
-                else if (motionInt == 3)
-                    motionCode = 80;
-                return motionCode;
-            }
+            return moveDecision();
         }
     }
+    
 }
 
 // making a delay
