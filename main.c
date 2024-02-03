@@ -15,8 +15,25 @@ int main()
     setTextColor(0, 15);
     printf("1) Continue my old game\n");
     printf("2) Start a new game\n");
+
+    // Move this section to validChecks.h as a functionS
     int newOrOld = 0;
-    scanf("%d", &newOrOld);
+    while (newOrOld != 1 && newOrOld != 2)
+    {
+        char newOrOldCopy[30];
+        scanf("%s", newOrOldCopy);
+
+        int i;
+        for (i = 0; newOrOldCopy[i] && '0' <= newOrOldCopy[i] && newOrOldCopy[i] <= '9'; i++)
+        {
+            newOrOld += (newOrOldCopy[i] - 48);
+            newOrOld *= 10;
+        }
+        newOrOld /= 10;
+        if (newOrOld != 1 && newOrOld != 2)
+            printf("Please enter a valid number\n");
+    }
+
     if (newOrOld == 1)
     {
         struct features loadFeatures;
@@ -79,9 +96,10 @@ int main()
 
         if (gameMode == 1)
         {
-            printf("1) Play with AI\n");
-            printf("2) Play with a friend\n");
+            printf("1) Play with a friend\n");
+            printf("2) Play with AI\n");
             scanf("%d", &aiSw);
+            aiSw--;
         }
         if (gameMode == 2)
         {
@@ -90,9 +108,15 @@ int main()
             printf("3) Play with AI(2 AI players)\n");
             printf("4) Play with AI(3 AI players)\n");
             scanf("%d", &aiSw);
+            aiSw--;
         }
 
-        if (gameMode == 1 && aiSw == 2)
+        player1.isAi = 0;
+        player2.isAi = 0;
+        player3.isAi = 0;
+        player4.isAi = 0;
+
+        if (gameMode == 1 && !aiSw)
         {
             // getting players' names
             printf("Player(1) Please enter your name:\n");
@@ -104,7 +128,7 @@ int main()
             player2.nameInitial = player2.name[0];
             clearScreen();
         }
-        else if (gameMode == 1 && aiSw == 1)
+        else if (gameMode == 1 && aiSw)
         {
             printf("Please enter your name:\n");
             scanf("%s", player1.name);
@@ -112,8 +136,9 @@ int main()
             clearScreen();
             strcpy(player2.name, "Computer");
             player2.nameInitial = 'C';
+            player2.isAi = 1;
         }
-        else if (gameMode == 2 && aiSw == 1)
+        else if (gameMode == 2 && !aiSw)
         {
             // getting players' names
             printf("Player(1) Please enter your name:\n");
@@ -133,7 +158,7 @@ int main()
             player4.nameInitial = player4.name[0];
             clearScreen();
         }
-        else if (gameMode == 2 && aiSw == 2)
+        else if (gameMode == 2 && aiSw == 1)
         {
             // getting players' names
             printf("Player(1) Please enter your name:\n");
@@ -150,6 +175,27 @@ int main()
 
             strcpy(player4.name, "Computer");
             player4.nameInitial = 'C';
+            player4.isAi = 1;
+            clearScreen();
+        }
+        else if (gameMode == 2 && aiSw == 2)
+        {
+            // getting players' names
+            printf("Player(1) Please enter your name:\n");
+            scanf("%s", player1.name);
+            player1.nameInitial = player1.name[0];
+
+            strcpy(player2.name, "Computer1");
+            player2.nameInitial = 'D';
+            player2.isAi = 1;
+
+            printf("Player(3) Please enter your name:\n");
+            scanf("%s", player3.name);
+            player3.nameInitial = player3.name[0];
+
+            strcpy(player4.name, "Computer2");
+            player4.nameInitial = 'L';
+            player4.isAi = 1;
             clearScreen();
         }
         else if (gameMode == 2 && aiSw == 3)
@@ -160,31 +206,16 @@ int main()
             player1.nameInitial = player1.name[0];
 
             strcpy(player2.name, "Computer1");
-            player2.nameInitial = 'C';
-
-            printf("Player(3) Please enter your name:\n");
-            scanf("%s", player3.name);
-            player3.nameInitial = player3.name[0];
-
-            strcpy(player4.name, "Computer2");
-            player4.nameInitial = 'C';
-            clearScreen();
-        }
-        else if (gameMode == 2 && aiSw == 4)
-        {
-            // getting players' names
-            printf("Player(1) Please enter your name:\n");
-            scanf("%s", player1.name);
-            player1.nameInitial = player1.name[0];
-
-            strcpy(player2.name, "Computer1");
-            player2.nameInitial = 'C';
+            player2.nameInitial = 'D';
+            player2.isAi = 1;
 
             strcpy(player3.name, "Computer2");
-            player3.nameInitial = 'C';
+            player3.nameInitial = 'R';
+            player3.isAi = 1;
 
             strcpy(player4.name, "Computer3");
-            player4.nameInitial = 'C';
+            player4.nameInitial = 'L';
+            player4.isAi = 1;
             clearScreen();
         }
 
@@ -312,6 +343,11 @@ int main()
         player3.blockedFor = 0;
         player4.blockedFor = 0;
 
+        player1.charmNo = 1;
+        player2.charmNo = 1;
+        player3.charmNo = 1;
+        player4.charmNo = 1;
+
         // placing the players in their positions:
         Board[player1.location.x][player1.location.y] = player1.nameInitial;
         Board[player2.location.x][player2.location.y] = player2.nameInitial;
@@ -323,7 +359,7 @@ int main()
     }
 
     // first print of the board:
-    printPage(&player1);
+    // printPage(&player1);
     // printf("%s's turn\n", player1.name);
 
     getchar();
@@ -332,7 +368,7 @@ int main()
     while (player1.location.x != 2 * row - 1 && player2.location.x != 1 && player3.location.y != 1 && player4.location.y != 2 * column - 1) // while nobody has won
     {
         printPage(determinePlayer());
-        if (charmSw) getCharm();
+        // if (charmSw) getCharm();
 
         if (determinePlayer()->blockedFor > 0)
         {

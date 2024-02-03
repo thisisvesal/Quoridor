@@ -15,7 +15,8 @@ void addWalls(struct Player *someone)
         num = 5;
 
     printf("congrats %s, you get %d extra walls\n", someone->name, num);
-    sleep(3500);
+    // sleep(3500);
+    getch();
 
     someone->wallCount += num;
 
@@ -33,7 +34,8 @@ int loseWalls(struct Player *someone)
         return 0;
 
     printf("sorry %s, you lose %d walls\n", someone->name, num);
-    sleep(3500);
+    // sleep(3500);
+    getch();
 
     someone->wallCount -= num;
 
@@ -91,7 +93,8 @@ int gainFromLoss(struct Player *gainer)
         return 0;
 
     printf("%s, you will take %d of %s's walls :]", gainer->name, num, loser->name);
-    sleep(3500);
+    // sleep(3500);
+    getch();
     gainer->wallCount += num;
     loser->wallCount -= num;
 
@@ -104,7 +107,8 @@ int gainFromLoss(struct Player *gainer)
 void removeAllWalls()
 {
     printf("..Removing every wall on the board..\n");
-    sleep(3500);
+    // sleep(3500);
+    getch();
     for (int i = 0; i < 2 * row + 1; i++)
     {
         for (int j = 0; j < 2 * column + 1; j++)
@@ -166,7 +170,8 @@ int blockRound(struct Player *someone)
     someone->blockedFor += block;
 
     printf("%s, sadly you can't play for %d rounds!\n", someone->name, block);
-    sleep(3500);
+    // sleep(3500);
+    getch();
 
     printPage(someone);
 
@@ -176,10 +181,14 @@ int blockRound(struct Player *someone)
 void getCharm()
 {
     struct Player *someone = determinePlayer();
-    if (someone->blockedFor != 0) return;
+    if (someone->blockedFor != 0)
+        return;
 
-    printf("\nPress a key to see your luck!\n");
-    getch();
+    if (!someone->isAi)
+    {
+        printf("\nPress a key to see your luck!\n");
+        getch();
+    }
 
     if (randomize(0, 1))
     {
@@ -201,8 +210,10 @@ void getCharm()
         int getRandom = randomize(0, 4);
         if (getRandom == 0 || getRandom == 1)
         {
-            if (loseWalls(someone));
-            else if (blockRound(someone));
+            if (loseWalls(someone))
+                ;
+            else if (blockRound(someone))
+                ;
             else
                 removeAllWalls();
         }

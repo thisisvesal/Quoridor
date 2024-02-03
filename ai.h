@@ -4,8 +4,11 @@
 #ifndef ai
 #define ai
 
-void aiPutWall()
+// This function decides what kind of move the computer should make
+// if putting a wall is not possible, 
+int shouldMove()
 {
+    int moveSw = 1;
     if (gameMode == 1)
     {
         if (round == 0)
@@ -17,6 +20,7 @@ void aiPutWall()
                 Board[player2.location.x - 1][player2.location.y] = -51;
                 Board[player2.location.x - 1][player2.location.y + 2] = -51;
                 Board[player2.location.x - 1][player2.location.y + 1] = -51;
+                moveSw = 0;
             }
             else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
                      Board[player2.location.x - 1][player2.location.y - 2] == -60 &&
@@ -25,6 +29,7 @@ void aiPutWall()
                 Board[player2.location.x - 1][player2.location.y] = -51;
                 Board[player2.location.x - 1][player2.location.y - 2] = -51;
                 Board[player2.location.x - 1][player2.location.y - 1] = -51;
+                moveSw = 0;
             }
         }
         else if (round == 1)
@@ -36,6 +41,7 @@ void aiPutWall()
                 Board[player1.location.x + 1][player1.location.y] = -51;
                 Board[player1.location.x + 1][player1.location.y + 2] = -51;
                 Board[player1.location.x + 1][player1.location.y + 1] = -51;
+                moveSw = 0;
             }
             else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
                      Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
@@ -44,6 +50,7 @@ void aiPutWall()
                 Board[player1.location.x + 1][player1.location.y] = -51;
                 Board[player1.location.x + 1][player1.location.y - 2] = -51;
                 Board[player1.location.x + 1][player1.location.y - 1] = -51;
+                moveSw = 0;
             }
         }
     }
@@ -81,6 +88,7 @@ void aiPutWall()
             min2Player = 3;
             min2 = player3.location.y;
         }
+
         if (2 * row - (player1.location.x) < min)
         {
             min2Player = minPlayer;
@@ -104,6 +112,7 @@ void aiPutWall()
                     Board[player1.location.x + 1][player1.location.y] = -51;
                     Board[player1.location.x + 1][player1.location.y + 2] = -51;
                     Board[player1.location.x + 1][player1.location.y + 1] = -51;
+                    moveSw = 0;
                 }
                 else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
                          Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
@@ -112,6 +121,7 @@ void aiPutWall()
                     Board[player1.location.x + 1][player1.location.y] = -51;
                     Board[player1.location.x + 1][player1.location.y - 2] = -51;
                     Board[player1.location.x + 1][player1.location.y - 1] = -51;
+                    moveSw = 0;
                 }
             }
             else if (min2Player == 2)
@@ -131,6 +141,7 @@ void aiPutWall()
                     Board[player2.location.x - 1][player2.location.y] = -51;
                     Board[player2.location.x - 1][player2.location.y - 2] = -51;
                     Board[player2.location.x - 1][player2.location.y - 1] = -51;
+                    moveSw = 0;
                 }
             }
             else if (min2Player == 3)
@@ -150,6 +161,7 @@ void aiPutWall()
                     Board[player3.location.x][player3.location.y - 1] = -70;
                     Board[player3.location.x - 2][player3.location.y - 1] = -70;
                     Board[player3.location.x - 1][player3.location.y - 1] = -70;
+                    moveSw = 0;
                 }
             }
             else if (min2Player == 4)
@@ -161,6 +173,7 @@ void aiPutWall()
                     Board[player4.location.x][player4.location.y + 1] = -70;
                     Board[player4.location.x + 2][player4.location.y + 1] = -70;
                     Board[player4.location.x + 1][player4.location.y + 1] = -70;
+                    moveSw = 0;
                 }
                 else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
                          Board[player4.location.x - 2][player4.location.y + 1] == -77 &&
@@ -169,6 +182,7 @@ void aiPutWall()
                     Board[player4.location.x][player4.location.y + 1] = -70;
                     Board[player4.location.x - 2][player4.location.y + 1] = -70;
                     Board[player4.location.x - 1][player4.location.y + 1] = -70;
+                    moveSw = 0;
                 }
             }
         }
@@ -183,6 +197,7 @@ void aiPutWall()
                     Board[player1.location.x + 1][player1.location.y] = -51;
                     Board[player1.location.x + 1][player1.location.y + 2] = -51;
                     Board[player1.location.x + 1][player1.location.y + 1] = -51;
+                    moveSw = 0;
                 }
                 else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
                          Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
@@ -191,6 +206,7 @@ void aiPutWall()
                     Board[player1.location.x + 1][player1.location.y] = -51;
                     Board[player1.location.x + 1][player1.location.y - 2] = -51;
                     Board[player1.location.x + 1][player1.location.y - 1] = -51;
+                    moveSw = 0;
                 }
             }
             else if (minPlayer == 2)
@@ -202,6 +218,7 @@ void aiPutWall()
                     Board[player2.location.x - 1][player2.location.y] = -51;
                     Board[player2.location.x - 1][player2.location.y + 2] = -51;
                     Board[player2.location.x - 1][player2.location.y + 1] = -51;
+                    moveSw = 0;
                 }
                 else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
                          Board[player2.location.x - 1][player2.location.y - 2] == -60 &&
@@ -210,6 +227,7 @@ void aiPutWall()
                     Board[player2.location.x - 1][player2.location.y] = -51;
                     Board[player2.location.x - 1][player2.location.y - 2] = -51;
                     Board[player2.location.x - 1][player2.location.y - 1] = -51;
+                    moveSw = 0;
                 }
             }
             else if (minPlayer == 3)
@@ -221,6 +239,7 @@ void aiPutWall()
                     Board[player3.location.x][player3.location.y - 1] = -70;
                     Board[player3.location.x + 2][player3.location.y - 1] = -70;
                     Board[player3.location.x + 1][player3.location.y - 1] = -70;
+                    moveSw = 0;
                 }
                 else if (Board[player3.location.x][player3.location.y - 1] == -77 &&
                          Board[player3.location.x - 2][player3.location.y - 1] == -77 &&
@@ -229,6 +248,7 @@ void aiPutWall()
                     Board[player3.location.x][player3.location.y - 1] = -70;
                     Board[player3.location.x - 2][player3.location.y - 1] = -70;
                     Board[player3.location.x - 1][player3.location.y - 1] = -70;
+                    moveSw = 0;
                 }
             }
             else if (minPlayer == 4)
@@ -240,6 +260,7 @@ void aiPutWall()
                     Board[player4.location.x][player4.location.y + 1] = -70;
                     Board[player4.location.x + 2][player4.location.y + 1] = -70;
                     Board[player4.location.x + 1][player4.location.y + 1] = -70;
+                    moveSw = 0;
                 }
                 else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
                          Board[player4.location.x - 2][player4.location.y + 1] == -77 &&
@@ -248,10 +269,13 @@ void aiPutWall()
                     Board[player4.location.x][player4.location.y + 1] = -70;
                     Board[player4.location.x - 2][player4.location.y + 1] = -70;
                     Board[player4.location.x - 1][player4.location.y + 1] = -70;
+                    moveSw = 0;
                 }
             }
         }
     }
+
+    return moveSw;
 }
 
 #endif

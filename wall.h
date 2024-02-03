@@ -3,107 +3,64 @@
 #ifndef wall
 #define wall
 
+location userWallPlace()
+{
+    location ans;
+    ans.x = row;
+    ans.y = column;
+    gotoxy(ans.x, ans.y);
+    // this section allows movement of the cursor until enter is pressed
+    // then when enter is hit, a wall will be placed there
+    while (1)
+    {
+        char where = getch();
+        if (where == 13)
+            break;
+        else if (where == 77) // right
+        {
+            ans.y++;
+            gotoxy(ans.x, ans.y);
+        }
+        else if (where == 75) // left
+        {
+            ans.y--;
+            gotoxy(ans.x, ans.y);
+        }
+        else if (where == 72) // up
+        {
+            ans.x--;
+            gotoxy(ans.x, ans.y);
+        }
+        else if (where == 80) // down
+        {
+            ans.x++;
+            gotoxy(ans.x, ans.y);
+        }
+    }
+
+    return ans;
+}
+
 // putting fences
-void putWall()
+int putWall()
 {
     // 2 player mode
     int contSw = 1;
     int x, y;
 
-    if (gameMode==1 && aiSw == 1 && round == 1)
+    if (determinePlayer()->isAi)
     {
-        int align = randomize(0,1);
-        // Vertical:
-        if (align == 0)
-        {
-            x = 2 * (randomize(1, row)) - 1;
-            y = 2 * (randomize(1, column - 1));
-        }
-            // Horizontal:
-        else if (align == 1)
-        {
-            x = 2 * (randomize(1, row - 1));
-            y = 2 * (randomize(1, column)) - 1;
-        }
-    } else if (gameMode==2 && aiSw == 2 && round == 3)
-    {
-        int align = randomize(0,1);
-        // Vertical:
-        if (align == 0)
-        {
-            x = 2 * (randomize(1, row)) - 1;
-            y = 2 * (randomize(1, column - 1));
-        }
-            // Horizontal:
-        else if (align == 1)
-        {
-            x = 2 * (randomize(1, row - 1));
-            y = 2 * (randomize(1, column)) - 1;
-        }
-    }else if (gameMode==2 && aiSw == 3 && (round == 3|| round==1))
-    {
-        int align = randomize(0,1);
-        // Vertical:
-        if (align == 0)
-        {
-            x = 2 * (randomize(1, row)) - 1;
-            y = 2 * (randomize(1, column - 1));
-        }
-            // Horizontal:
-        else if (align == 1)
-        {
-            x = 2 * (randomize(1, row - 1));
-            y = 2 * (randomize(1, column)) - 1;
-        }
-    }else if (gameMode==2 && aiSw == 3 && round!=0 )
-    {
-        int align = randomize(0,1);
-        // Vertical:
-        if (align == 0)
-        {
-            x = 2 * (randomize(1, row)) - 1;
-            y = 2 * (randomize(1, column - 1));
-        }
-            // Horizontal:
-        else if (align == 1)
-        {
-            x = 2 * (randomize(1, row - 1));
-            y = 2 * (randomize(1, column)) - 1;
-        }
+        location where = aiWallPlace();
+        x = where.x;
+        y = where.y;
     }
     else
     {
-        x = row;
-        y = column;
-        gotoxy(x, y);
-        // this section allows movement of the cursor until enter is pressed
-        // then when enter is hit, a wall will be placed there
-        while (1)
-        {
-            char where = getch();
-            if (where == 13)
-                break;
-            else if (where == 77) // right
-            {
-                y++;
-                gotoxy(x, y);
-            }
-            else if (where == 75) // left
-            {
-                y--;
-                gotoxy(x, y);
-            }
-            else if (where == 72) // up
-            {
-                x--;
-                gotoxy(x, y);
-            }
-            else if (where == 80) // down
-            {
-                x++;
-                gotoxy(x, y);
-            }
-        }
+        printf("%s %d= a computer\n", determinePlayer()->name, determinePlayer()->isAi);
+        sleep(1000);
+        location where = userWallPlace();
+        x = where.x;
+        y = where.y;
     }
 
     // checking if the chosen place is accessible then place it
@@ -144,8 +101,8 @@ void putWall()
                 }
             }
         }
-            // vertical fences
-            //  ║ 186
+        // vertical fences
+        //  ║ 186
         else if (y % 2 == 0 && x % 2 != 0)
         {
             if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
@@ -185,7 +142,7 @@ void putWall()
             putWall();
         }
     }
-        // 4 player mode
+    // 4 player mode
     else if (gameMode == 2)
     {
 
@@ -245,8 +202,8 @@ void putWall()
                 }
             }
         }
-            // vertical fences
-            //  ║ 186
+        // vertical fences
+        //  ║ 186
         else if (y % 2 == 0 && x % 2 != 0)
         {
             if (x == 2 * row - 1 && Board[x][y] == -77 && Board[x - 2][y] == -77 && Board[x - 1][y] == -59)
@@ -303,9 +260,14 @@ void putWall()
 
         if (contSw)
         {
-            putWall();
+            if (determinePlayer()->isAi)
+                return 0;
+            else
+                putWall();
         }
     }
+
+    return 1;
 }
 
 #endif

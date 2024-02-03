@@ -24,7 +24,11 @@ int motionDetect()
 {
     char motionCode;
 
-    if (aiSw == 1)
+    if (determinePlayer()->isAi)
+    {
+        return moveDecision();
+    }
+    else
     {
         motionCode = getch();
         if (motionCode == 0)
@@ -37,67 +41,7 @@ int motionDetect()
             // down: 80
         }
     }
-    else if (aiSw == 2)
-    {
-        if (round == 3)
-        {
-            return moveDecision();
-        }
-        else
-        {
-            motionCode = getch();
-            if (motionCode == 0)
-            {
-                motionCode = getch();
-                return motionCode;
-                // right: 77
-                // left: 75
-                // up: 72
-                // down: 80
-            }
-        }
-    }
-    else if (aiSw == 3)
-    {
-        if (round == 2 || round == 3)
-        {
-            return moveDecision();
-        }
-        else
-        {
-            motionCode = getch();
-            if (motionCode == 0)
-            {
-                motionCode = getch();
-                return motionCode;
-                // right: 77
-                // left: 75
-                // up: 72
-                // down: 80
-            }
-        }
-    }
-    else if (aiSw == 4)
-    {
-        if (round == 0)
-        {
-            motionCode = getch();
-            if (motionCode == 0)
-            {
-                motionCode = getch();
-                return motionCode;
-                // right: 77
-                // left: 75
-                // up: 72
-                // down: 80
-            }
-        }
-        else
-        {
-            return moveDecision();
-        }
-    }
-    
+ 
 }
 
 // making a delay

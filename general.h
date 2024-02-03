@@ -20,6 +20,8 @@ struct Player
     } location;
     int wallCount;
     int blockedFor;
+    int charmNo;
+    int isAi;
 } player1, player2, player3, player4;
 
 int row, column;
@@ -33,7 +35,14 @@ int round = 0;
 
 struct Player* determinePlayer()
 {
-    if (gameMode == 2)
+    if (gameMode == 1)
+    {
+        if (round == 0)
+            return &player1;
+        else if (round == 1)
+            return &player2;
+    }
+    else if (gameMode == 2)
     {
         if (round == 0)
             return &player1;
@@ -43,13 +52,6 @@ struct Player* determinePlayer()
             return &player2;
         else if (round == 3)
             return &player4;
-    }
-    else
-    {
-        if (round == 0)
-            return &player1;
-        else if (round == 1)
-            return &player2;
     }
 }
 
