@@ -28,6 +28,7 @@ struct Player
 
 int row, column;
 char Board[101][101];
+int wallCount = 0;
 int sw[101][101];
 int gameMode = 0;
 int color = 0;
@@ -35,7 +36,7 @@ int aiSw = 0;
 // integer round determines whose turn it is
 int round = 0;
 
-struct Player* determinePlayer()
+struct Player *determinePlayer()
 {
     if (gameMode == 1)
     {
@@ -56,7 +57,5 @@ struct Player* determinePlayer()
             return &player4;
     }
 }
-
-
 
 #endif

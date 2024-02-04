@@ -85,15 +85,8 @@ void gameRun()
     }
     else if (moveChar[0] == 'w' && someone->wallCount == 0) // if the player is out of walls
     {
-        // if (gameMode == 1 && aiSw == 1 && round == 1)
-        // {
-        //     moveChar[0] = 'm';
-        // }
-        // else
-        //{
         printf("You're out of walls!\n");
         sleep(750);
-        //}
     }
     else if (moveChar[0] == 'm') // move for someone
     {
@@ -179,10 +172,11 @@ void gameRun()
 
             fclose(savePlayers);
 
-            printf("\nGame saved\n\n");
+            printf("\nGame saved");
 
             setTextColor(color, 15);
-
+            printf("\n\n");
+            
             sleep(2000);
         }
     }
