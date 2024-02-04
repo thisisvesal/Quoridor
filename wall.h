@@ -56,8 +56,6 @@ int putWall()
     }
     else
     {
-        printf("%s %d= a computer\n", determinePlayer()->name, determinePlayer()->isAi);
-        sleep(1000);
         location where = userWallPlace();
         x = where.x;
         y = where.y;

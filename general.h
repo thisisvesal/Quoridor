@@ -10,14 +10,16 @@ struct features
     int round;
 };
 
+typedef struct location
+{
+    int x, y;
+} location;
+
 struct Player
 {
     char name[30];
     char nameInitial;
-    struct place
-    {
-        int x, y;
-    } location;
+    location location;
     int wallCount;
     int blockedFor;
     int charmNo;

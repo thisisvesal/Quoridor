@@ -5,16 +5,7 @@
 void gameRun()
 {
     struct Player *someone = determinePlayer();
-
-    // resetting charmNo for everyone but the current player
-    struct Player players[4] = {player1, player2, player3, player4};
-    for (size_t i = 0; i < 4; i++)
-    {
-        if (someone != &players[i])
-        {
-            players[i].charmNo = 1;
-        }
-    }
+    aiWallTry = 0;
 
     charmSw = 1;
 
@@ -77,6 +68,7 @@ void gameRun()
     {
         putWall();
         someone->wallCount--;
+        someone->charmNo = 1;
 
         printPage(someone);
 
@@ -107,6 +99,7 @@ void gameRun()
     {
         gotoxy(someone->location.x, someone->location.y);
         move(someone);
+        someone->charmNo = 1;
 
         printPage(someone);
 
@@ -123,10 +116,10 @@ void gameRun()
     }
     else if (moveChar[0] == 'l')
     {
-        if (determinePlayer()->charmNo > 0)
+        if (someone->charmNo > 0)
         {
             getCharm();
-            determinePlayer()->charmNo = 0;
+            someone->charmNo = 0;
         }
         else
         {

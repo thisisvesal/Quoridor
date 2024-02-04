@@ -80,6 +80,20 @@ void move(struct Player *someone)
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 6] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y += 6;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 8] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y += 8;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
         }
     }
@@ -101,6 +115,20 @@ void move(struct Player *someone)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y -= 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 6] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y -= 6;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 8] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.y -= 8;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
@@ -128,6 +156,20 @@ void move(struct Player *someone)
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
+                else if (Board[someoneCopy.location.x - 6][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x -= 6;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x - 8][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x -= 8;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
             }
         }
     }
@@ -149,6 +191,20 @@ void move(struct Player *someone)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x += 4;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x + 6][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x += 6;
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
+                    contSw = 0;
+                }
+                else if (Board[someoneCopy.location.x + 8][someoneCopy.location.y] == ' ')
+                {
+                    Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+                    someoneCopy.location.x += 8;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }

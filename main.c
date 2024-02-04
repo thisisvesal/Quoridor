@@ -185,7 +185,7 @@ int main()
             scanf("%s", player1.name);
             player1.nameInitial = player1.name[0];
 
-            strcpy(player2.name, "Computer1");
+            strcpy(player2.name, "Down");
             player2.nameInitial = 'D';
             player2.isAi = 1;
 
@@ -193,7 +193,7 @@ int main()
             scanf("%s", player3.name);
             player3.nameInitial = player3.name[0];
 
-            strcpy(player4.name, "Computer2");
+            strcpy(player4.name, "Left");
             player4.nameInitial = 'L';
             player4.isAi = 1;
             clearScreen();
@@ -205,15 +205,15 @@ int main()
             scanf("%s", player1.name);
             player1.nameInitial = player1.name[0];
 
-            strcpy(player2.name, "Computer1");
+            strcpy(player2.name, "Down");
             player2.nameInitial = 'D';
             player2.isAi = 1;
 
-            strcpy(player3.name, "Computer2");
+            strcpy(player3.name, "Right");
             player3.nameInitial = 'R';
             player3.isAi = 1;
 
-            strcpy(player4.name, "Computer3");
+            strcpy(player4.name, "Left");
             player4.nameInitial = 'L';
             player4.isAi = 1;
             clearScreen();
@@ -357,18 +357,13 @@ int main()
             Board[player4.location.x][player4.location.y] = player4.nameInitial;
         }
     }
-
-    // first print of the board:
-    // printPage(&player1);
-    // printf("%s's turn\n", player1.name);
-
+    
     getchar();
 
     // The game loop:
     while (player1.location.x != 2 * row - 1 && player2.location.x != 1 && player3.location.y != 1 && player4.location.y != 2 * column - 1) // while nobody has won
     {
         printPage(determinePlayer());
-        // if (charmSw) getCharm();
 
         if (determinePlayer()->blockedFor > 0)
         {

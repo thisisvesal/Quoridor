@@ -4,385 +4,298 @@
 #ifndef desicion
 #define decision
 
-typedef struct location
-{
-    int x, y;
-} location;
-
 // This function prioritizes putting walls over moving,
 // on certain conditions
 // if those conditions are not met,
 // -1, -1 is returned, which indicates that we have to move
-location aiWallPlace()
+
+int aiWallTry = 0;
+
+int distanceOf(struct Player *someone)
 {
-    location ans;
-    ans.x = -1;
-    ans.y = -1;
-    int moveSw = 1;
-
-    if (determinePlayer()->wallCount == 0)
-        return ans;
-    if (gameMode == 1)
+    if (someone == &player1)
     {
-        if (round == 0)
-        {
-            if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                Board[player2.location.x - 1][player2.location.y + 2] == -60 &&
-                Board[player2.location.x - 1][player2.location.y + 1] == -59)
-            {
-                // Board[player2.location.x - 1][player2.location.y] = -51;
-                // Board[player2.location.x - 1][player2.location.y + 2] = -51;
-                // Board[player2.location.x - 1][player2.location.y + 1] = -51;
-                ans.x = player2.location.x - 1;
-                ans.y = player2.location.y;
-                moveSw = 0;
-            }
-            else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                     Board[player2.location.x - 1][player2.location.y - 2] == -60 &&
-                     Board[player2.location.x - 1][player2.location.y - 1] == -59)
-            {
-                // Board[player2.location.x - 1][player2.location.y] = -51;
-                // Board[player2.location.x - 1][player2.location.y - 2] = -51;
-                // Board[player2.location.x - 1][player2.location.y - 1] = -51;
-                ans.x = player2.location.x - 1;
-                ans.y = player2.location.y - 2;
-                moveSw = 0;
-            }
-        }
-        else if (round == 1)
-        {
-            if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                Board[player1.location.x + 1][player1.location.y + 2] == -60 &&
-                Board[player1.location.x + 1][player1.location.y + 1] == -59)
-            {
-                // Board[player1.location.x + 1][player1.location.y] = -51;
-                // Board[player1.location.x + 1][player1.location.y + 2] = -51;
-                // Board[player1.location.x + 1][player1.location.y + 1] = -51;
-                ans.x = player1.location.x + 1;
-                ans.y = player1.location.y;
-                moveSw = 0;
-            }
-            else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                     Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
-                     Board[player1.location.x + 1][player1.location.y - 1] == -59)
-            {
-                // Board[player1.location.x + 1][player1.location.y] = -51;
-                // Board[player1.location.x + 1][player1.location.y - 2] = -51;
-                // Board[player1.location.x + 1][player1.location.y - 1] = -51;
-                ans.x = player1.location.x + 1;
-                ans.y = player1.location.y - 2;
-                moveSw = 0;
-            }
-        }
+        return 2 * row - player1.location.x - 1;
     }
-    else if (gameMode == 2)
+    else if (someone == &player2)
     {
-        int min = 102;
-        int min2 = 200;
-        int minPlayer = 0;
-        int min2Player = 0;
+        return player2.location.x - 1;
+    }
+    else if (someone == &player3)
+    {
+        return player3.location.y - 1;
+    }
+    else if (someone == &player4)
+    {
+        return 2 * column - player4.location.y - 1;
+    }
+}
 
-        if ((player2.location.x) < min)
-        {
-            min = player2.location.x;
-            minPlayer = 2;
-        }
-        if (2 * column - (player4.location.y) < min)
-        {
-            min2Player = minPlayer;
-            min = 2 * column - (player4.location.y);
-            minPlayer = 4;
-        }
-        else if (2 * column - (player4.location.y) < min2)
-        {
-            min2Player = 4;
-            min2 = 2 * column - (player4.location.y);
-        }
-        if (player3.location.y < min)
-        {
-            min2Player = minPlayer;
-            min = player3.location.y;
-            minPlayer = 3;
-        }
-        else if (player3.location.y < min2)
-        {
-            min2Player = 3;
-            min2 = player3.location.y;
-        }
+struct Player *minDistancePerson()
+{
+    struct Player *ans;
 
-        if (2 * row - (player1.location.x) < min)
+    int min = 200;
+    if (distanceOf(&player1) < min)
+    {
+        min = distanceOf(&player1);
+        ans = &player1;
+    }
+    if (distanceOf(&player2) < min)
+    {
+        min = distanceOf(&player2);
+        ans = &player2;
+    }
+    if (gameMode == 2)
+    {
+        if (distanceOf(&player3) < min)
         {
-            min2Player = minPlayer;
-            min = player1.location.x;
-            minPlayer = 1;
+            min = distanceOf(&player3);
+            ans = &player3;
         }
-        else if (2 * row - (player1.location.x) < min2)
+        if (distanceOf(&player4) < min)
         {
-            min2Player = 1;
-            min2 = player1.location.x;
-        }
-
-        if ((round == 0 && minPlayer == 1) || (round == 1 && minPlayer == 3) || (round == 2 && minPlayer == 2) || (round == 3 && minPlayer == 3))
-        {
-            if (min2Player == 1)
-            {
-                if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                    Board[player1.location.x + 1][player1.location.y + 2] == -60 &&
-                    Board[player1.location.x + 1][player1.location.y + 1] == -59)
-                {
-                    // Board[player1.location.x + 1][player1.location.y] = -51;
-                    // Board[player1.location.x + 1][player1.location.y + 2] = -51;
-                    // Board[player1.location.x + 1][player1.location.y + 1] = -51;
-                    ans.x = player1.location.x + 1;
-                    ans.y = player1.location.y;
-                    moveSw = 0;
-                }
-                else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                         Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
-                         Board[player1.location.x + 1][player1.location.y - 1] == -59)
-                {
-                    // Board[player1.location.x + 1][player1.location.y] = -51;
-                    // Board[player1.location.x + 1][player1.location.y - 2] = -51;
-                    // Board[player1.location.x + 1][player1.location.y - 1] = -51;
-                    ans.x = player1.location.x + 1;
-                    ans.y = player1.location.y - 2;
-                    moveSw = 0;
-                }
-            }
-            else if (min2Player == 2)
-            {
-                if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                    Board[player2.location.x - 1][player2.location.y + 2] == -60 &&
-                    Board[player2.location.x - 1][player2.location.y + 1] == -59)
-                {
-                    // Board[player2.location.x - 1][player2.location.y] = -51;
-                    // Board[player2.location.x - 1][player2.location.y + 2] = -51;
-                    // Board[player2.location.x - 1][player2.location.y + 1] = -51;
-                    ans.x = player2.location.x - 1;
-                    ans.y = player2.location.y;
-                }
-                else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                         Board[player2.location.x - 1][player2.location.y - 2] == -60 &&
-                         Board[player2.location.x - 1][player2.location.y - 1] == -59)
-                {
-                    // Board[player2.location.x - 1][player2.location.y] = -51;
-                    // Board[player2.location.x - 1][player2.location.y - 2] = -51;
-                    // Board[player2.location.x - 1][player2.location.y - 1] = -51;
-                    ans.x = player2.location.x - 1;
-                    ans.y = player2.location.y - 2;
-                    moveSw = 0;
-                }
-            }
-            else if (min2Player == 3)
-            {
-                if (Board[player3.location.x][player3.location.y - 1] == -77 &&
-                    Board[player3.location.x + 2][player3.location.y - 1] == -77 &&
-                    Board[player3.location.x + 1][player3.location.y - 1] == -59)
-                {
-                    // Board[player3.location.x][player3.location.y - 1] = -70;
-                    // Board[player3.location.x + 2][player3.location.y - 1] = -70;
-                    // Board[player3.location.x + 1][player3.location.y - 1] = -70;
-                    ans.x = player3.location.x;
-                    ans.y = player3.location.y - 1;
-                }
-                else if (Board[player3.location.x][player3.location.y - 1] == -77 &&
-                         Board[player3.location.x - 2][player3.location.y - 1] == -77 &&
-                         Board[player3.location.x - 1][player3.location.y - 1] == -59)
-                {
-                    // Board[player3.location.x][player3.location.y - 1] = -70;
-                    // Board[player3.location.x - 2][player3.location.y - 1] = -70;
-                    // Board[player3.location.x - 1][player3.location.y - 1] = -70;
-                    ans.x = player3.location.x - 2;
-                    ans.y = player3.location.y - 1;
-                    moveSw = 0;
-                }
-            }
-            else if (min2Player == 4)
-            {
-                if (Board[player4.location.x][player4.location.y + 1] == -77 &&
-                    Board[player4.location.x + 2][player4.location.y + 1] == -77 &&
-                    Board[player4.location.x + 1][player4.location.y + 1] == -59)
-                {
-                    // Board[player4.location.x][player4.location.y + 1] = -70;
-                    // Board[player4.location.x + 2][player4.location.y + 1] = -70;
-                    // Board[player4.location.x + 1][player4.location.y + 1] = -70;
-                    ans.x = player4.location.x;
-                    ans.y = player4.location.y + 1;
-                    moveSw = 0;
-                }
-                else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
-                         Board[player4.location.x - 2][player4.location.y + 1] == -77 &&
-                         Board[player4.location.x - 1][player4.location.y + 1] == -59)
-                {
-                    // Board[player4.location.x][player4.location.y + 1] = -70;
-                    // Board[player4.location.x - 2][player4.location.y + 1] = -70;
-                    // Board[player4.location.x - 1][player4.location.y + 1] = -70;
-                    ans.x = player4.location.x - 2;
-                    ans.y = player4.location.y + 1;
-                    moveSw = 0;
-                }
-            }
-        }
-        else
-        {
-            if (minPlayer == 1)
-            {
-                if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                    Board[player1.location.x + 1][player1.location.y + 2] == -60 &&
-                    Board[player1.location.x + 1][player1.location.y + 1] == -59)
-                {
-                    // Board[player1.location.x + 1][player1.location.y] = -51;
-                    // Board[player1.location.x + 1][player1.location.y + 2] = -51;
-                    // Board[player1.location.x + 1][player1.location.y + 1] = -51;
-                    ans.x = player1.location.x + 1;
-                    ans.y = player1.location.y;
-                    moveSw = 0;
-                }
-                else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                         Board[player1.location.x + 1][player1.location.y - 2] == -60 &&
-                         Board[player1.location.x + 1][player1.location.y - 1] == -59)
-                {
-                    // Board[player1.location.x + 1][player1.location.y] = -51;
-                    // Board[player1.location.x + 1][player1.location.y - 2] = -51;
-                    // Board[player1.location.x + 1][player1.location.y - 1] = -51;
-                    ans.x = player1.location.x + 1;
-                    ans.y = player1.location.y - 2;
-                    moveSw = 0;
-                }
-            }
-            else if (minPlayer == 2)
-            {
-                if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                    Board[player2.location.x - 1][player2.location.y + 2] == -60 &&
-                    Board[player2.location.x - 1][player2.location.y + 1] == -59)
-                {
-                    // Board[player2.location.x - 1][player2.location.y] = -51;
-                    // Board[player2.location.x - 1][player2.location.y + 2] = -51;
-                    // Board[player2.location.x - 1][player2.location.y + 1] = -51;
-                    ans.x = player2.location.x - 1;
-                    ans.y = player2.location.y;
-                    moveSw = 0;
-                }
-                else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                         Board[player2.location.x - 1][player2.location.y - 2] == -60 &&
-                         Board[player2.location.x - 1][player2.location.y - 1] == -59)
-                {
-                    // Board[player2.location.x - 1][player2.location.y] = -51;
-                    // Board[player2.location.x - 1][player2.location.y - 2] = -51;
-                    // Board[player2.location.x - 1][player2.location.y - 1] = -51;
-                    ans.x = player2.location.x - 1;
-                    ans.y = player2.location.y - 2;
-                    moveSw = 0;
-                }
-            }
-            else if (minPlayer == 3)
-            {
-                if (Board[player3.location.x][player3.location.y - 1] == -77 &&
-                    Board[player3.location.x + 2][player3.location.y - 1] == -77 &&
-                    Board[player3.location.x + 1][player3.location.y - 1] == -59)
-                {
-                    // Board[player3.location.x][player3.location.y - 1] = -70;
-                    // Board[player3.location.x + 2][player3.location.y - 1] = -70;
-                    // Board[player3.location.x + 1][player3.location.y - 1] = -70;
-                    ans.x = player3.location.x;
-                    ans.y = player3.location.y - 1;
-                    moveSw = 0;
-                }
-                else if (Board[player3.location.x][player3.location.y - 1] == -77 &&
-                         Board[player3.location.x - 2][player3.location.y - 1] == -77 &&
-                         Board[player3.location.x - 1][player3.location.y - 1] == -59)
-                {
-                    // Board[player3.location.x][player3.location.y - 1] = -70;
-                    // Board[player3.location.x - 2][player3.location.y - 1] = -70;
-                    // Board[player3.location.x - 1][player3.location.y - 1] = -70;
-                    ans.x = player3.location.x - 2;
-                    ans.y = player3.location.y - 1;
-                    moveSw = 0;
-                }
-            }
-            else if (minPlayer == 4)
-            {
-                if (Board[player4.location.x][player4.location.y + 1] == -77 &&
-                    Board[player4.location.x + 2][player4.location.y + 1] == -77 &&
-                    Board[player4.location.x + 1][player4.location.y + 1] == -59)
-                {
-                    // Board[player4.location.x][player4.location.y + 1] = -70;
-                    // Board[player4.location.x + 2][player4.location.y + 1] = -70;
-                    // Board[player4.location.x + 1][player4.location.y + 1] = -70;
-                    ans.x = player4.location.x;
-                    ans.y = player4.location.y + 1;
-                    moveSw = 0;
-                }
-                else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
-                         Board[player4.location.x - 2][player4.location.y + 1] == -77 &&
-                         Board[player4.location.x - 1][player4.location.y + 1] == -59)
-                {
-                    // Board[player4.location.x][player4.location.y + 1] = -70;
-                    // Board[player4.location.x - 2][player4.location.y + 1] = -70;
-                    // Board[player4.location.x - 1][player4.location.y + 1] = -70;
-                    ans.x = player4.location.x - 2;
-                    ans.y = player4.location.y + 1;
-                    moveSw = 0;
-                }
-            }
+            min = distanceOf(&player4);
+            ans = &player4;
         }
     }
 
     return ans;
 }
 
+int isFrontWallFree(struct Player *someone)
+{
+    if (someone == &player1)
+    {
+        if (Board[player1.location.x + 1][player1.location.y] == -60 &&
+            Board[player1.location.x + 1][player1.location.y + 2] == -60)
+        {
+            return 1;
+        }
+        else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
+                 Board[player1.location.x + 1][player1.location.y - 2] == -60)
+        {
+            return 2;
+        }
+    }
+    else if (someone == &player2)
+    {
+        if (Board[player2.location.x - 1][player2.location.y] == -60 &&
+            Board[player2.location.x - 1][player2.location.y + 2] == -60)
+        {
+            return 1;
+        }
+        else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
+                 Board[player2.location.x - 1][player2.location.y - 2] == -60)
+        {
+            return 2;
+        }
+    }
+    else if (someone == &player3)
+    {
+        if (Board[player3.location.x][player3.location.y - 1] == -77 &&
+            Board[player3.location.x + 2][player3.location.y - 1] == -77)
+        {
+            return 1;
+        }
+        else if (Board[player3.location.x][player3.location.y - 1] == -77 &&
+                 Board[player3.location.x - 2][player3.location.y - 1] == -77)
+        {
+            return 2;
+        }
+    }
+    else if (someone == &player4)
+    {
+        if (Board[player4.location.x][player4.location.y + 1] == -77 &&
+            Board[player4.location.x + 2][player4.location.y + 1] == -77)
+        {
+            return 1;
+        }
+        else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
+                 Board[player4.location.x - 2][player4.location.y + 1] == -77)
+        {
+            return 2;
+        }
+    }
+
+    return 0;
+}
+
+location frontRightWall(struct Player *someone)
+{
+    location ans;
+    if (someone == &player1)
+    {
+        ans.x = player1.location.x + 1;
+        ans.y = player1.location.y;
+        return ans;
+    }
+    if (someone == &player2)
+    {
+        ans.x = player2.location.x - 1;
+        ans.y = player2.location.y;
+        return ans;
+    }
+    if (someone == &player3)
+    {
+        ans.x = player3.location.x;
+        ans.y = player3.location.y - 1;
+        return ans;
+    }
+    if (someone == &player4)
+    {
+        ans.x = player4.location.x;
+        ans.y = player4.location.y + 1;
+        return ans;
+    }
+}
+
+location frontLeftWall(struct Player *someone)
+{
+    location ans;
+    if (someone == &player1)
+    {
+        ans.x = player1.location.x + 1;
+        ans.y = player1.location.y - 2;
+        return ans;
+    }
+    if (someone == &player2)
+    {
+        ans.x = player2.location.x - 1;
+        ans.y = player2.location.y - 2;
+        return ans;
+    }
+    if (someone == &player3)
+    {
+        ans.x = player3.location.x - 2;
+        ans.y = player3.location.y - 1;
+        return ans;
+    }
+    if (someone == &player4)
+    {
+        ans.x = player4.location.x - 2;
+        ans.y = player4.location.y + 1;
+        return ans;
+    }
+}
+
+location aiWallPlace()
+{
+    location ans;
+    ans.x = -1;
+    ans.y = -1;
+
+    struct Player *someone = determinePlayer();
+    struct Player *closePLayer = minDistancePerson();
+
+    if (someone->wallCount == 0)
+    {
+        return ans;
+    }
+    if (someone == closePLayer)
+    {
+        return ans;
+    }
+    if (aiWallTry > 2)
+    {
+        return ans;
+    }
+
+    if (!isFrontWallFree(closePLayer))
+    {
+        return ans;
+    }
+    else if (isFrontWallFree(closePLayer) == 2)
+    {
+        aiWallTry++;
+        ans = frontLeftWall(closePLayer);
+        return ans;
+    }
+    else if (isFrontWallFree(closePLayer) == 1)
+    {
+        aiWallTry++;
+        ans = frontRightWall(closePLayer);
+        return ans;
+    }
+}
+
 int isInBottom(struct Player *someone)
 {
-    if (someone->location.x == 2 * row - 1) return 1;
-    else return 0;
+    if (someone->location.x == 2 * row - 1)
+        return 1;
+    else
+        return 0;
 }
 
 int isInTop(struct Player *someone)
 {
-    if (someone->location.x == 1) return 1;
-    else return 0;
+    if (someone->location.x == 1)
+        return 1;
+    else
+        return 0;
 }
 
 int isOnRight(struct Player *someone)
 {
-    if (someone->location.y == 2 * column - 1) return 1;
-    else return 0;
+    if (someone->location.y == 2 * column - 1)
+        return 1;
+    else
+        return 0;
 }
 
 int isOnLeft(struct Player *someone)
 {
-    if (someone->location.y == 0) return 1;
-    else return 0;
+    if (someone->location.y == 1)
+        return 1;
+    else
+        return 0;
 }
+
 
 int isDownFree(struct Player *someone)
 {
-    if (isInBottom(someone)) return 0;
-    else if (Board[someone->location.x + 1][someone->location.y] == -51) return 0;
+    if (isInBottom(someone))
+        return 0;
+    if (Board[someone->location.x + 1][someone->location.y] == -51)
+        return 0;
+    if (Board[someone->location.x + 2][someone->location.y] != ' ')
+        return 0;
 
     return 1;
 }
 
 int isUpFree(struct Player *someone)
 {
-    if (isInTop(someone)) return 0;
-    else if (Board[someone->location.x - 1][someone->location.y] == -51) return 0;
+    if (isInTop(someone))
+        return 0;
+    if (Board[someone->location.x - 1][someone->location.y] == -51)
+        return 0;
+    if (Board[someone->location.x - 2][someone->location.y] != ' ')
+        return 0;
 
     return 1;
 }
 
 int isRightFree(struct Player *someone)
 {
-    if (isOnRight(someone)) return 0;
-    else if (Board[someone->location.x][someone->location.y + 1] == -70) return 0;
+    if (isOnRight(someone))
+        return 0;
+    if (Board[someone->location.x][someone->location.y + 1] == -70)
+        return 0;
+    if (Board[someone->location.x][someone->location.y + 2] != ' ')
+        return 0;
 
     return 1;
 }
 
 int isLeftFree(struct Player *someone)
 {
-    if (isOnRight(someone)) return 0;
-    else if (Board[someone->location.x][someone->location.y - 1] == -70) return 0;
+    if (isOnLeft(someone))
+        return 0;
+    if (Board[someone->location.x][someone->location.y - 1] == -70)
+        return 0;
+    if (Board[someone->location.x][someone->location.y - 2] != ' ')
+        return 0;
 
     return 1;
 }
@@ -471,7 +384,6 @@ int moveDecision()
             return 75;
         }
     }
-    
 }
 
 #endif
