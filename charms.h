@@ -42,7 +42,7 @@ int loseWalls(struct Player *someone)
     printPage(someone);
     // printf("%s's turn\n", someone->name);
 
-    return 0;
+    return 1;
 }
 
 int gainFromLoss(struct Player *gainer)
