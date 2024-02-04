@@ -22,7 +22,11 @@ void gameRun()
 
         if (someone->isAi)
         {
-            if (aiWallPlace().x == -1)
+            int dontGetCharm = randomize(0, 2);
+            // basically, it gets a charm if dontGetcharm is 0
+            // so the probabillity of getting a charm is 1/3 for the computer
+            if (!dontGetCharm && someone->charmNo) moveChar[0] = 'l';
+            else if (aiWallPlace().x == -1)
                 moveChar[0] = 'm';
             else if (putWall())
             {

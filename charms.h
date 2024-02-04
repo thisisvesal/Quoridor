@@ -15,8 +15,10 @@ void addWalls(struct Player *someone)
         num = 5;
 
     printf("congrats %s, you get %d extra walls\n", someone->name, num);
-    // sleep(3500);
-    getch();
+    
+    if (!someone->isAi) getch();
+    else sleep(1500);
+
 
     someone->wallCount += num;
 
@@ -34,8 +36,10 @@ int loseWalls(struct Player *someone)
         return 0;
 
     printf("sorry %s, you lose %d walls\n", someone->name, num);
-    // sleep(3500);
-    getch();
+    
+    if (!someone->isAi) getch();
+    else sleep(1500);
+
 
     someone->wallCount -= num;
 
@@ -93,8 +97,10 @@ int gainFromLoss(struct Player *gainer)
         return 0;
 
     printf("%s, you will take %d of %s's walls :]", gainer->name, num, loser->name);
-    // sleep(3500);
-    getch();
+    
+    if (!gainer->isAi) getch();
+    else sleep(1500);
+
     gainer->wallCount += num;
     loser->wallCount -= num;
 
@@ -107,8 +113,10 @@ int gainFromLoss(struct Player *gainer)
 void removeAllWalls()
 {
     printf("..Removing every wall on the board..\n");
-    // sleep(3500);
-    getch();
+    
+    if (!determinePlayer()->isAi) getch();
+    else sleep(1500);
+
     for (int i = 0; i < 2 * row + 1; i++)
     {
         for (int j = 0; j < 2 * column + 1; j++)
@@ -170,8 +178,9 @@ int blockRound(struct Player *someone)
     someone->blockedFor += block;
 
     printf("%s, sadly you can't play for %d rounds!\n", someone->name, block);
-    // sleep(3500);
-    getch();
+    
+    if (!someone->isAi) getch();
+    else sleep(1500);
 
     printPage(someone);
 
@@ -184,10 +193,21 @@ void getCharm()
     if (someone->blockedFor != 0)
         return;
 
-    if (!someone->isAi)
+    /*
+        if (!someone->isAi)
+        {
+            printf("\nPress a key to see your luck!\n");
+            
+            if (!someone->isAi) getch();
+            else sleep(1500);
+
+        }
+    */
+
+    if (someone->isAi)
     {
-        printf("\nPress a key to see your luck!\n");
-        getch();
+        printf("%s gets a charm this round\n", someone->name);
+        sleep(750);
     }
 
     if (randomize(0, 1))
