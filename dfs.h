@@ -3,7 +3,7 @@
 #ifndef dfs
 #define dfs
 
-// checking if the route exist for player1
+// checking if a route exist for player1
 int dfsDown(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -38,7 +38,7 @@ int dfsDown(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-// checking if the route exist for player2
+// checking if a route exist for player2
 int dfsUp(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -73,7 +73,7 @@ int dfsUp(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-// checking if the route exist for player4
+// checking if a route exist for player4
 int dfsRight(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;
@@ -108,7 +108,7 @@ int dfsRight(int sw[101][101], int row, int column, int x, int y)
     return 0;
 }
 
-// checking if the route exist for player3
+// checking if a route exist for player3
 int dfsLeft(int sw[101][101], int row, int column, int x, int y)
 {
     sw[x][y] = 2;

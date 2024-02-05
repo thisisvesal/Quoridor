@@ -3,7 +3,8 @@
 #ifndef boardMaker
 #define boardMaker
 
-void makeBoard(int row, int column) // as the name suggests, making the board
+// as the name suggests, making the board
+void makeBoard(int row, int column)
 {
     for (int i = 0; i < 2 * row + 1; i++)
     {
