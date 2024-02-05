@@ -2,12 +2,13 @@
 #include "charms.h"
 #include "getInfo.h"
 
+#ifndef game
+#define game
+
 void gameRun()
 {
     struct Player *someone = determinePlayer();
     aiWallTry = 0;
-
-    charmSw = 1;
 
     printPage(someone);
 
@@ -129,3 +130,5 @@ void gameRun()
         saveGame();
     }
 }
+
+#endif

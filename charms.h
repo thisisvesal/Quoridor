@@ -4,9 +4,6 @@
 #ifndef charms
 #define charms
 
-// This prevents applying a charm after the user saves the game
-int charmSw = 1;
-
 void addWalls(struct Player *someone)
 {
     int num = randomize(2, 4);

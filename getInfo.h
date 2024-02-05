@@ -413,7 +413,6 @@ void newGame()
 
 void saveGame()
 {
-    charmSw = 0;
     setTextColor(15, color);
     // save
 
