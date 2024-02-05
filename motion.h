@@ -73,21 +73,27 @@ void move(struct Player *someone)
             }
             else // jump over the other player
             {
-                if (Board[someoneCopy.location.x][someoneCopy.location.y + 4] == ' ')
+                if (Board[someoneCopy.location.x][someoneCopy.location.y + 4] == ' '
+                    && Board[someoneCopy.location.x][someoneCopy.location.y + 3] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y += 4;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 6] == ' ')
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 6] == ' '
+                         && Board[someoneCopy.location.x][someoneCopy.location.y + 3] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y + 5] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y += 6;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 8] == ' ')
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y + 8] == ' '
+                         && Board[someoneCopy.location.x][someoneCopy.location.y + 3] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y + 5] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y + 7] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y += 8;
@@ -111,21 +117,28 @@ void move(struct Player *someone)
             }
             else // jump over the other player
             {
-                if (Board[someoneCopy.location.x][someoneCopy.location.y - 4] == ' ')
+                if (Board[someoneCopy.location.x][someoneCopy.location.y - 4] == ' '
+                    && Board[someoneCopy.location.x][someoneCopy.location.y - 3] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y -= 4;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 6] == ' ')
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 6] == ' '
+                         && Board[someoneCopy.location.x][someoneCopy.location.y - 3] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y - 5] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
+
                     someoneCopy.location.y -= 6;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 8] == ' ')
+                else if (Board[someoneCopy.location.x][someoneCopy.location.y - 8] == ' '
+                         && Board[someoneCopy.location.x][someoneCopy.location.y - 3] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y - 5] == -77
+                         && Board[someoneCopy.location.x][someoneCopy.location.y - 7] == -77)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.y -= 8;
@@ -149,21 +162,27 @@ void move(struct Player *someone)
             }
             else // jump over the other player
             {
-                if (Board[someoneCopy.location.x - 4][someoneCopy.location.y] == ' ')
+                if (Board[someoneCopy.location.x - 4][someoneCopy.location.y] == ' '
+                    && Board[someoneCopy.location.x - 3][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x -= 4;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x - 6][someoneCopy.location.y] == ' ')
+                else if (Board[someoneCopy.location.x - 6][someoneCopy.location.y] == ' '
+                         && Board[someoneCopy.location.x - 3][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x - 5][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x -= 6;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x - 8][someoneCopy.location.y] == ' ')
+                else if (Board[someoneCopy.location.x - 8][someoneCopy.location.y] == ' '
+                         && Board[someoneCopy.location.x - 3][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x - 5][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x - 7][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x -= 8;
@@ -187,21 +206,28 @@ void move(struct Player *someone)
             }
             else // jump over the other player
             {
-                if (Board[someoneCopy.location.x + 4][someoneCopy.location.y] == ' ')
+                if (Board[someoneCopy.location.x + 4][someoneCopy.location.y] == ' '
+
+                    && Board[someoneCopy.location.x + 3][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x += 4;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x + 6][someoneCopy.location.y] == ' ')
+                else if (Board[someoneCopy.location.x + 6][someoneCopy.location.y] == ' '
+                         && Board[someoneCopy.location.x + 3][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x + 5][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x += 6;
                     Board[someoneCopy.location.x][someoneCopy.location.y] = someoneCopy.nameInitial;
                     contSw = 0;
                 }
-                else if (Board[someoneCopy.location.x + 8][someoneCopy.location.y] == ' ')
+                else if (Board[someoneCopy.location.x + 8][someoneCopy.location.y] == ' '
+                         && Board[someoneCopy.location.x + 3][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x + 5][someoneCopy.location.y] == -60
+                         && Board[someoneCopy.location.x + 7][someoneCopy.location.y] == -60)
                 {
                     Board[someoneCopy.location.x][someoneCopy.location.y] = ' ';
                     someoneCopy.location.x += 8;
@@ -215,9 +241,9 @@ void move(struct Player *someone)
     *someone = someoneCopy;
     if (contSw)
     {
-        // printf("\a");
         move(someone);
     }
 }
+
 
 #endif

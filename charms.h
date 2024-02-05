@@ -4,7 +4,6 @@
 #ifndef charms
 #define charms
 
-int roundBlock[4] = {0, 0, 0, 0};
 // This prevents applying a charm after the user saves the game
 int charmSw = 1;
 
@@ -17,7 +16,7 @@ void addWalls(struct Player *someone)
     printf("congrats %s, you get %d extra walls\n", someone->name, num);
     
     if (!someone->isAi) getch();
-    else sleep(1500);
+    else sleep(2000);
 
 
     someone->wallCount += num;
@@ -38,7 +37,7 @@ int loseWalls(struct Player *someone)
     printf("sorry %s, you lose %d walls\n", someone->name, num);
     
     if (!someone->isAi) getch();
-    else sleep(1500);
+    else sleep(2000);
 
 
     someone->wallCount -= num;
@@ -56,21 +55,21 @@ int gainFromLoss(struct Player *gainer)
     if (gameMode == 2)
     {
         struct Player players[4] = {player1, player2, player3, player4};
-        if (round == 0)
+        if (turn == 0)
         {
             for (size_t i = 0; i < 3; i++)
             {
                 players[i] = players[i + 1];
             }
         }
-        else if (round == 1)
+        else if (turn == 1)
         {
             for (size_t i = 2; i < 3; i++)
             {
                 players[i] = players[i + 1];
             }
         }
-        else if (round == 2)
+        else if (turn == 2)
         {
             for (size_t i = 1; i < 3; i++)
             {
@@ -82,11 +81,11 @@ int gainFromLoss(struct Player *gainer)
     }
     else
     {
-        if (round == 0)
+        if (turn == 0)
         {
             loser = &player2;
         }
-        else if (round == 1)
+        else if (turn == 1)
         {
             loser = &player1;
         }
@@ -99,7 +98,7 @@ int gainFromLoss(struct Player *gainer)
     printf("%s, you will take %d of %s's walls :]", gainer->name, num, loser->name);
     
     if (!gainer->isAi) getch();
-    else sleep(1500);
+    else sleep(2000);
 
     gainer->wallCount += num;
     loser->wallCount -= num;
@@ -115,25 +114,28 @@ void removeAllWalls()
     printf("..Removing every wall on the board..\n");
     
     if (!determinePlayer()->isAi) getch();
-    else sleep(1500);
+    else sleep(2000);
 
     for (int i = 0; i < 2 * row + 1; i++)
     {
-        for (int j = 0; j < 2 * column + 1; j++)
+        for (int i = 0; i < 2 * row + 1; i++)
         {
-            if (Board[i][j] == -51)
+            for (int j = 0; j < 2 * column + 1; j++)
             {
-                if (j % 2 == 0)
-                    Board[i][j] = -60;
-                else
-                    Board[i][j] = -59;
-            }
-            else if (Board[i][j] == -70)
-            {
-                if (i % 2 == 1)
-                    Board[i][j] = -77;
-                else
-                    Board[i][j] = -59;
+                if (Board[i][j] == -51)
+                {
+                    if (j % 2 == 1 && i % 2 == 0)
+                        Board[i][j] = -60;
+                    else
+                        Board[i][j] = -59;
+                }
+                else if (Board[i][j] == -70)
+                {
+                    if (i % 2 == 1 && j % 2 == 0)
+                        Board[i][j] = -77;
+                    else
+                        Board[i][j] = -59;
+                }
             }
         }
     }
@@ -142,21 +144,21 @@ void removeAllWalls()
 int blockRound(struct Player *someone)
 {
     struct Player players[4] = {player1, player2, player3, player4};
-    if (round == 0)
+    if (turn == 0)
     {
         for (size_t i = 0; i < 3; i++)
         {
             players[i] = players[i + 1];
         }
     }
-    else if (round == 1)
+    else if (turn == 1)
     {
         for (size_t i = 2; i < 3; i++)
         {
             players[i] = players[i + 1];
         }
     }
-    else if (round == 2)
+    else if (turn == 2)
     {
         for (size_t i = 1; i < 3; i++)
         {
@@ -180,7 +182,7 @@ int blockRound(struct Player *someone)
     printf("%s, sadly you can't play for %d rounds!\n", someone->name, block);
     
     if (!someone->isAi) getch();
-    else sleep(1500);
+    else sleep(2000);
 
     printPage(someone);
 
@@ -193,21 +195,10 @@ void getCharm()
     if (someone->blockedFor != 0)
         return;
 
-    /*
-        if (!someone->isAi)
-        {
-            printf("\nPress a key to see your luck!\n");
-            
-            if (!someone->isAi) getch();
-            else sleep(1500);
-
-        }
-    */
-
     if (someone->isAi)
     {
         printf("%s gets a charm this round\n", someone->name);
-        sleep(750);
+        sleep(1000);
     }
 
     if (randomize(0, 1))

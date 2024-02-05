@@ -11,7 +11,7 @@ int shouldMove()
     int moveSw = 1;
     if (gameMode == 1)
     {
-        if (round == 0)
+        if (rounds == 0)
         {
             if (Board[player2.location.x - 1][player2.location.y] == -60 &&
                 Board[player2.location.x - 1][player2.location.y + 2] == -60 &&
@@ -32,7 +32,7 @@ int shouldMove()
                 moveSw = 0;
             }
         }
-        else if (round == 1)
+        else if (rounds == 1)
         {
             if (Board[player1.location.x + 1][player1.location.y] == -60 &&
                 Board[player1.location.x + 1][player1.location.y + 2] == -60 &&
@@ -101,7 +101,7 @@ int shouldMove()
             min2 = player1.location.x;
         }
 
-        if ((round == 0 && minPlayer == 1) || (round == 1 && minPlayer == 3) || (round == 2 && minPlayer == 2) || (round == 3 && minPlayer == 3))
+        if ((rounds == 0 && minPlayer == 1) || (rounds == 1 && minPlayer == 3) || (rounds == 2 && minPlayer == 2) || (rounds == 3 && minPlayer == 3))
         {
             if (min2Player == 1)
             {
