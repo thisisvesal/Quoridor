@@ -18,7 +18,7 @@ int main()
     printf("2) Start a new game\n");
 
     // Move this section to validChecks.h as a functionS
-    int newOrOld = 0;
+    newOrOld = 0;
     while (newOrOld != 1 && newOrOld != 2)
     {
         char newOrOldCopy[30];
@@ -45,43 +45,75 @@ int main()
         FILE *outBoard = fopen("saveBoard.bin", "rb");
         FILE *outPlayers = fopen("savePlayers.bin", "rb");
 
-        fread(&loadFeatures, sizeof(loadFeatures), 1, outFeatures);
-        fclose(outFeatures);
-
-        row = loadFeatures.row;
-        column = loadFeatures.column;
-        color = loadFeatures.color;
-        gameMode = loadFeatures.gameMode;
-        aiSw = loadFeatures.aiSw;
-        turn = loadFeatures.round;
-
-        for (int i = 0; i < 2 * row + 1; i++)
+        if (!outFeatures || !outBoard || !outPlayers)
         {
-            fread(Board[i], sizeof(char), 2 * column + 1, outBoard);
-        }
-        fclose(outBoard);
+            printf("You don't have any previously saved games!\n");
+            printf("Do you want to start a new game?\n(y/n)\n");
+            getchar();
+            char response[20] = "\0";
+            while (response[1] != 0
+            || (response[0] != 'n' && response[0] != 'N' && response[0] != 'y' && response[0] != 'Y'))
+            {
+                gets(response);
+                if ((response[0] == 'n' || response[0] == 'N') && response[1] == 0)
+                {
+                    printf("Alright :]\n");
+                    printf("Press any key to exit \n");
+                    getch();
 
-        if (gameMode == 1)
-        {
-            fread(&loadPlayers, sizeof(struct Player), 2, outPlayers);
+                    return 0;
+                }
+                else if ((response[0] == 'y' || response[0] == 'Y') && response[1] == 0)
+                {
+                    newOrOld = 2;
+                }
+                else
+                {
+                    printf("Invalid entry!\n");
+                }
+            }
         }
-        else if (gameMode == 2)
+        else
         {
-            fread(&loadPlayers, sizeof(struct Player), 4, outPlayers);
-        }
+            fread(&loadFeatures, sizeof(loadFeatures), 1, outFeatures);
+            fclose(outFeatures);
 
-        player1 = loadPlayers[0];
-        player2 = loadPlayers[1];
-        if (gameMode == 2)
-        {
-            player3 = loadPlayers[2];
-            player4 = loadPlayers[3];
-        }
+            row = loadFeatures.row;
+            column = loadFeatures.column;
+            color = loadFeatures.color;
+            gameMode = loadFeatures.gameMode;
+            aiSw = loadFeatures.aiSw;
+            turn = loadFeatures.round;
 
-        fclose(outPlayers);
+            for (int i = 0; i < 2 * row + 1; i++)
+            {
+                fread(Board[i], sizeof(char), 2 * column + 1, outBoard);
+            }
+            fclose(outBoard);
+
+            if (gameMode == 1)
+            {
+                fread(&loadPlayers, sizeof(struct Player), 2, outPlayers);
+            }
+            else if (gameMode == 2)
+            {
+                fread(&loadPlayers, sizeof(struct Player), 4, outPlayers);
+            }
+
+            player1 = loadPlayers[0];
+            player2 = loadPlayers[1];
+            if (gameMode == 2)
+            {
+                player3 = loadPlayers[2];
+                player4 = loadPlayers[3];
+            }
+
+            fclose(outPlayers);
+        }
     }
-    else if (newOrOld == 2)
+    if (newOrOld == 2)
     {
+        clearScreen();
         // choosing a theme
         color = chooseBoard();
         clearScreen();

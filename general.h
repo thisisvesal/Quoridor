@@ -35,6 +35,7 @@ int color = 0;
 int aiSw = 0;
 // integer round determines whose turn it is
 int turn = 0;
+int newOrOld;
 
 struct Player *determinePlayer()
 {
