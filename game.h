@@ -35,14 +35,14 @@ void gameRun()
                 printPage(someone);
 
                 // changing the round:
-                round += 1;
+                turn += 1;
                 if (gameMode == 2)
                 {
-                    round %= 4;
+                    turn %= 4;
                 }
                 else if (gameMode == 1)
                 {
-                    round %= 2;
+                    turn %= 2;
                 }
                 return;
             }
@@ -77,14 +77,14 @@ void gameRun()
         printPage(someone);
 
         // changing the round:
-        round += 1;
+        turn += 1;
         if (gameMode == 2)
         {
-            round %= 4;
+            turn %= 4;
         }
         else if (gameMode == 1)
         {
-            round %= 2;
+            turn %= 2;
         }
     }
     else if (moveChar[0] == 'w' && someone->wallCount == 0) // if the player is out of walls
@@ -101,14 +101,14 @@ void gameRun()
         printPage(someone);
 
         // changing the round:
-        round += 1;
+        turn += 1;
         if (gameMode == 2)
         {
-            round %= 4;
+            turn %= 4;
         }
         else if (gameMode == 1)
         {
-            round %= 2;
+            turn %= 2;
         }
     }
     else if (moveChar[0] == 'l')
@@ -156,7 +156,7 @@ void gameRun()
             features.color = color;
             features.gameMode = gameMode;
             features.aiSw = aiSw;
-            features.round = round;
+            features.round = turn;
 
             fwrite(&features, sizeof(features), 1, saveFeatures);
             fclose(saveFeatures);

@@ -53,7 +53,7 @@ int main()
         color = loadFeatures.color;
         gameMode = loadFeatures.gameMode;
         aiSw = loadFeatures.aiSw;
-        round = loadFeatures.round;
+        turn = loadFeatures.round;
 
         for (int i = 0; i < 2 * row + 1; i++)
         {
@@ -145,11 +145,11 @@ int main()
         if (determinePlayer()->blockedFor > 0)
         {
             determinePlayer()->blockedFor--;
-            round += 1;
+            turn += 1;
             if (gameMode == 1)
-                round %= 2;
+                turn %= 2;
             else if (gameMode == 2)
-                round %= 4;
+                turn %= 4;
 
             continue;
         }

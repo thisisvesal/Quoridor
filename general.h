@@ -34,26 +34,26 @@ int gameMode = 0;
 int color = 0;
 int aiSw = 0;
 // integer round determines whose turn it is
-int round = 0;
+int turn = 0;
 
 struct Player *determinePlayer()
 {
     if (gameMode == 1)
     {
-        if (round == 0)
+        if (turn == 0)
             return &player1;
-        else if (round == 1)
+        else if (turn == 1)
             return &player2;
     }
     else if (gameMode == 2)
     {
-        if (round == 0)
+        if (turn == 0)
             return &player1;
-        else if (round == 1)
+        else if (turn == 1)
             return &player3;
-        else if (round == 2)
+        else if (turn == 2)
             return &player2;
-        else if (round == 3)
+        else if (turn == 3)
             return &player4;
     }
 }

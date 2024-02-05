@@ -4,7 +4,6 @@
 #ifndef charms
 #define charms
 
-int roundBlock[4] = {0, 0, 0, 0};
 // This prevents applying a charm after the user saves the game
 int charmSw = 1;
 
@@ -56,21 +55,21 @@ int gainFromLoss(struct Player *gainer)
     if (gameMode == 2)
     {
         struct Player players[4] = {player1, player2, player3, player4};
-        if (round == 0)
+        if (turn == 0)
         {
             for (size_t i = 0; i < 3; i++)
             {
                 players[i] = players[i + 1];
             }
         }
-        else if (round == 1)
+        else if (turn == 1)
         {
             for (size_t i = 2; i < 3; i++)
             {
                 players[i] = players[i + 1];
             }
         }
-        else if (round == 2)
+        else if (turn == 2)
         {
             for (size_t i = 1; i < 3; i++)
             {
@@ -82,11 +81,11 @@ int gainFromLoss(struct Player *gainer)
     }
     else
     {
-        if (round == 0)
+        if (turn == 0)
         {
             loser = &player2;
         }
-        else if (round == 1)
+        else if (turn == 1)
         {
             loser = &player1;
         }
@@ -123,14 +122,14 @@ void removeAllWalls()
         {
             if (Board[i][j] == -51)
             {
-                if (j % 2 == 0)
+                if (j % 2 == 0 && i % 2 == 1)
                     Board[i][j] = -60;
                 else
                     Board[i][j] = -59;
             }
             else if (Board[i][j] == -70)
             {
-                if (i % 2 == 1)
+                if (i % 2 == 1 && j % 2 == 0)
                     Board[i][j] = -77;
                 else
                     Board[i][j] = -59;
@@ -142,21 +141,21 @@ void removeAllWalls()
 int blockRound(struct Player *someone)
 {
     struct Player players[4] = {player1, player2, player3, player4};
-    if (round == 0)
+    if (turn == 0)
     {
         for (size_t i = 0; i < 3; i++)
         {
             players[i] = players[i + 1];
         }
     }
-    else if (round == 1)
+    else if (turn == 1)
     {
         for (size_t i = 2; i < 3; i++)
         {
             players[i] = players[i + 1];
         }
     }
-    else if (round == 2)
+    else if (turn == 2)
     {
         for (size_t i = 1; i < 3; i++)
         {

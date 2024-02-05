@@ -215,7 +215,6 @@ void move(struct Player *someone)
     *someone = someoneCopy;
     if (contSw)
     {
-        // printf("\a");
         move(someone);
     }
 }
