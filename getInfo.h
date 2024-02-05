@@ -290,7 +290,6 @@ int loadOldGame()
     {
         printf("You don't have any previously saved games!\n");
         printf("Do you want to start a new game?\n(y/n)\n");
-        getchar();
         char response[20] = "\0";
         while (response[1] != 0 || (response[0] != 'n' && response[0] != 'N' && response[0] != 'y' && response[0] != 'Y'))
         {

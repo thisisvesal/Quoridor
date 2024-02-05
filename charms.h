@@ -11,10 +11,11 @@ void addWalls(struct Player *someone)
         num = 5;
 
     printf("congrats %s, you get %d extra walls\n", someone->name, num);
-    
-    if (!someone->isAi) getch();
-    else sleep(2000);
 
+    if (!someone->isAi)
+        getch();
+    else
+        sleep(2000);
 
     someone->wallCount += num;
 
@@ -32,10 +33,11 @@ int loseWalls(struct Player *someone)
         return 0;
 
     printf("sorry %s, you lose %d walls\n", someone->name, num);
-    
-    if (!someone->isAi) getch();
-    else sleep(2000);
 
+    if (!someone->isAi)
+        getch();
+    else
+        sleep(2000);
 
     someone->wallCount -= num;
 
@@ -94,9 +96,11 @@ int gainFromLoss(struct Player *gainer)
         return 0;
 
     printf("%s, you will take %d of %s's walls :]", gainer->name, num, loser->name);
-    
-    if (!gainer->isAi) getch();
-    else sleep(2000);
+
+    if (!gainer->isAi)
+        getch();
+    else
+        sleep(2000);
 
     gainer->wallCount += num;
     loser->wallCount -= num;
@@ -110,29 +114,26 @@ int gainFromLoss(struct Player *gainer)
 void removeAllWalls()
 {
     printf("..Removing every wall on the board..\n");
-    
+
     sleep(2000);
 
     for (int i = 0; i < 2 * row + 1; i++)
     {
-        for (int i = 0; i < 2 * row + 1; i++)
+        for (int j = 0; j < 2 * column + 1; j++)
         {
-            for (int j = 0; j < 2 * column + 1; j++)
+            if (Board[i][j] == -51)
             {
-                if (Board[i][j] == -51)
-                {
-                    if (j % 2 == 1 && i % 2 == 0)
-                        Board[i][j] = -60;
-                    else
-                        Board[i][j] = -59;
-                }
-                else if (Board[i][j] == -70)
-                {
-                    if (i % 2 == 1 && j % 2 == 0)
-                        Board[i][j] = -77;
-                    else
-                        Board[i][j] = -59;
-                }
+                if (j % 2 == 1 && i % 2 == 0)
+                    Board[i][j] = -60;
+                else
+                    Board[i][j] = -59;
+            }
+            else if (Board[i][j] == -70)
+            {
+                if (i % 2 == 1 && j % 2 == 0)
+                    Board[i][j] = -77;
+                else
+                    Board[i][j] = -59;
             }
         }
     }
@@ -177,9 +178,11 @@ int blockRound(struct Player *someone)
     someone->blockedFor += block;
 
     printf("%s, sadly you can't play for %d rounds!\n", someone->name, block);
-    
-    if (!someone->isAi) getch();
-    else sleep(2000);
+
+    if (!someone->isAi)
+        getch();
+    else
+        sleep(2000);
 
     printPage(someone);
 
