@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <windows.h>
 #include "boardMaker.h"
 #include "boardPrinter.h"
@@ -123,31 +122,28 @@ int chooseBoard()
     printBoard(Board, 2, 2);
     printf("\n");
 
-    // getting the input color and changing color
-    num = 0;
-    while (num <= 0 || num > 8)
-    {
-        scanf("%d", &num);
-        // checking if the input is valid
-        if (num == 1)
-            return 0;
-        else if (num == 2)
-            return 6;
-        else if (num == 3)
-            return 13;
-        else if (num == 4)
-            return 12;
-        else if (num == 5)
-            return 11;
-        else if (num == 6)
-            return 10;
-        else if (num == 7)
-            return 9;
-        else if (num == 8)
-            return 8;
-        else
-            printf("That is not a theme number!\n");
-    }
+    setTextColor(0, 15);
+
+    // getting the input color and changing the theme color
+    // also checking if the input is valid using a loop structure
+    num = getValidInt(1, 8);
+
+    if (num == 1) // black
+        return 0;
+    else if (num == 2) // gold
+        return 6;
+    else if (num == 3) // purple
+        return 13;
+    else if (num == 4) // red
+        return 12;
+    else if (num == 5) // light blue
+        return 11;
+    else if (num == 6) // green
+        return 10;
+    else if (num == 7) // dark blue
+        return 9;
+    else if (num == 8) // gray
+        return 8;
 }
 
 void printPage(struct Player *someone)

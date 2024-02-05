@@ -1,14 +1,10 @@
 #include "general.h"
-#include <stdio.h>
 
 #ifndef desicion
 #define decision
 
-// This function prioritizes putting walls over moving,
-// on certain conditions
-// if those conditions are not met,
-// -1, -1 is returned, which indicates that we have to move
-
+// Indicates the number of wall placement attempts
+// aiWallTry is reset in every call of gameRun()
 int aiWallTry = 0;
 
 int distanceOf(struct Player *someone)
@@ -179,6 +175,11 @@ location frontLeftWall(struct Player *someone)
     }
 }
 
+// This function decides whether the computer should move or place a wall
+// It prioritizes putting walls over moving,
+// using certain conditions
+// If those conditions are not met,
+// -1, -1 is returned, which indicates that we have to move
 location aiWallPlace()
 {
     location ans;
@@ -218,6 +219,7 @@ location aiWallPlace()
         return ans;
     }
 }
+
 
 int isInBottom(struct Player *someone)
 {

@@ -163,7 +163,7 @@ void getWallCount()
     while (!wallIsNum)
     {
         printf("Please enter the number of walls:\n");
-        char wallCountCopy[30];
+        char wallCountCopy[100];
         scanf("%s", wallCountCopy);
 
         int i;
@@ -271,4 +271,204 @@ void winMessage()
     printf("\n\n");
 }
 
+void getNewOrOld()
+{
+    newOrOld = getValidInt(1, 2);
+}
+
+int loadOldGame()
+{
+    struct features loadFeatures;
+    char loadBoard[101][101];
+    struct Player loadPlayers[4];
+
+    FILE *outFeatures = fopen("saveFeatures.bin", "rb");
+    FILE *outBoard = fopen("saveBoard.bin", "rb");
+    FILE *outPlayers = fopen("savePlayers.bin", "rb");
+
+    if (!outFeatures || !outBoard || !outPlayers)
+    {
+        printf("You don't have any previously saved games!\n");
+        printf("Do you want to start a new game?\n(y/n)\n");
+        getchar();
+        char response[20] = "\0";
+        while (response[1] != 0 || (response[0] != 'n' && response[0] != 'N' && response[0] != 'y' && response[0] != 'Y'))
+        {
+            gets(response);
+            if ((response[0] == 'n' || response[0] == 'N') && response[1] == 0)
+            {
+                printf("Alright :]\n");
+                printf("Press any key to exit \n");
+                getch();
+
+                return 0;
+            }
+            else if ((response[0] == 'y' || response[0] == 'Y') && response[1] == 0)
+            {
+                return 2;
+            }
+            else
+            {
+                printf("Invalid entry!\n");
+            }
+        }
+    }
+    else
+    {
+        fread(&loadFeatures, sizeof(loadFeatures), 1, outFeatures);
+        fclose(outFeatures);
+
+        row = loadFeatures.row;
+        column = loadFeatures.column;
+        color = loadFeatures.color;
+        gameMode = loadFeatures.gameMode;
+        aiSw = loadFeatures.aiSw;
+        turn = loadFeatures.round;
+
+        for (int i = 0; i < 2 * row + 1; i++)
+        {
+            fread(Board[i], sizeof(char), 2 * column + 1, outBoard);
+        }
+        fclose(outBoard);
+
+        if (gameMode == 1)
+        {
+            fread(&loadPlayers, sizeof(struct Player), 2, outPlayers);
+        }
+        else if (gameMode == 2)
+        {
+            fread(&loadPlayers, sizeof(struct Player), 4, outPlayers);
+        }
+
+        player1 = loadPlayers[0];
+        player2 = loadPlayers[1];
+        if (gameMode == 2)
+        {
+            player3 = loadPlayers[2];
+            player4 = loadPlayers[3];
+        }
+
+        fclose(outPlayers);
+
+        return 1;
+    }
+}
+
+void newGame()
+{
+    clearScreen();
+    // choosing a theme
+    color = chooseBoard();
+    clearScreen();
+
+    setTextColor(0, 15);
+
+    // choosing game mode
+    printf("How would you like to play?\n");
+    printf("1) 2 Player mode\n");
+    printf("2) 4 Player mode\n");
+
+    // getting gameMode while making sure the input is valid
+    gameMode = getValidInt(1, 2);
+
+    clearScreen();
+
+    if (gameMode == 1)
+    {
+        printf("1) Play with a friend\n");
+        printf("2) Play with AI\n");
+        aiSw = getValidInt(1, 2);
+        aiSw--;
+    }
+    if (gameMode == 2)
+    {
+        printf("1) Play with a friend\n");
+        printf("2) Play with AI(1 AI player)\n");
+        printf("3) Play with AI(2 AI players)\n");
+        printf("4) Play with AI(3 AI players)\n");
+        aiSw = getValidInt(1, 2);
+        aiSw--;
+    }
+
+    getPlayers();
+    getRowCol();
+    clearScreen();
+    getWallCount();
+    clearScreen();
+
+    // setting players' wall count:
+    player1.wallCount = player2.wallCount = wallCount;
+    if (gameMode == 2)
+    {
+        player3.wallCount = player4.wallCount = wallCount;
+    }
+
+    // make the board
+    makeBoard(row, column);
+
+    // not sure if this is needed here:
+    makeSw();
+
+    // determining the pawns' initial positions:
+    positionPlayers();
+}
+
+void saveGame()
+{
+    charmSw = 0;
+    setTextColor(15, color);
+    // save
+
+    FILE *saveBoard, *saveFeatures, *savePlayers;
+
+    saveBoard = fopen("saveBoard.bin", "wb");
+    saveFeatures = fopen("saveFeatures.bin", "wb");
+    savePlayers = fopen("savePlayers.bin", "wb");
+    if (!saveBoard || !saveFeatures || !savePlayers)
+    {
+        printf("Can't save the game !\n");
+    }
+    else
+    {
+        for (int i = 0; i < 2 * row + 1; i++)
+        {
+            fwrite(Board[i], sizeof(char), 2 * column + 1, saveBoard);
+        }
+        fclose(saveBoard);
+
+        struct features features;
+
+        features.row = row;
+        features.column = column;
+        features.color = color;
+        features.gameMode = gameMode;
+        features.aiSw = aiSw;
+        features.round = turn;
+
+        fwrite(&features, sizeof(features), 1, saveFeatures);
+        fclose(saveFeatures);
+
+        if (gameMode == 1)
+        {
+            struct Player players[2] = {player1, player2};
+
+            fwrite(players, sizeof(struct Player), 2, savePlayers);
+        }
+        else if (gameMode == 2)
+        {
+            struct Player players[4] = {player1, player2, player3, player4};
+
+            fwrite(players, sizeof(struct Player), 4, savePlayers);
+        }
+
+        fclose(savePlayers);
+
+        printf("\nGame saved");
+
+        setTextColor(color, 15);
+        printf("\n\n");
+
+        sleep(2000);
+    }
+}
 #endif

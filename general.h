@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #ifndef general
 #define general
 
@@ -35,7 +37,28 @@ int color = 0;
 int aiSw = 0;
 // integer round determines whose turn it is
 int turn = 0;
-int newOrOld;
+int newOrOld = 0;
+
+int getValidInt(int start, int end)
+{
+    int input = 0;
+    while (!(start <= input && input <= end))
+    {
+        char inputCopy[100];
+        gets(inputCopy);
+
+        for (int i = 0; inputCopy[i] && '0' <= inputCopy[i] && inputCopy[i] <= '9'; i++)
+        {
+            input += (inputCopy[i] - 48);
+            input *= 10;
+        }
+        input /= 10;
+        if (!(start <= input && input <= end))
+            printf("Please enter a valid number\n");
+    }
+
+    return input;
+}
 
 struct Player *determinePlayer()
 {

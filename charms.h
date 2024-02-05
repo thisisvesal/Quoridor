@@ -48,6 +48,7 @@ int loseWalls(struct Player *someone)
     return 1;
 }
 
+// The current player(gainer) takes 1 or 2 number of walls from another player
 int gainFromLoss(struct Player *gainer)
 {
     struct Player *loser;
@@ -113,8 +114,7 @@ void removeAllWalls()
 {
     printf("..Removing every wall on the board..\n");
     
-    if (!determinePlayer()->isAi) getch();
-    else sleep(2000);
+    sleep(2000);
 
     for (int i = 0; i < 2 * row + 1; i++)
     {

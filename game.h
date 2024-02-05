@@ -1,6 +1,6 @@
 #include "wall.h"
 #include "charms.h"
-#include <stdlib.h>
+#include "getInfo.h"
 
 void gameRun()
 {
@@ -23,9 +23,10 @@ void gameRun()
         if (someone->isAi)
         {
             int dontGetCharm = randomize(0, 2);
-            // basically, it gets a charm if dontGetcharm is 0
+            // basically, we get a charm if dontGetcharm is 0
             // so the probabillity of getting a charm is 1/3 for the computer
-            if (!dontGetCharm && someone->charmNo) moveChar[0] = 'l';
+            if (!dontGetCharm && someone->charmNo)
+                moveChar[0] = 'l';
             else if (aiWallPlace().x == -1)
                 moveChar[0] = 'm';
             else if (putWall())
@@ -64,7 +65,6 @@ void gameRun()
             else if (moveChar[0] == 'S' && moveChar[1] == 0)
                 moveChar[0] = 's';
         }
-        
     }
 
     // placing a wall:
@@ -126,62 +126,6 @@ void gameRun()
     }
     else if (moveChar[0] == 's')
     {
-        charmSw = 0;
-        setTextColor(15, color);
-        // save
-
-        FILE *saveBoard, *saveFeatures, *savePlayers;
-
-        // saveColor = fopen("saveColor.bin", "wb");
-        // saveGameMode = fopen("saveGameMode.bin", "wb");
-        saveBoard = fopen("saveBoard.bin", "wb");
-        saveFeatures = fopen("saveFeatures.bin", "wb");
-        savePlayers = fopen("savePlayers.bin", "wb");
-        if (!saveBoard || !saveFeatures || !savePlayers)
-        {
-            printf("Can't save the game !\n");
-        }
-        else
-        {
-            for (int i = 0; i < 2 * row + 1; i++)
-            {
-                fwrite(Board[i], sizeof(char), 2 * column + 1, saveBoard);
-            }
-            fclose(saveBoard);
-
-            struct features features;
-
-            features.row = row;
-            features.column = column;
-            features.color = color;
-            features.gameMode = gameMode;
-            features.aiSw = aiSw;
-            features.round = turn;
-
-            fwrite(&features, sizeof(features), 1, saveFeatures);
-            fclose(saveFeatures);
-
-            if (gameMode == 1)
-            {
-                struct Player players[2] = {player1, player2};
-
-                fwrite(players, sizeof(struct Player), 2, savePlayers);
-            }
-            else if (gameMode == 2)
-            {
-                struct Player players[4] = {player1, player2, player3, player4};
-
-                fwrite(players, sizeof(struct Player), 4, savePlayers);
-            }
-
-            fclose(savePlayers);
-
-            printf("\nGame saved");
-
-            setTextColor(color, 15);
-            printf("\n\n");
-            
-            sleep(2000);
-        }
+        saveGame();
     }
 }
