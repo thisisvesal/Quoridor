@@ -405,8 +405,6 @@ void newGame()
 
     // make the board
     makeBoard(row, column);
-
-    // not sure if this is needed here:
     makeSw();
 
     // determining the pawns' initial positions:

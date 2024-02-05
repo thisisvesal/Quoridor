@@ -35,7 +35,7 @@ int sw[101][101];
 int gameMode = 0;
 int color = 0;
 int aiSw = 0;
-// integer round determines whose turn it is
+// integer turn determines whose turn it is
 int turn = 0;
 int newOrOld = 0;
 

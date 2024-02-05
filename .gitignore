@@ -5,5 +5,6 @@ savePlayers.bin
 test.c
 test.exe
 NOTE.txt
-main.exe
 .idea
+main.exe
+sth.h
