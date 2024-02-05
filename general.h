@@ -29,7 +29,8 @@ struct Player
     int isAi;
 } player1, player2, player3, player4;
 
-int row, column;
+int row = 0;
+int column = 0;
 char Board[101][101];
 int wallCount = 0;
 int sw[101][101];

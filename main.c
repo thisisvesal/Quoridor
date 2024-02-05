@@ -1,4 +1,4 @@
-#include "game.h"
+#include "tutorial.h"
 
 int main()
 {
@@ -10,29 +10,37 @@ int main()
     setTextColor(6, 15);
     printf(" %c\n", 2);
     sleep(2000);
-    clearScreen();
 
-    setTextColor(0, 15);
-    printf("1) Continue my old game\n");
-    printf("2) Start a new game\n");
-
-    getNewOrOld();
-
-    if (newOrOld == 1)
+    while (newOrOld != 1 && newOrOld != 2)
     {
-        int openAGame = loadOldGame();
-        if (!openAGame)
+        clearScreen();
+
+        setTextColor(0, 15);
+        printf("1) Continue my old game\n");
+        printf("2) Start a new game\n");
+        printf("3) How to play\n");
+        getNewOrOld();
+
+        if (newOrOld == 1)
         {
-            return 0;
+            int openAGame = loadOldGame();
+            if (!openAGame)
+            {
+                return 0;
+            }
+            else if (openAGame == 2)
+            {
+                newGame();
+            }
         }
-        else if (openAGame == 2)
+        else if (newOrOld == 2)
         {
-            newOrOld = 2;
+            newGame();
         }
-    }
-    if (newOrOld == 2)
-    {
-        newGame();
+        else if (newOrOld == 3)
+        {
+            getTutorial();
+        }
     }
 
     getchar();

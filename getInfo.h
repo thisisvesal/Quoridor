@@ -273,7 +273,7 @@ void winMessage()
 
 void getNewOrOld()
 {
-    newOrOld = getValidInt(1, 2);
+    newOrOld = getValidInt(1, 3);
 }
 
 int loadOldGame()
