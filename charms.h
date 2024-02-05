@@ -122,7 +122,6 @@ void removeAllWalls()
         {
             for (int j = 0; j < 2 * column + 1; j++)
             {
-<<<<<<< HEAD
                 if (Board[i][j] == -51)
                 {
                     if (j % 2 == 1 && i % 2 == 0)
@@ -137,19 +136,6 @@ void removeAllWalls()
                     else
                         Board[i][j] = -59;
                 }
-=======
-                if (j % 2 == 0 && i % 2 == 1)
-                    Board[i][j] = -60;
-                else
-                    Board[i][j] = -59;
-            }
-            else if (Board[i][j] == -70)
-            {
-                if (i % 2 == 1 && j % 2 == 0)
-                    Board[i][j] = -77;
-                else
-                    Board[i][j] = -59;
->>>>>>> 01289b1bfedcc998f6f6a607c46942af422f1834
             }
         }
     }
