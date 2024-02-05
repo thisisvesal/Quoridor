@@ -141,39 +141,48 @@ void removeAllWalls()
 
 int blockRound(struct Player *someone)
 {
-    struct Player players[4] = {player1, player2, player3, player4};
-    if (turn == 0)
+    if (gameMode == 1)
     {
+        if (someone == &player1 && player2.blockedFor > 0)
+            return 0;
+        else if (someone == &player2 && player1.blockedFor > 0)
+            return 0;
+    }
+    else if (gameMode == 2)
+    {
+        struct Player players[4] = {player1, player2, player3, player4};
+        if (turn == 0)
+        {
+            for (size_t i = 0; i < 3; i++)
+            {
+                players[i] = players[i + 1];
+            }
+        }
+        else if (turn == 1)
+        {
+            for (size_t i = 2; i < 3; i++)
+            {
+                players[i] = players[i + 1];
+            }
+        }
+        else if (turn == 2)
+        {
+            for (size_t i = 1; i < 3; i++)
+            {
+                players[i] = players[i + 1];
+            }
+        }
+
+        int freeCount = 0;
         for (size_t i = 0; i < 3; i++)
         {
-            players[i] = players[i + 1];
+            if (players[i].blockedFor == 0)
+                freeCount++;
         }
-    }
-    else if (turn == 1)
-    {
-        for (size_t i = 2; i < 3; i++)
-        {
-            players[i] = players[i + 1];
-        }
-    }
-    else if (turn == 2)
-    {
-        for (size_t i = 1; i < 3; i++)
-        {
-            players[i] = players[i + 1];
-        }
-    }
 
-    int freeCount = 0;
-    for (size_t i = 0; i < 3; i++)
-    {
-        if (players[i].blockedFor == 0)
-            freeCount++;
+        if (freeCount == 0)
+            return 0;
     }
-
-    if (freeCount == 0)
-        return 0;
-
     int block = randomize(1, 2);
     someone->blockedFor += block;
 
