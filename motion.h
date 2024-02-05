@@ -43,14 +43,6 @@ int motionDetect()
  
 }
 
-// making a delay
-void sleep(int mseconds)
-{
-    clock_t goal = mseconds + clock();
-    while (goal > clock())
-        ;
-}
-
 // performing pawn's move
 void move(struct Player *someone)
 {

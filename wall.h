@@ -40,6 +40,7 @@ location userWallPlace()
 
     return ans;
 }
+// Also aiWallPlace() is in decision.h, among other computer gameplay functions
 
 // putting fences
 int putWall()

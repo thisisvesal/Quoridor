@@ -19,6 +19,14 @@ void setTextColor(int textColor, int backColor)
     SetConsoleTextAttribute(consoleHandle, colorAttribute);
 }
 
+// making a delay
+void sleep(int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock())
+        ;
+}
+
 // printing arrow keys
 void arrowKeyPrint()
 {

@@ -183,6 +183,7 @@ location frontLeftWall(struct Player *someone)
     }
 }
 
+
 // This function decides whether the computer should move or place a wall
 // It prioritizes putting walls over moving,
 // using certain conditions

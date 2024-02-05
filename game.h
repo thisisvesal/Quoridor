@@ -18,7 +18,6 @@ void gameRun()
     // getting moveChar:
     while ((moveChar[0] != 'm' && moveChar[0] != 'w' && moveChar[0] != 's' && moveChar[0] != 'l') || moveChar[1] != 0)
     {
-        // int aiCharm = randomize(0, 1);
         setTextColor(0, 15);
 
         if (someone->isAi)
@@ -30,9 +29,12 @@ void gameRun()
                 moveChar[0] = 'l';
             else if (aiWallPlace().x == -1)
                 moveChar[0] = 'm';
-            else if (putWall())
+            else if (putWall()) // putwall will return 0 if putting a wall has failed for some reason
             {
                 someone->wallCount--;
+
+                // resetting charmNo of the current player for next rounds
+                someone->charmNo = 1;
 
                 printPage(someone);
 
@@ -47,6 +49,10 @@ void gameRun()
                     turn %= 2;
                 }
                 return;
+            }
+            else // here, we declare that a move should be made because putting a wall has not been possible
+            {
+                moveChar[0] = 'm';
             }
         }
         else
@@ -73,6 +79,8 @@ void gameRun()
     {
         putWall();
         someone->wallCount--;
+
+        // resetting charmNo of the current player for next rounds
         someone->charmNo = 1;
 
         printPage(someone);
@@ -97,6 +105,8 @@ void gameRun()
     {
         gotoxy(someone->location.x, someone->location.y);
         move(someone);
+
+        // resetting charmNo of the current player for next rounds
         someone->charmNo = 1;
 
         printPage(someone);
