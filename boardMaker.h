@@ -91,13 +91,6 @@ void makeSw()
             {
                 sw[i][j] = 0;
             }
-            // else if (i % 2 == 1 && j % 2 == 1) // players' pawns
-            // {
-            //     if (('a' <= Board[i][j] && Board[i][j] <= 'z') || ('A' <= Board[i][j] && Board[i][j] <= 'Z'))
-            //     {
-            //         sw[i][j] = 0;
-            //     }
-            // }
             else if (Board[i][j] == -59) // these: ┼
             {
                 sw[i][j] = 0;
