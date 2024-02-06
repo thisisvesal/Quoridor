@@ -87,11 +87,11 @@ void getTutorial()
 {
     printTutorialText();
 
-    wallCount = 6;
+    wallCount = 5;
     gameMode = 1;
     color = 7;
     aiSw = 1;
-    row = column = 5;
+    row = column = 4;
     color = 0;
 
     makeBoard(row, column);

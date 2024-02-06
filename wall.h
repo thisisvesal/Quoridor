@@ -137,8 +137,10 @@ int putWall()
         }
         if (contSw)
         {
-            printf("\a");
-            putWall();
+            if (determinePlayer()->isAi)
+                return 0;
+            else
+                putWall();
         }
     }
     // 4 player mode

@@ -385,7 +385,7 @@ void newGame()
         printf("2) Play with AI(1 AI player)\n");
         printf("3) Play with AI(2 AI players)\n");
         printf("4) Play with AI(3 AI players)\n");
-        aiSw = getValidInt(1, 2);
+        aiSw = getValidInt(1, 4);
         aiSw--;
     }
 

@@ -70,7 +70,7 @@ int isFrontWallFree(struct Player *someone)
             return 1;
         }
         else if (Board[player1.location.x + 1][player1.location.y] == -60 &&
-                Board[player1.location.x + 1][player1.location.y - 1] == -59 &&
+                 Board[player1.location.x + 1][player1.location.y - 1] == -59 &&
                  Board[player1.location.x + 1][player1.location.y - 2] == -60)
         {
             return 2;
@@ -85,7 +85,7 @@ int isFrontWallFree(struct Player *someone)
             return 1;
         }
         else if (Board[player2.location.x - 1][player2.location.y] == -60 &&
-                Board[player2.location.x - 1][player2.location.y - 1] == -60 &&
+                 Board[player2.location.x - 1][player2.location.y - 1] == -59 &&
                  Board[player2.location.x - 1][player2.location.y - 2] == -60)
         {
             return 2;
@@ -100,7 +100,7 @@ int isFrontWallFree(struct Player *someone)
             return 1;
         }
         else if (Board[player3.location.x][player3.location.y - 1] == -77 &&
-                Board[player3.location.x - 1][player3.location.y - 1] == -59 &&
+                 Board[player3.location.x - 1][player3.location.y - 1] == -59 &&
                  Board[player3.location.x - 2][player3.location.y - 1] == -77)
         {
             return 2;
@@ -115,7 +115,7 @@ int isFrontWallFree(struct Player *someone)
             return 1;
         }
         else if (Board[player4.location.x][player4.location.y + 1] == -77 &&
-                Board[player4.location.x - 1][player4.location.y + 1] == -59 &&
+                 Board[player4.location.x - 1][player4.location.y + 1] == -59 &&
                  Board[player4.location.x - 2][player4.location.y + 1] == -77)
         {
             return 2;
@@ -183,7 +183,6 @@ location frontLeftWall(struct Player *someone)
     }
 }
 
-
 // This function decides whether the computer should move or place a wall
 // It prioritizes putting walls over moving,
 // using certain conditions
@@ -229,7 +228,6 @@ location aiWallPlace()
     }
 }
 
-
 int isInBottom(struct Player *someone)
 {
     if (someone->location.x == 2 * row - 1)
@@ -261,7 +259,6 @@ int isOnLeft(struct Player *someone)
     else
         return 0;
 }
-
 
 int isDownFree(struct Player *someone)
 {
